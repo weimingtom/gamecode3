@@ -1,0 +1,14 @@
+=================================
+UNASSIGNED TODOs AND KNOWN ISSUES
+=================================
+
+- Missing Feature: CMessageBox should accept Hotkeys
+	The Message Box code should accept single key presses such as 'Y' for yes and 'C' for cancel.
+	
+- Bug: Editor can't open levels
+
+- Bug: Network gaming doesn't intialize properly
+	
+	
+
+
