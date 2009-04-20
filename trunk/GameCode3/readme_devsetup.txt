@@ -1,37 +1,34 @@
 =================================================
-GameCode2 v2.2 Source Code - Teapot Wars
+GameCode3 v3.0 Source Code - Teapot Wars
 
 
 The complete source code for the book by
-Mike McShaffry: Game Coding Complete 2nd Edition.
+Mike McShaffry: Game Coding Complete 3rd Edition.
 =================================================
 
 NOTE: YOU CAN'T SKIP ANY OF THIS STUFF! ITS ALL IMPORTANT.
 
 Out of the Box Requirements:
 
-1. Install Microsoft DevStudio .NET 2003
-2. Install DirectX 9 Summer 2005 or better from msdn.microsoft.com
+1. Install Microsoft DevStudio .NET 2005
+2. Install DirectX SDK (November 2008) or later from msdn.microsoft.com
+3. Download the 3rdParty.zip file from http://code.google.com/p/gamecode3/downloads/list
+4. Extract it to GameCode3\Source\3rdParty
 
-Due to licensing complications, NovodeX (recently renamed by AGEIA to PhysX) is not included,
-but a build target, Debug-NoPhysics is provided to allow compilation and running
-without NovodeX (PhysX).
-
-5. Optional - Install AGEIA's PhysX SDK from http://www.ageia.com/developers/downloads.html
 
 
 ================================
 GENERAL INSTALLATION OF ALL SDKS
 ================================
 
-The GameCode2 source includes Ogg-Vorbis and Boost. 
-These SDKs are referenced in the proj files.
-Following is information about 3rd Party SDKs for those that choose
-to install them.
+The GameCode3 source uses 3rd Party open source libraries. The 3rdParty.zip file includes just 
+enough for you to compile and link, but not the entire SDK. Here's where to get each one:
 
-======================
-DIRECTX 9 October 2005 Release
-======================
+
+
+----------------------------------
+DIRECTX SDK November 2008 Release
+----------------------------------
 
 Download from msdn.microsoft.com.
 It's pretty big - a few hundred megabytes - it takes a long time.
@@ -40,66 +37,74 @@ The DirectX SDK include and library directories must be added
 to the Visual Studio Tools -> Options -> Projects ->
 VC++Directories settings (which is usually done by the installer).
 
-=====================
+----------------------
 OggVorbis - Audio SDK
-=====================
+----------------------
 
 If you want the latest version find it at www.vorbis.org - but check the 
 GameCode web site to see if there are any compatibility problems!
 
-================================
+---------------------------------
 BOOST - C++ Template Library kit
-================================
+---------------------------------
 
 If you want the latest version find it at www.boost.org - but check the 
 GameCode web site to see if there are any compatibility problems!
 
-No compilation of the link libraries is required for use with
-GameCode2, although to make complete use of Boost C++ you will want to compile it.
+Some of the link libraries is required for use with
+GameCode3. Since compiling it takes forever - the libraries you need have already
+been built with VS.NET 2005 and are incldued in 3rdPary.zip.
+
+To make complete use of Boost C++ you will want to download the entire thing and compile it.
 Follow the installation instructions to do this if you wish.
 
+-------------------
+Bullet Physics SDK
+-------------------
 
-==============================
-PhysX 2.3.1 - Game Physics SDK
-==============================
+Download it from here: http://code.google.com/p/bullet/
 
-You can obtain the current NovodeX SDK from the following website:
-http://www.ageia.com/developers/downloads.html
 
-As of February 6th, 2006, this codebase is compatible with PhysX 2.3.1, but
-you must download the SDK yourself.  If you choose not to download the SDK,
-you can still compile and run the code by adding DISABLE_PHYSICS to the
-preprocessor defines.  This has already been done for you in the build
-configuration named "NoPhysics-Debug".
+--------
+LuaPlus 
+--------
 
-After you download and install the SDK - you MUST follow these steps to get things working:
-1. Copy the "PhysX SDK 2.3.1\SDKs" folder as your "GameCode\Source\3rdParty\PhysX" folder
-2. Copy "PhysX SDK 2.3.1\Bin\win32\PhysXLoader.dll" to the "GameCode\Bin" directory
-3. Copy "PhysX SDK 2.3.1\Bin\win32\PhysXCore.dll" to the "GameCode\Bin" directory
+Download it from http://www.luaplus.org
 
 
 ==============================
-VISUAL STUDIO .NET 2003 SETUP
+VISUAL STUDIO .NET 2005 SETUP
 ==============================
 
 You are almost there....you need to set up your debugging environment.
 
-1. Double click on GameCode2.sln and launch VS.NET.
-2. Notice that GameCode2 has 4 projects: DXUT, GameCode2, Lang, and TeapotWars
+1. Double click on GameCode3.sln and launch VS.NET.
+2. Notice that GameCode3 has 5 projects: DXUT, GameCode3, Editor, Lang, and TeapotWars
 3. Right click on TeapotWars and select "Set as Startup Project"
 4. Right click on TeapotWars again, and select "Properties"
-5. Make sure the "Configuration" drop down is set to "All Configurations"
-6. Under "Configuration Properties" select "Debugging"
-7. Look for "Working Directory" and set it to "..\..\Bin"
+5. Under "Configuration Properties" select "Debug"
+6. Look for "Working Directory" and set it to "..\..\Bin"
 
 Ok - you are ready to go!
 
+If you want to compile and launch the simple game editor
 
+1. Right click on Editor and select "Set as Startup Project"
+2. Hit F5 and you'll soon see the editor windows!
 
 
 ==============================================
 CHANGE LOG
 ==============================================
+
+Changes from 2.3 to 3.0
+------------------------
+1. Ditched PhysX for Bullet
+2. Added LuaPlus scripting
+3. Added a simple C# editor
+4. Added a multithreaded class, CRealtimeProcess, for managing multithreaded code
+5. Added some AI systems: A*, and simple AI state machines
+
 
 Changes from 2.2 to 2.3
 ------------------------
