@@ -384,7 +384,7 @@ class BulletPhysics : public IGamePhysics, boost::noncopyable
 	optional<ActorId> FindActorID( btRigidBody const * ) const;
 	
 	// callback from bullet for each physics time step.  set in VInitialize
-	static void BulletInternalTickCallback( btDynamicsWorld * const world, btScalar const timeStep );
+	static void BulletInternalTickCallback( btDynamicsWorld * world, btScalar timeStep );
 	
 public:
 	BulletPhysics();
@@ -887,7 +887,7 @@ void BulletPhysics::VTranslate(ActorId actorId, const Vec3& vec)
 //
 //   - Chapter 15, page 560
 //
-void BulletPhysics::BulletInternalTickCallback( btDynamicsWorld * const world, btScalar const timeStep )
+void BulletPhysics::BulletInternalTickCallback( btDynamicsWorld * world, btScalar timeStep )
 {
 	assert( world );
 	
