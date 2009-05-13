@@ -55,7 +55,7 @@ void EmptyEventData::VBuildLuaEventData(void)
 	assert( ( false == m_bHasLuaEventData ) && "Already built lua event data!" );
 
 	//Get the global state.
-	LuaState * pState = g_pApp->m_pLuaStateManager->GetGlobalState().Get();
+	LuaPlus::LuaState * pState = g_pApp->m_pLuaStateManager->GetGlobalState().Get();
 
 	//We just set a nil object.
 	m_LuaEventData.AssignNil( pState );

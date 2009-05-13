@@ -113,7 +113,7 @@ ActorParams *ActorParams::CreateFromStream(std::istrstream &in)
 //
 // ActorParams::CreateFromLuaObj				- Chapter 19, page 688 
 //
-ActorParams * ActorParams::CreateFromLuaObj( LuaObject srcData )
+ActorParams * ActorParams::CreateFromLuaObj( LuaPlus::LuaObject srcData )
 {
 	//Make sure this is legit.
 	if ( false == srcData.IsTable() )
@@ -123,7 +123,7 @@ ActorParams * ActorParams::CreateFromLuaObj( LuaObject srcData )
 	}
 
 	//Find out the actor type.
-	LuaObject actorTypeObj = srcData[ "ActorType" ];
+	LuaPlus::LuaObject actorTypeObj = srcData[ "ActorType" ];
 	if ( false == actorTypeObj.IsString() )
 	{
 		assert( 0 && "Member 'ActorType' wasn't found!" );

@@ -99,7 +99,7 @@ struct EvtData_New_Actor : public BaseEventData
 		SAFE_DELETE(m_pActorParams); 
 	}
 
-	virtual LuaObject VGetLuaEventData(void) const
+	virtual LuaPlus::LuaObject VGetLuaEventData(void) const
 	{
 		assert( ( true == m_bHasLuaEventData ) && "Can't get lua event data because it hasn't been built yet!  Call BulidLuaEventData() first!" );
 		return m_LuaEventData;
@@ -110,14 +110,14 @@ struct EvtData_New_Actor : public BaseEventData
 		assert( ( false == m_bHasLuaEventData ) && "Already built lua event data!" );
 
 		//Get the global state.
-		LuaState * pState = g_pApp->m_pLuaStateManager->GetGlobalState().Get();
+		LuaPlus::LuaState * pState = g_pApp->m_pLuaStateManager->GetGlobalState().Get();
 		m_LuaEventData.AssignNewTable( pState );
 
 		//Serialize the data necessary.
 		m_LuaEventData.SetInteger( "ActorId", m_id );
 		
 		//Create a new sub-table to hold actor params.
-		LuaObject actorParamsObj = m_LuaEventData.CreateTable( "ActorParams" );
+		LuaPlus::LuaObject actorParamsObj = m_LuaEventData.CreateTable( "ActorParams" );
 		if ( NULL != m_pActorParams )
 		{
 			//TODO JWC!   James what the hell is supposed to go here???
@@ -136,7 +136,7 @@ struct EvtData_New_Actor : public BaseEventData
 	ActorParams *m_pActorParams;	//Parameters for actor
 
 private:
-	LuaObject	m_LuaEventData;
+	LuaPlus::LuaObject	m_LuaEventData;
 };
 
 // struct EvtData_Destroy_Actor				- Chapter 10, 279
@@ -166,7 +166,7 @@ struct EvtData_Destroy_Actor : public BaseEventData
 
 	virtual ~EvtData_Destroy_Actor() {}
 
-	virtual LuaObject VGetLuaEventData(void) const
+	virtual LuaPlus::LuaObject VGetLuaEventData(void) const
 	{
 		assert( ( true == m_bHasLuaEventData ) && "Can't get lua event data because it hasn't been built yet!  Call BulidLuaEventData() first!" );
 		return m_LuaEventData;
@@ -177,7 +177,7 @@ struct EvtData_Destroy_Actor : public BaseEventData
 		assert( ( false == m_bHasLuaEventData ) && "Already built lua event data!" );
 
 		//Get the global state.
-		LuaState * pState = g_pApp->m_pLuaStateManager->GetGlobalState().Get();
+		LuaPlus::LuaState * pState = g_pApp->m_pLuaStateManager->GetGlobalState().Get();
 		m_LuaEventData.AssignNewTable( pState );
 
 		//Serialize the data necessary.
@@ -194,7 +194,7 @@ struct EvtData_Destroy_Actor : public BaseEventData
 	ActorId m_id;
 
 private:
-	LuaObject	m_LuaEventData;
+	LuaPlus::LuaObject	m_LuaEventData;
 };
 
 struct EvtData_Move_Actor : public BaseEventData
@@ -223,7 +223,7 @@ struct EvtData_Move_Actor : public BaseEventData
 		}
 	}
 
-	virtual LuaObject VGetLuaEventData(void) const
+	virtual LuaPlus::LuaObject VGetLuaEventData(void) const
 	{
 		assert( ( true == m_bHasLuaEventData ) && "Can't get lua event data because it hasn't been built yet!  Call BulidLuaEventData() first!" );
 		return m_LuaEventData;
@@ -234,7 +234,7 @@ struct EvtData_Move_Actor : public BaseEventData
 		assert( ( false == m_bHasLuaEventData ) && "Already built lua event data!" );
 
 		//Get the global state.
-		LuaState * pState = g_pApp->m_pLuaStateManager->GetGlobalState().Get();
+		LuaPlus::LuaState * pState = g_pApp->m_pLuaStateManager->GetGlobalState().Get();
 		m_LuaEventData.AssignNewTable( pState );
 
 		//Now assign the data.
@@ -242,7 +242,7 @@ struct EvtData_Move_Actor : public BaseEventData
 
 		//We don't want a whole 4x4 matrix, so just give us the position.
 		const Vec3 srcPos = m_Mat.GetPosition(); 
-		LuaObject posTable = m_LuaEventData.CreateTable( "Pos", 3 );
+		LuaPlus::LuaObject posTable = m_LuaEventData.CreateTable( "Pos", 3 );
 		posTable.SetNumber( 1, srcPos.x );
 		posTable.SetNumber( 2, srcPos.y );
 		posTable.SetNumber( 3, srcPos.z );
@@ -271,7 +271,7 @@ struct EvtData_Move_Actor : public BaseEventData
 	Mat4x4 m_Mat;
 
 private:
-	LuaObject	m_LuaEventData;
+	LuaPlus::LuaObject	m_LuaEventData;
 };
 
 class EvtData_New_Game : public EmptyEventData
@@ -296,7 +296,7 @@ public:
 	{
 	}
 
-	EvtData_New_Game( LuaObject srcData )
+	EvtData_New_Game( LuaPlus::LuaObject srcData )
 	{
 	}
 };
@@ -319,7 +319,7 @@ public:
 	{
 	}
 
-	EvtData_Request_Start_Game( LuaObject srcData )
+	EvtData_Request_Start_Game( LuaPlus::LuaObject srcData )
 	{
 	}
 
@@ -356,7 +356,7 @@ struct EvtData_Game_State : public BaseEventData
 
 	virtual ~EvtData_Game_State() {}
 
-	virtual LuaObject VGetLuaEventData(void) const
+	virtual LuaPlus::LuaObject VGetLuaEventData(void) const
 	{
 		assert( ( true == m_bHasLuaEventData ) && "Can't get lua event data because it hasn't been built yet!  Call BulidLuaEventData() first!" );
 		return m_LuaEventData;
@@ -367,7 +367,7 @@ struct EvtData_Game_State : public BaseEventData
 		assert( ( false == m_bHasLuaEventData ) && "Already built lua event data!" );
 
 		//Get the global state.
-		LuaState * pState = g_pApp->m_pLuaStateManager->GetGlobalState().Get();
+		LuaPlus::LuaState * pState = g_pApp->m_pLuaStateManager->GetGlobalState().Get();
 		m_LuaEventData.AssignNewTable( pState );
 
 		//Serialize the data necessary.
@@ -403,7 +403,7 @@ struct EvtData_Game_State : public BaseEventData
 	BaseGameState m_gameState;
 
 private:
-	LuaObject	m_LuaEventData;
+	LuaPlus::LuaObject	m_LuaEventData;
 };
 
 struct EvtData_Remote_Client : public BaseEventData
@@ -432,7 +432,7 @@ struct EvtData_Remote_Client : public BaseEventData
 
 	virtual ~EvtData_Remote_Client() {}
 
-	virtual LuaObject VGetLuaEventData(void) const
+	virtual LuaPlus::LuaObject VGetLuaEventData(void) const
 	{
 		assert( ( true == m_bHasLuaEventData ) && "Can't get lua event data because it hasn't been built yet!  Call BulidLuaEventData() first!" );
 		return m_LuaEventData;
@@ -443,7 +443,7 @@ struct EvtData_Remote_Client : public BaseEventData
 		assert( ( false == m_bHasLuaEventData ) && "Already built lua event data!" );
 
 		//Get the global state.
-		LuaState * pState = g_pApp->m_pLuaStateManager->GetGlobalState().Get();
+		LuaPlus::LuaState * pState = g_pApp->m_pLuaStateManager->GetGlobalState().Get();
 		m_LuaEventData.AssignNewTable( pState );
 
 		//Serialize the data necessary.
@@ -464,7 +464,7 @@ struct EvtData_Remote_Client : public BaseEventData
 	int m_ipAddress;
 
 private:
-	LuaObject	m_LuaEventData;
+	LuaPlus::LuaObject	m_LuaEventData;
 };
 
 struct EvtData_Update_Tick : public BaseEventData
@@ -485,7 +485,7 @@ struct EvtData_Update_Tick : public BaseEventData
 		return IEventDataPtr (GCC_NEW EvtData_Update_Tick ( m_DeltaMilliseconds ) );
 	}
 
-	virtual LuaObject VGetLuaEventData(void) const
+	virtual LuaPlus::LuaObject VGetLuaEventData(void) const
 	{
 		assert( ( true == m_bHasLuaEventData ) && "Can't get lua event data because it hasn't been built yet!  Call BulidLuaEventData() first!" );
 		return m_LuaEventData;
@@ -496,7 +496,7 @@ struct EvtData_Update_Tick : public BaseEventData
 		assert( ( false == m_bHasLuaEventData ) && "Already built lua event data!" );
 
 		//Get the global state.
-		LuaState * pState = g_pApp->m_pLuaStateManager->GetGlobalState().Get();
+		LuaPlus::LuaState * pState = g_pApp->m_pLuaStateManager->GetGlobalState().Get();
 		m_LuaEventData.AssignNewTable( pState );
 
 		//Serialize the data necessary.
@@ -513,7 +513,7 @@ struct EvtData_Update_Tick : public BaseEventData
 
 	int m_DeltaMilliseconds;
 private:
-	LuaObject m_LuaEventData;
+	LuaPlus::LuaObject m_LuaEventData;
 };
 
 struct EvtData_Debug_String : public BaseEventData
@@ -542,7 +542,7 @@ struct EvtData_Debug_String : public BaseEventData
 		return IEventDataPtr ( GCC_NEW EvtData_Debug_String (m_DebugMessage, m_Type) );
 	}
 
-	virtual LuaObject VGetLuaEventData(void) const
+	virtual LuaPlus::LuaObject VGetLuaEventData(void) const
 	{
 		assert( ( true == m_bHasLuaEventData ) && "Can't get lua event data because it hasn't been built yet!  Call BulidLuaEventData() first!" );
 		return m_LuaEventData;
@@ -553,7 +553,7 @@ struct EvtData_Debug_String : public BaseEventData
 		assert( ( false == m_bHasLuaEventData ) && "Already built lua event data!" );
 
 		//Get the global state.
-		LuaState * pState = g_pApp->m_pLuaStateManager->GetGlobalState().Get();
+		LuaPlus::LuaState * pState = g_pApp->m_pLuaStateManager->GetGlobalState().Get();
 		m_LuaEventData.AssignNewTable( pState );
 
 		//Serialize the data necessary.
@@ -579,7 +579,7 @@ struct EvtData_Debug_String : public BaseEventData
 	std::string m_DebugMessage;
 	eDebugStringType m_Type;
 private:
-	LuaObject m_LuaEventData;
+	LuaPlus::LuaObject m_LuaEventData;
 };
 
 
@@ -610,7 +610,7 @@ struct EvtData_Network_Player_Actor_Assignment : public BaseEventData
 
 	virtual ~EvtData_Network_Player_Actor_Assignment() {}
 
-	virtual LuaObject VGetLuaEventData(void) const
+	virtual LuaPlus::LuaObject VGetLuaEventData(void) const
 	{
 		assert( ( true == m_bHasLuaEventData ) && "Can't get lua event data because it hasn't been built yet!  Call BulidLuaEventData() first!" );
 		return m_LuaEventData;
@@ -621,7 +621,7 @@ struct EvtData_Network_Player_Actor_Assignment : public BaseEventData
 		assert( ( false == m_bHasLuaEventData ) && "Already built lua event data!" );
 
 		//Get the global state.
-		LuaState * pState = g_pApp->m_pLuaStateManager->GetGlobalState().Get();
+		LuaPlus::LuaState * pState = g_pApp->m_pLuaStateManager->GetGlobalState().Get();
 		m_LuaEventData.AssignNewTable( pState );
 
 		//Serialize the data necessary.
@@ -642,7 +642,7 @@ struct EvtData_Network_Player_Actor_Assignment : public BaseEventData
 	int m_remotePlayerId;
 
 private:
-	LuaObject	m_LuaEventData;
+	LuaPlus::LuaObject	m_LuaEventData;
 };
 
 
@@ -666,7 +666,7 @@ struct EvtData_Decompress_Request : public BaseEventData
 		return IEventDataPtr (GCC_NEW EvtData_Decompress_Request ( m_zipFileName, m_fileName ) );
 	}
 
-	virtual LuaObject VGetLuaEventData(void) const
+	virtual LuaPlus::LuaObject VGetLuaEventData(void) const
 	{
 		assert( ( true == m_bHasLuaEventData ) && "Can't get lua event data because it hasn't been built yet!  Call BulidLuaEventData() first!" );
 		return m_LuaEventData;
@@ -688,7 +688,7 @@ public:
 	std::string m_fileName;
 
 private:
-	LuaObject m_LuaEventData;
+	LuaPlus::LuaObject m_LuaEventData;
 };
 
 
@@ -713,7 +713,7 @@ struct EvtData_Decompression_Progress : public BaseEventData
 		return IEventDataPtr (GCC_NEW EvtData_Decompression_Progress ( m_progress, m_zipFileName, m_fileName, m_buffer ) );
 	}
 
-	virtual LuaObject VGetLuaEventData(void) const
+	virtual LuaPlus::LuaObject VGetLuaEventData(void) const
 	{
 		assert( ( true == m_bHasLuaEventData ) && "Can't get lua event data because it hasn't been built yet!  Call BulidLuaEventData() first!" );
 		return m_LuaEventData;
@@ -737,7 +737,7 @@ public:
 	void *m_buffer;
 
 private:
-	LuaObject m_LuaEventData;
+	LuaPlus::LuaObject m_LuaEventData;
 };
 
 
@@ -752,7 +752,7 @@ struct EvtData_Request_New_Actor : public BaseEventData
 		return sk_EventType;
 	}
 
-	explicit EvtData_Request_New_Actor( LuaObject srcData )
+	explicit EvtData_Request_New_Actor( LuaPlus::LuaObject srcData )
 		: m_ActorDef( srcData )
 		, m_pActorParams( NULL )
 	{
@@ -777,7 +777,7 @@ struct EvtData_Request_New_Actor : public BaseEventData
 		SAFE_DELETE( m_pActorParams );
 	}
 
-	virtual LuaObject VGetLuaEventData(void) const
+	virtual LuaPlus::LuaObject VGetLuaEventData(void) const
 	{
 		assert( ( true == m_bHasLuaEventData ) && "Can't get lua event data because it hasn't been built yet!  Call BulidLuaEventData() first!" );
 		return m_ActorDef;
@@ -792,7 +792,7 @@ struct EvtData_Request_New_Actor : public BaseEventData
 	ActorParams * m_pActorParams;
 
 private:
-	LuaObject m_ActorDef;
+	LuaPlus::LuaObject m_ActorDef;
 };
 
 // Nasty game dependant events here. We'll move this back into game specific TeapotEvents.h when
@@ -824,7 +824,7 @@ public:
 
 	virtual ~EvtData_Fire_Weapon() {}
 
-	virtual LuaObject VGetLuaEventData() const
+	virtual LuaPlus::LuaObject VGetLuaEventData() const
 	{
 		assert( ( true == m_bHasLuaEventData ) && "Can't get lua event data because it hasn't been built yet!  Call BulidLuaEventData() first!" );
 		return m_LuaEventData;
@@ -835,7 +835,7 @@ public:
 		assert( ( false == m_bHasLuaEventData ) && "Already built lua event data!" );
 
 		//Get the global state.
-		LuaState * pState = g_pApp->m_pLuaStateManager->GetGlobalState().Get();
+		LuaPlus::LuaState * pState = g_pApp->m_pLuaStateManager->GetGlobalState().Get();
 		m_LuaEventData.AssignNewTable( pState );
 
 		//Serialize the data necessary.
@@ -852,7 +852,7 @@ public:
 	ActorId m_id;
 
 private:
-	LuaObject	m_LuaEventData;
+	LuaPlus::LuaObject	m_LuaEventData;
 };
 
 
@@ -888,7 +888,7 @@ struct EvtData_Thrust : public BaseEventData
 	ActorId m_id;
 	float m_throttle;
 
-	virtual LuaObject VGetLuaEventData(void) const
+	virtual LuaPlus::LuaObject VGetLuaEventData(void) const
 	{
 		assert( ( true == m_bHasLuaEventData ) && "Can't get lua event data because it hasn't been built yet!  Call BulidLuaEventData() first!" );
 		return m_LuaEventData;
@@ -899,7 +899,7 @@ struct EvtData_Thrust : public BaseEventData
 		assert( ( false == m_bHasLuaEventData ) && "Already built lua event data!" );
 
 		//Get the global state.
-		LuaState * pState = g_pApp->m_pLuaStateManager->GetGlobalState().Get();
+		LuaPlus::LuaState * pState = g_pApp->m_pLuaStateManager->GetGlobalState().Get();
 		m_LuaEventData.AssignNewTable( pState );
 
 		//Set the appropriate data.
@@ -916,7 +916,7 @@ struct EvtData_Thrust : public BaseEventData
 	}
 
 private:
-	LuaObject	m_LuaEventData;
+	LuaPlus::LuaObject	m_LuaEventData;
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -948,7 +948,7 @@ struct EvtData_Steer : public BaseEventData
 	{
 	}
 
-	virtual LuaObject VGetLuaEventData(void) const
+	virtual LuaPlus::LuaObject VGetLuaEventData(void) const
 	{
 		assert( ( true == m_bHasLuaEventData ) && "Can't get lua event data because it hasn't been built yet!  Call BulidLuaEventData() first!" );
 		return m_LuaEventData;
@@ -959,7 +959,7 @@ struct EvtData_Steer : public BaseEventData
 		assert( ( false == m_bHasLuaEventData ) && "Already built lua event data!" );
 
 		//Get the global state.
-		LuaState * pState = g_pApp->m_pLuaStateManager->GetGlobalState().Get();
+		LuaPlus::LuaState * pState = g_pApp->m_pLuaStateManager->GetGlobalState().Get();
 		m_LuaEventData.AssignNewTable( pState );
 
 		//Set appropriate data.
@@ -979,7 +979,7 @@ struct EvtData_Steer : public BaseEventData
 	float m_dir;		// -1.0 is all the way left, 0 is straight, 1.0 is right
 
 private:
-	LuaObject	m_LuaEventData;
+	LuaPlus::LuaObject	m_LuaEventData;
 };
 
 
@@ -993,7 +993,7 @@ private:
 struct EvtData_UpdateActorParams : public BaseEventData
 {
 private:
-	LuaObject m_LuaEventData;
+	LuaPlus::LuaObject m_LuaEventData;
 
 public:
 	static const EventType sk_EventType;
@@ -1004,12 +1004,12 @@ public:
 		return sk_EventType;
 	}
 
-	explicit EvtData_UpdateActorParams( LuaObject eventData )
+	explicit EvtData_UpdateActorParams( LuaPlus::LuaObject eventData )
 		: m_LuaEventData( eventData )
 		, m_ActorID( 0 )
 	{
 		assert( eventData.IsTable() && "UpdateActorParams event requires a valid table!" );
-		LuaObject actorID = eventData[ "ActorID" ];
+		LuaPlus::LuaObject actorID = eventData[ "ActorID" ];
 		assert( actorID.IsInteger() && "UpdateActorParams event requires member 'ActorID', and for it to be an integer!" );
 		m_ActorID = actorID.GetInteger();
 		m_bHasLuaEventData = true;	//We're just using what was passed into us.
@@ -1020,7 +1020,7 @@ public:
 		return IEventDataPtr (GCC_NEW EvtData_UpdateActorParams(m_LuaEventData) );
 	}
 
-	virtual LuaObject VGetLuaEventData(void) const
+	virtual LuaPlus::LuaObject VGetLuaEventData(void) const
 	{
 		assert( ( true == m_bHasLuaEventData ) && "Can't get lua event data because it hasn't been built yet!  Call BulidLuaEventData() first!" );
 		return m_LuaEventData;

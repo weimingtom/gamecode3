@@ -102,16 +102,16 @@ bool ActorParams::VInit(std::istrstream &in)
 //
 // ActorParams::VInit						- Chpater 19, page 685
 //
-bool ActorParams::VInit( LuaObject srcData, TErrorMessageList & errorMessages )
+bool ActorParams::VInit( LuaPlus::LuaObject srcData, TErrorMessageList & errorMessages )
 {
-	LuaObject actorIDObj = srcData[ "ActorID" ];
+	LuaPlus::LuaObject actorIDObj = srcData[ "ActorID" ];
 	if ( actorIDObj.IsInteger() )
 	{
 		m_Id = actorIDObj.GetInteger();
 	}
 
 
-	LuaObject posObj = srcData[ "Pos" ];
+	LuaPlus::LuaObject posObj = srcData[ "Pos" ];
 	if ( posObj.IsTable() )
 	{
 		const int tableCount = posObj.GetTableCount();
@@ -130,26 +130,26 @@ bool ActorParams::VInit( LuaObject srcData, TErrorMessageList & errorMessages )
 		}
 	}
 
-	LuaObject colorObj = srcData[ "Color" ];
+	LuaPlus::LuaObject colorObj = srcData[ "Color" ];
 	if ( colorObj.IsTable() )
 	{
 		//Get the RGBA off of it.
-		LuaObject r = colorObj[ "R" ];
+		LuaPlus::LuaObject r = colorObj[ "R" ];
 		if ( r.IsNumber() )
 		{
 			m_Color.r = r.GetFloat();
 		}
-		LuaObject g = colorObj[ "G" ];
+		LuaPlus::LuaObject g = colorObj[ "G" ];
 		if ( g.IsNumber() )
 		{
 			m_Color.g = g.GetFloat();
 		}
-		LuaObject b = colorObj[ "B" ];
+		LuaPlus::LuaObject b = colorObj[ "B" ];
 		if ( b.IsNumber() )
 		{
 			m_Color.b = b.GetFloat();
 		}
-		LuaObject a = colorObj[ "A" ];
+		LuaPlus::LuaObject a = colorObj[ "A" ];
 		if ( a.IsNumber() )
 		{
 			m_Color.a = a.GetFloat();
@@ -157,13 +157,13 @@ bool ActorParams::VInit( LuaObject srcData, TErrorMessageList & errorMessages )
 	}
 
 	//See if we have any on create/destroy handlers.
-	LuaObject onCreateObj = srcData[ "OnCreateFunc" ];
+	LuaPlus::LuaObject onCreateObj = srcData[ "OnCreateFunc" ];
 	if ( onCreateObj.IsString() )
 	{
 		const char * pString = onCreateObj.GetString();
 		strcpy_s( m_OnCreateLuaFunctionName, sk_MaxFuncName, onCreateObj.GetString() );
 	}
-	LuaObject onDestroyObj = srcData[ "OnDestroyFunc" ];
+	LuaPlus::LuaObject onDestroyObj = srcData[ "OnDestroyFunc" ];
 	if ( onDestroyObj.IsString() )
 	{
 		strcpy_s( m_OnDestroyLuaFunctionName, sk_MaxFuncName, onDestroyObj.GetString() );
@@ -220,7 +220,7 @@ bool SphereParams::VInit(std::istrstream &in)
 	return false;
 }
 
-bool SphereParams::VInit( LuaObject srcData, TErrorMessageList & errorMessages )
+bool SphereParams::VInit( LuaPlus::LuaObject srcData, TErrorMessageList & errorMessages )
 {
 	if ( false == ActorParams::VInit( srcData, errorMessages ) )
 	{
@@ -229,17 +229,17 @@ bool SphereParams::VInit( LuaObject srcData, TErrorMessageList & errorMessages )
 
 	m_Type = AT_Sphere;
 
-	LuaObject radiusObj = srcData[ "Radius" ];
+	LuaPlus::LuaObject radiusObj = srcData[ "Radius" ];
 	if ( radiusObj.IsNumber() )
 	{
 		m_Radius = radiusObj.GetFloat();
 	}
-	LuaObject segmentObj = srcData[ "Segments" ];
+	LuaPlus::LuaObject segmentObj = srcData[ "Segments" ];
 	if ( segmentObj.IsInteger() )
 	{
 		m_Segments = segmentObj.GetInteger();
 	}
-	LuaObject normalObj = srcData[ "NormalDir" ];
+	LuaPlus::LuaObject normalObj = srcData[ "NormalDir" ];
 	if ( normalObj.IsTable() )
 	{
 		const int tableCount = normalObj.GetTableCount();
@@ -257,7 +257,7 @@ bool SphereParams::VInit( LuaObject srcData, TErrorMessageList & errorMessages )
 			m_NormalDir.z = normalObj[ 3 ].GetFloat();
 		}
 	}
-	LuaObject forceObj = srcData[ "Force" ];
+	LuaPlus::LuaObject forceObj = srcData[ "Force" ];
 	if ( forceObj.IsNumber() )
 	{
 		m_Force = forceObj.GetFloat();
@@ -319,7 +319,7 @@ bool TeapotParams::VInit(std::istrstream &in)
 //
 // TeapotParams::VInit					- Chapter 19, page 691
 //
-bool TeapotParams::VInit( LuaObject srcData, TErrorMessageList & errorMessages )
+bool TeapotParams::VInit( LuaPlus::LuaObject srcData, TErrorMessageList & errorMessages )
 {
 	if ( false == ActorParams::VInit( srcData, errorMessages ) )
 	{
@@ -328,7 +328,7 @@ bool TeapotParams::VInit( LuaObject srcData, TErrorMessageList & errorMessages )
 
 	m_Type = AT_Teapot;
 
-	LuaObject lengthObj = srcData[ "Length" ];
+	LuaPlus::LuaObject lengthObj = srcData[ "Length" ];
 	if ( lengthObj.IsNumber() )
 	{
 		m_Length = lengthObj.GetFloat();
@@ -336,7 +336,7 @@ bool TeapotParams::VInit( LuaObject srcData, TErrorMessageList & errorMessages )
 
 	m_Mat = Mat4x4::g_Identity;
 
-	LuaObject matObj = srcData[ "Mat" ];
+	LuaPlus::LuaObject matObj = srcData[ "Mat" ];
 	if ( matObj.IsTable() )
 	{
 		const int tableCount = matObj.GetTableCount();
@@ -348,82 +348,82 @@ bool TeapotParams::VInit( LuaObject srcData, TErrorMessageList & errorMessages )
 		}
 		else
 		{
-			LuaObject m11 = matObj[ "_11" ];
+			LuaPlus::LuaObject m11 = matObj[ "_11" ];
 			if ( m11.IsNumber() )
 			{
 				m_Mat._11 = m11.GetFloat();
 			}
-			LuaObject m12 = matObj[ "_12" ];
+			LuaPlus::LuaObject m12 = matObj[ "_12" ];
 			if ( m12.IsNumber() )
 			{
 				m_Mat._12 = m12.GetFloat();
 			}
-			LuaObject m13 = matObj[ "_13" ];
+			LuaPlus::LuaObject m13 = matObj[ "_13" ];
 			if ( m13.IsNumber() )
 			{
 				m_Mat._13 = m13.GetFloat();
 			}
-			LuaObject m14 = matObj[ "_14" ];
+			LuaPlus::LuaObject m14 = matObj[ "_14" ];
 			if ( m14.IsNumber() )
 			{
 				m_Mat._14 = m14.GetFloat();
 			}
-			LuaObject m21 = matObj[ "_21" ];
+			LuaPlus::LuaObject m21 = matObj[ "_21" ];
 			if ( m21.IsNumber() )
 			{
 				m_Mat._21 = m21.GetFloat();
 			}
-			LuaObject m22 = matObj[ "_22" ];
+			LuaPlus::LuaObject m22 = matObj[ "_22" ];
 			if ( m22.IsNumber() )
 			{
 				m_Mat._22 = m22.GetFloat();
 			}
-			LuaObject m23 = matObj[ "_23" ];
+			LuaPlus::LuaObject m23 = matObj[ "_23" ];
 			if ( m23.IsNumber() )
 			{
 				m_Mat._23 = m23.GetFloat();
 			}
-			LuaObject m24 = matObj[ "_24" ];
+			LuaPlus::LuaObject m24 = matObj[ "_24" ];
 			if ( m24.IsNumber() )
 			{
 				m_Mat._24 = m24.GetFloat();
 			}
-			LuaObject m31 = matObj[ "_31" ];
+			LuaPlus::LuaObject m31 = matObj[ "_31" ];
 			if ( m31.IsNumber() )
 			{
 				m_Mat._31 = m31.GetFloat();
 			}
-			LuaObject m32 = matObj[ "_32" ];
+			LuaPlus::LuaObject m32 = matObj[ "_32" ];
 			if ( m32.IsNumber() )
 			{
 				m_Mat._32 = m32.GetFloat();
 			}
-			LuaObject m33 = matObj[ "_33" ];
+			LuaPlus::LuaObject m33 = matObj[ "_33" ];
 			if ( m33.IsNumber() )
 			{
 				m_Mat._33 = m33.GetFloat();
 			}
-			LuaObject m34 = matObj[ "_34" ];
+			LuaPlus::LuaObject m34 = matObj[ "_34" ];
 			if ( m34.IsNumber() )
 			{
 				m_Mat._34 = m34.GetFloat();
 			}
-			LuaObject m41 = matObj[ "_41" ];
+			LuaPlus::LuaObject m41 = matObj[ "_41" ];
 			if ( m41.IsNumber() )
 			{
 				m_Mat._41 = m41.GetFloat();
 			}
-			LuaObject m42 = matObj[ "_42" ];
+			LuaPlus::LuaObject m42 = matObj[ "_42" ];
 			if ( m42.IsNumber() )
 			{
 				m_Mat._42 = m42.GetFloat();
 			}
-			LuaObject m43 = matObj[ "_43" ];
+			LuaPlus::LuaObject m43 = matObj[ "_43" ];
 			if ( m43.IsNumber() )
 			{
 				m_Mat._43 = m43.GetFloat();
 			}
-			LuaObject m44 = matObj[ "_44" ];
+			LuaPlus::LuaObject m44 = matObj[ "_44" ];
 			if ( m44.IsNumber() )
 			{
 				m_Mat._44 = m44.GetFloat();
@@ -432,7 +432,7 @@ bool TeapotParams::VInit( LuaObject srcData, TErrorMessageList & errorMessages )
 	}
 
 
-	LuaObject viewIDObj = srcData[ "GameViewID" ];
+	LuaPlus::LuaObject viewIDObj = srcData[ "GameViewID" ];
 	if ( viewIDObj.IsInteger() )
 	{
 		m_ViewId = viewIDObj.GetInteger();
@@ -491,7 +491,7 @@ bool TestObjectParams::VInit(std::istrstream &in)
 	return false;
 }
 
-bool TestObjectParams::VInit( LuaObject srcData, TErrorMessageList & errorMessages )
+bool TestObjectParams::VInit( LuaPlus::LuaObject srcData, TErrorMessageList & errorMessages )
 {
 	if ( false == ActorParams::VInit( srcData, errorMessages ) )
 	{
@@ -502,7 +502,7 @@ bool TestObjectParams::VInit( LuaObject srcData, TErrorMessageList & errorMessag
 
 	m_Mat = Mat4x4::g_Identity;
 
-	LuaObject matObj = srcData[ "Mat" ];
+	LuaPlus::LuaObject matObj = srcData[ "Mat" ];
 	if ( matObj.IsTable() )
 	{
 		const int tableCount = matObj.GetTableCount();
@@ -514,82 +514,82 @@ bool TestObjectParams::VInit( LuaObject srcData, TErrorMessageList & errorMessag
 		}
 		else
 		{
-			LuaObject m11 = matObj[ "_11" ];
+			LuaPlus::LuaObject m11 = matObj[ "_11" ];
 			if ( m11.IsNumber() )
 			{
 				m_Mat._11 = m11.GetFloat();
 			}
-			LuaObject m12 = matObj[ "_12" ];
+			LuaPlus::LuaObject m12 = matObj[ "_12" ];
 			if ( m12.IsNumber() )
 			{
 				m_Mat._12 = m12.GetFloat();
 			}
-			LuaObject m13 = matObj[ "_13" ];
+			LuaPlus::LuaObject m13 = matObj[ "_13" ];
 			if ( m13.IsNumber() )
 			{
 				m_Mat._13 = m13.GetFloat();
 			}
-			LuaObject m14 = matObj[ "_14" ];
+			LuaPlus::LuaObject m14 = matObj[ "_14" ];
 			if ( m14.IsNumber() )
 			{
 				m_Mat._14 = m14.GetFloat();
 			}
-			LuaObject m21 = matObj[ "_21" ];
+			LuaPlus::LuaObject m21 = matObj[ "_21" ];
 			if ( m21.IsNumber() )
 			{
 				m_Mat._21 = m21.GetFloat();
 			}
-			LuaObject m22 = matObj[ "_22" ];
+			LuaPlus::LuaObject m22 = matObj[ "_22" ];
 			if ( m22.IsNumber() )
 			{
 				m_Mat._22 = m22.GetFloat();
 			}
-			LuaObject m23 = matObj[ "_23" ];
+			LuaPlus::LuaObject m23 = matObj[ "_23" ];
 			if ( m23.IsNumber() )
 			{
 				m_Mat._23 = m23.GetFloat();
 			}
-			LuaObject m24 = matObj[ "_24" ];
+			LuaPlus::LuaObject m24 = matObj[ "_24" ];
 			if ( m24.IsNumber() )
 			{
 				m_Mat._24 = m24.GetFloat();
 			}
-			LuaObject m31 = matObj[ "_31" ];
+			LuaPlus::LuaObject m31 = matObj[ "_31" ];
 			if ( m31.IsNumber() )
 			{
 				m_Mat._31 = m31.GetFloat();
 			}
-			LuaObject m32 = matObj[ "_32" ];
+			LuaPlus::LuaObject m32 = matObj[ "_32" ];
 			if ( m32.IsNumber() )
 			{
 				m_Mat._32 = m32.GetFloat();
 			}
-			LuaObject m33 = matObj[ "_33" ];
+			LuaPlus::LuaObject m33 = matObj[ "_33" ];
 			if ( m33.IsNumber() )
 			{
 				m_Mat._33 = m33.GetFloat();
 			}
-			LuaObject m34 = matObj[ "_34" ];
+			LuaPlus::LuaObject m34 = matObj[ "_34" ];
 			if ( m34.IsNumber() )
 			{
 				m_Mat._34 = m34.GetFloat();
 			}
-			LuaObject m41 = matObj[ "_41" ];
+			LuaPlus::LuaObject m41 = matObj[ "_41" ];
 			if ( m41.IsNumber() )
 			{
 				m_Mat._41 = m41.GetFloat();
 			}
-			LuaObject m42 = matObj[ "_42" ];
+			LuaPlus::LuaObject m42 = matObj[ "_42" ];
 			if ( m42.IsNumber() )
 			{
 				m_Mat._42 = m42.GetFloat();
 			}
-			LuaObject m43 = matObj[ "_43" ];
+			LuaPlus::LuaObject m43 = matObj[ "_43" ];
 			if ( m43.IsNumber() )
 			{
 				m_Mat._43 = m43.GetFloat();
 			}
-			LuaObject m44 = matObj[ "_44" ];
+			LuaPlus::LuaObject m44 = matObj[ "_44" ];
 			if ( m44.IsNumber() )
 			{
 				m_Mat._44 = m44.GetFloat();
@@ -647,7 +647,7 @@ GridParams::GridParams() : ActorParams()
 	return false;
 }
 
-bool GridParams::VInit( LuaObject srcData, TErrorMessageList & errorMessages )
+bool GridParams::VInit( LuaPlus::LuaObject srcData, TErrorMessageList & errorMessages )
 {
 	if ( false == ActorParams::VInit( srcData, errorMessages ) )
 	{
@@ -658,7 +658,7 @@ bool GridParams::VInit( LuaObject srcData, TErrorMessageList & errorMessages )
 
 	m_Mat = Mat4x4::g_Identity;
 
-	LuaObject matObj = srcData[ "Mat" ];
+	LuaPlus::LuaObject matObj = srcData[ "Mat" ];
 	if ( matObj.IsTable() )
 	{
 		const int tableCount = matObj.GetTableCount();
@@ -670,82 +670,82 @@ bool GridParams::VInit( LuaObject srcData, TErrorMessageList & errorMessages )
 		}
 		else
 		{
-			LuaObject m11 = matObj[ "_11" ];
+			LuaPlus::LuaObject m11 = matObj[ "_11" ];
 			if ( m11.IsNumber() )
 			{
 				m_Mat._11 = m11.GetFloat();
 			}
-			LuaObject m12 = matObj[ "_12" ];
+			LuaPlus::LuaObject m12 = matObj[ "_12" ];
 			if ( m12.IsNumber() )
 			{
 				m_Mat._12 = m12.GetFloat();
 			}
-			LuaObject m13 = matObj[ "_13" ];
+			LuaPlus::LuaObject m13 = matObj[ "_13" ];
 			if ( m13.IsNumber() )
 			{
 				m_Mat._13 = m13.GetFloat();
 			}
-			LuaObject m14 = matObj[ "_14" ];
+			LuaPlus::LuaObject m14 = matObj[ "_14" ];
 			if ( m14.IsNumber() )
 			{
 				m_Mat._14 = m14.GetFloat();
 			}
-			LuaObject m21 = matObj[ "_21" ];
+			LuaPlus::LuaObject m21 = matObj[ "_21" ];
 			if ( m21.IsNumber() )
 			{
 				m_Mat._21 = m21.GetFloat();
 			}
-			LuaObject m22 = matObj[ "_22" ];
+			LuaPlus::LuaObject m22 = matObj[ "_22" ];
 			if ( m22.IsNumber() )
 			{
 				m_Mat._22 = m22.GetFloat();
 			}
-			LuaObject m23 = matObj[ "_23" ];
+			LuaPlus::LuaObject m23 = matObj[ "_23" ];
 			if ( m23.IsNumber() )
 			{
 				m_Mat._23 = m23.GetFloat();
 			}
-			LuaObject m24 = matObj[ "_24" ];
+			LuaPlus::LuaObject m24 = matObj[ "_24" ];
 			if ( m24.IsNumber() )
 			{
 				m_Mat._24 = m24.GetFloat();
 			}
-			LuaObject m31 = matObj[ "_31" ];
+			LuaPlus::LuaObject m31 = matObj[ "_31" ];
 			if ( m31.IsNumber() )
 			{
 				m_Mat._31 = m31.GetFloat();
 			}
-			LuaObject m32 = matObj[ "_32" ];
+			LuaPlus::LuaObject m32 = matObj[ "_32" ];
 			if ( m32.IsNumber() )
 			{
 				m_Mat._32 = m32.GetFloat();
 			}
-			LuaObject m33 = matObj[ "_33" ];
+			LuaPlus::LuaObject m33 = matObj[ "_33" ];
 			if ( m33.IsNumber() )
 			{
 				m_Mat._33 = m33.GetFloat();
 			}
-			LuaObject m34 = matObj[ "_34" ];
+			LuaPlus::LuaObject m34 = matObj[ "_34" ];
 			if ( m34.IsNumber() )
 			{
 				m_Mat._34 = m34.GetFloat();
 			}
-			LuaObject m41 = matObj[ "_41" ];
+			LuaPlus::LuaObject m41 = matObj[ "_41" ];
 			if ( m41.IsNumber() )
 			{
 				m_Mat._41 = m41.GetFloat();
 			}
-			LuaObject m42 = matObj[ "_42" ];
+			LuaPlus::LuaObject m42 = matObj[ "_42" ];
 			if ( m42.IsNumber() )
 			{
 				m_Mat._42 = m42.GetFloat();
 			}
-			LuaObject m43 = matObj[ "_43" ];
+			LuaPlus::LuaObject m43 = matObj[ "_43" ];
 			if ( m43.IsNumber() )
 			{
 				m_Mat._43 = m43.GetFloat();
 			}
-			LuaObject m44 = matObj[ "_44" ];
+			LuaPlus::LuaObject m44 = matObj[ "_44" ];
 			if ( m44.IsNumber() )
 			{
 				m_Mat._44 = m44.GetFloat();
@@ -753,13 +753,13 @@ bool GridParams::VInit( LuaObject srcData, TErrorMessageList & errorMessages )
 		}
 	}
 
-	LuaObject textureObj = srcData[ "Texture" ];
+	LuaPlus::LuaObject textureObj = srcData[ "Texture" ];
 	if ( textureObj.IsString() )
 	{
 		const char * pTexture = textureObj.GetString();
 		strcpy( m_Texture, pTexture );
 	}
-	LuaObject squaresObj = srcData[ "Squares" ];
+	LuaPlus::LuaObject squaresObj = srcData[ "Squares" ];
 	if ( squaresObj.IsInteger() )
 	{
 		const int tempVal = squaresObj.GetInteger();
@@ -821,7 +821,7 @@ bool GenericMeshObjectParams::VInit(std::istrstream &in)
 	return false;
 }
 
-bool GenericMeshObjectParams::VInit( LuaObject srcData, TErrorMessageList & errorMessages )
+bool GenericMeshObjectParams::VInit( LuaPlus::LuaObject srcData, TErrorMessageList & errorMessages )
 {
 	if ( false == ActorParams::VInit( srcData, errorMessages ) )
 	{
@@ -832,7 +832,7 @@ bool GenericMeshObjectParams::VInit( LuaObject srcData, TErrorMessageList & erro
 
 	m_Mat = Mat4x4::g_Identity;
 
-	LuaObject matObj = srcData[ "Mat" ];
+	LuaPlus::LuaObject matObj = srcData[ "Mat" ];
 	if ( matObj.IsTable() )
 	{
 		const int tableCount = matObj.GetTableCount();
@@ -854,7 +854,7 @@ bool GenericMeshObjectParams::VInit( LuaObject srcData, TErrorMessageList & erro
 				{
 					name[2] = '0' + j;
 
-					LuaObject entry = matObj[ name ];
+					LuaPlus::LuaObject entry = matObj[ name ];
 					if( entry.IsNumber() ) 
 					{
 						m_Mat.m[i - 1][j - 1] = entry.GetFloat();
@@ -864,14 +864,14 @@ bool GenericMeshObjectParams::VInit( LuaObject srcData, TErrorMessageList & erro
 		}
 	}
 
-	LuaObject XFileObj = srcData[ "XFile" ];
+	LuaPlus::LuaObject XFileObj = srcData[ "XFile" ];
 	if ( XFileObj.IsString() )
 	{
 		const char * pXFile = XFileObj.GetString();
 		strcpy( m_XFileName, pXFile );
 	}
 
-	LuaObject FXFileObj = srcData[ "FXFile" ];
+	LuaPlus::LuaObject FXFileObj = srcData[ "FXFile" ];
 	if ( FXFileObj.IsString() )
 	{
 		const char * pFXFile = FXFileObj.GetString();

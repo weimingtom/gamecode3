@@ -71,7 +71,7 @@ struct EvtData_PhysTrigger_Enter : public BaseEventData
 		return IEventDataPtr(GCC_NEW EvtData_PhysTrigger_Enter(m_triggerID, m_other));
 	}
 
-	virtual LuaObject VGetLuaEventData(void) const
+	virtual LuaPlus::LuaObject VGetLuaEventData(void) const
 	{
 		assert( ( true == m_bHasLuaEventData ) && "Can't get lua event data because it hasn't been built yet!  Call BulidLuaEventData() first!" );
 		return m_LuaEventData;
@@ -82,7 +82,7 @@ struct EvtData_PhysTrigger_Enter : public BaseEventData
 		assert( ( false == m_bHasLuaEventData ) && "Already built lua event data!" );
 
 		//Get the global state.
-		LuaState * pState = g_pApp->m_pLuaStateManager->GetGlobalState().Get();
+		LuaPlus::LuaState * pState = g_pApp->m_pLuaStateManager->GetGlobalState().Get();
 		m_LuaEventData.AssignNewTable( pState );
 
 		//TODO JWC:  Alter this to make it work with new physics.
@@ -94,7 +94,7 @@ struct EvtData_PhysTrigger_Enter : public BaseEventData
 	optional<ActorId> m_other;
 
 private:
-	LuaObject	m_LuaEventData;
+	LuaPlus::LuaObject	m_LuaEventData;
 };
 
 struct EvtData_PhysTrigger_Leave : public BaseEventData
@@ -117,7 +117,7 @@ struct EvtData_PhysTrigger_Leave : public BaseEventData
 		return IEventDataPtr ( GCC_NEW EvtData_PhysTrigger_Leave(m_triggerID, m_other) );
 	}
 
-	virtual LuaObject VGetLuaEventData(void) const
+	virtual LuaPlus::LuaObject VGetLuaEventData(void) const
 	{
 		assert( ( true == m_bHasLuaEventData ) && "Can't get lua event data because it hasn't been built yet!  Call BulidLuaEventData() first!" );
 		return m_LuaEventData;
@@ -128,7 +128,7 @@ struct EvtData_PhysTrigger_Leave : public BaseEventData
 		assert( ( false == m_bHasLuaEventData ) && "Already built lua event data!" );
 
 		//Get the global state.
-		LuaState * pState = g_pApp->m_pLuaStateManager->GetGlobalState().Get();
+		LuaPlus::LuaState * pState = g_pApp->m_pLuaStateManager->GetGlobalState().Get();
 		m_LuaEventData.AssignNewTable( pState );
 
 		//TODO JWC:  Alter this to make it work with new physics.
@@ -140,7 +140,7 @@ struct EvtData_PhysTrigger_Leave : public BaseEventData
 	optional<ActorId> m_other;
 
 private:
-	LuaObject	m_LuaEventData;
+	LuaPlus::LuaObject	m_LuaEventData;
 };
 
 struct EvtData_PhysCollision : public BaseEventData
@@ -169,7 +169,7 @@ struct EvtData_PhysCollision : public BaseEventData
 		return IEventDataPtr ( GCC_NEW EvtData_PhysCollision(m_ActorA, m_ActorB, m_SumNormalForce, m_SumFrictionForce, m_CollisionPoints));
 	}
 
-	virtual LuaObject VGetLuaEventData(void) const
+	virtual LuaPlus::LuaObject VGetLuaEventData(void) const
 	{
 		assert( ( true == m_bHasLuaEventData ) && "Can't get lua event data because it hasn't been built yet!  Call BulidLuaEventData() first!" );
 		return m_LuaEventData;
@@ -180,19 +180,19 @@ struct EvtData_PhysCollision : public BaseEventData
 		assert( ( false == m_bHasLuaEventData ) && "Already built lua event data!" );
 
 		//Get the global state.
-		LuaState * pState = g_pApp->m_pLuaStateManager->GetGlobalState().Get();
+		LuaPlus::LuaState * pState = g_pApp->m_pLuaStateManager->GetGlobalState().Get();
 		m_LuaEventData.AssignNewTable( pState );
 
 		//Now provide the event data necessary.
 		m_LuaEventData.SetInteger( "ActorA", m_ActorA );
 		m_LuaEventData.SetInteger( "ActorB", m_ActorB );
 
-		LuaObject normalForceObj = m_LuaEventData.CreateTable( "NormalForce" );
+		LuaPlus::LuaObject normalForceObj = m_LuaEventData.CreateTable( "NormalForce" );
 		normalForceObj.SetNumber( 1, m_SumNormalForce.x );
 		normalForceObj.SetNumber( 2, m_SumNormalForce.y );
 		normalForceObj.SetNumber( 3, m_SumNormalForce.z );
 
-		LuaObject frictionForceObj = m_LuaEventData.CreateTable( "FrictionForce" );
+		LuaPlus::LuaObject frictionForceObj = m_LuaEventData.CreateTable( "FrictionForce" );
 		frictionForceObj.SetNumber( 1, m_SumFrictionForce.x );
 		frictionForceObj.SetNumber( 2, m_SumFrictionForce.y );
 		frictionForceObj.SetNumber( 3, m_SumFrictionForce.z );
@@ -207,7 +207,7 @@ struct EvtData_PhysCollision : public BaseEventData
 	Vec3List m_CollisionPoints;
 
 private:
-	LuaObject	m_LuaEventData;
+	LuaPlus::LuaObject	m_LuaEventData;
 };
 
 struct EvtData_PhysSeparation : public BaseEventData
@@ -230,7 +230,7 @@ struct EvtData_PhysSeparation : public BaseEventData
 		return IEventDataPtr ( GCC_NEW EvtData_PhysSeparation(m_ActorA, m_ActorB) );
 	}
 
-	virtual LuaObject VGetLuaEventData(void) const
+	virtual LuaPlus::LuaObject VGetLuaEventData(void) const
 	{
 		assert( ( true == m_bHasLuaEventData ) && "Can't get lua event data because it hasn't been built yet!  Call BulidLuaEventData() first!" );
 		return m_LuaEventData;
@@ -241,7 +241,7 @@ struct EvtData_PhysSeparation : public BaseEventData
 		assert( ( false == m_bHasLuaEventData ) && "Already built lua event data!" );
 
 		//Get the global state.
-		LuaState * pState = g_pApp->m_pLuaStateManager->GetGlobalState().Get();
+		LuaPlus::LuaState * pState = g_pApp->m_pLuaStateManager->GetGlobalState().Get();
 		m_LuaEventData.AssignNewTable( pState );
 
 		//Now provide the event data necessary.
@@ -255,7 +255,7 @@ struct EvtData_PhysSeparation : public BaseEventData
 	ActorId m_ActorB;
 
 private:
-	LuaObject	m_LuaEventData;
+	LuaPlus::LuaObject	m_LuaEventData;
 };
 
 

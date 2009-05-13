@@ -37,7 +37,7 @@
 
 
 // ScriptEventListener::ScriptEventListener				- Chapter 11, page 335
-ScriptEventListener::ScriptEventListener( LuaObject explicitHandlerFunction )
+ScriptEventListener::ScriptEventListener( LuaPlus::LuaObject explicitHandlerFunction )
 : m_HandlerFunction( explicitHandlerFunction )
 {
 	assert( explicitHandlerFunction.IsFunction() && "Script listener *MUST* be a valid function!" );
@@ -71,7 +71,7 @@ bool ScriptEventListener::HandleEvent( IEventData const & event )
 		NCEventData.VBuildLuaEventData();
 	}
 
-	LuaObject & eventDataObj = event.VGetLuaEventData();
+	LuaPlus::LuaObject & eventDataObj = event.VGetLuaEventData();
 
 	//Call the handler function.
 	const bool bResult = VCallLuaFunction( eventDataObj );
@@ -80,22 +80,22 @@ bool ScriptEventListener::HandleEvent( IEventData const & event )
 }
 
 // ScriptEventListener::VCallLuaFunction				- Chapter 11, page 335
-bool ScriptEventListener::VCallLuaFunction( LuaObject & eventData )
+bool ScriptEventListener::VCallLuaFunction( LuaPlus::LuaObject & eventData )
 {
-	LuaFunction<bool> function( m_HandlerFunction );
+	LuaPlus::LuaFunction<bool> function( m_HandlerFunction );
 	return function( eventData );
 }
 
 //-The ScriptActorEventListener.  Same as the ScriptEventListener, but
 // passes in an actor's script context, too.
-ScriptActorEventListener::ScriptActorEventListener( LuaObject explicitHandlerFunction, const ActorId actorID )
+ScriptActorEventListener::ScriptActorEventListener( LuaPlus::LuaObject explicitHandlerFunction, const ActorId actorID )
 : ScriptEventListener( explicitHandlerFunction )
 , m_SrcActorID( actorID )
 {
 }
 
 // ScriptActorEventListener::VCallLuaFunction			- Chapter 11, page 343
-bool ScriptActorEventListener::VCallLuaFunction( LuaObject & eventData )
+bool ScriptActorEventListener::VCallLuaFunction( LuaPlus::LuaObject & eventData )
 {
 	// Find our actor to pass in the actor script data context.
 	
@@ -109,12 +109,12 @@ bool ScriptActorEventListener::VCallLuaFunction( LuaObject & eventData )
 	}
 
 	// Get ahold of the actor's script data.
-	LuaState * pState = g_pApp->m_pLuaStateManager->GetGlobalState().Get();
-	LuaObject globalActorTable = g_pApp->m_pLuaStateManager->GetGlobalActorTable();
+	LuaPlus::LuaState * pState = g_pApp->m_pLuaStateManager->GetGlobalState().Get();
+	LuaPlus::LuaObject globalActorTable = g_pApp->m_pLuaStateManager->GetGlobalActorTable();
 	assert( globalActorTable.IsTable() && "Global actor table is NOT a table!" );
-	LuaObject actorData = globalActorTable[ m_SrcActorID ];
+	LuaPlus::LuaObject actorData = globalActorTable[ m_SrcActorID ];
 
 	// We pass in the event data IN ADDITION TO the actor's script data.
-	LuaFunction<bool> function( m_HandlerFunction );
+	LuaPlus::LuaFunction<bool> function( m_HandlerFunction );
 	return function( eventData, actorData );
 }

@@ -125,10 +125,10 @@ struct ActorParams
 	virtual void VSerialize(std::ostrstream &out) const;
 
 	typedef std::deque< std::string > TErrorMessageList;
-	virtual bool VInit( LuaObject srcData, TErrorMessageList & errorMessages );
+	virtual bool VInit( LuaPlus::LuaObject srcData, TErrorMessageList & errorMessages );
 
 	static ActorParams *CreateFromStream(std::istrstream &in);
-	static ActorParams *CreateFromLuaObj( LuaObject srcData );
+	static ActorParams *CreateFromLuaObj( LuaPlus::LuaObject srcData );
 
 	virtual shared_ptr<IActor> VCreate(BaseGameLogic *logic) { shared_ptr<IActor> p; return p; }
 	virtual shared_ptr<SceneNode> VCreateSceneNode(shared_ptr<Scene> pScene) { shared_ptr<SceneNode> p; return p; }
@@ -145,7 +145,7 @@ struct SphereParams : public ActorParams
 	SphereParams();
 
 	virtual bool VInit(std::istrstream &in);
-	virtual bool VInit( LuaObject srcData, TErrorMessageList & errorMessages );
+	virtual bool VInit( LuaPlus::LuaObject srcData, TErrorMessageList & errorMessages );
 	virtual void VSerialize(std::ostrstream &out) const;
 	virtual shared_ptr<IActor> VCreate(BaseGameLogic *logic);
 	virtual shared_ptr<SceneNode> VCreateSceneNode(shared_ptr<Scene> pScene);
@@ -160,7 +160,7 @@ struct TeapotParams : public ActorParams
 	TeapotParams();
 
 	virtual bool VInit(std::istrstream &in);
-	virtual bool VInit( LuaObject srcData, TErrorMessageList & errorMessages );
+	virtual bool VInit( LuaPlus::LuaObject srcData, TErrorMessageList & errorMessages );
 	virtual void VSerialize(std::ostrstream &out) const;
 	virtual shared_ptr<IActor> VCreate(BaseGameLogic *logic);
 	virtual shared_ptr<SceneNode> VCreateSceneNode(shared_ptr<Scene> pScene);
@@ -175,7 +175,7 @@ struct AiTeapotParams : public ActorParams
 	AiTeapotParams(); 
 
 	virtual bool VInit(std::istrstream &in);
-	virtual bool VInit( LuaObject srcData, TErrorMessageList & errorMessages );
+	virtual bool VInit( LuaPlus::LuaObject srcData, TErrorMessageList & errorMessages );
 	virtual void VSerialize(std::ostrstream &out) const;
 	virtual shared_ptr<IActor> VCreate(BaseGameLogic *logic);
 	virtual shared_ptr<SceneNode> VCreateSceneNode(shared_ptr<Scene> pScene);
@@ -189,7 +189,7 @@ struct TestObjectParams : public ActorParams
 	TestObjectParams();
 
 	virtual bool VInit(std::istrstream &in);
-	virtual bool VInit( LuaObject srcData, TErrorMessageList & errorMessages );
+	virtual bool VInit( LuaPlus::LuaObject srcData, TErrorMessageList & errorMessages );
 	virtual void VSerialize(std::ostrstream &out) const;
 	virtual shared_ptr<IActor> VCreate(BaseGameLogic *logic);
 	virtual shared_ptr<SceneNode> VCreateSceneNode(shared_ptr<Scene> pScene);
@@ -206,7 +206,7 @@ struct GridParams : public ActorParams
 	GridParams();
 
 	virtual bool VInit(std::istrstream &in);
-	virtual bool VInit( LuaObject srcData, TErrorMessageList & errorMessages );
+	virtual bool VInit( LuaPlus::LuaObject srcData, TErrorMessageList & errorMessages );
 	virtual void VSerialize(std::ostrstream &out) const;
 	virtual shared_ptr<IActor> VCreate(BaseGameLogic *logic);
 	virtual shared_ptr<SceneNode> VCreateSceneNode(shared_ptr<Scene> pScene);
@@ -222,7 +222,7 @@ struct GenericMeshObjectParams : public ActorParams
 	GenericMeshObjectParams();
 
 	virtual bool VInit(std::istrstream &in);
-	virtual bool VInit( LuaObject srcData, TErrorMessageList & errorMessages );
+	virtual bool VInit( LuaPlus::LuaObject srcData, TErrorMessageList & errorMessages );
 	virtual void VSerialize(std::ostrstream &out) const;
 	virtual shared_ptr<IActor> VCreate(BaseGameLogic *logic);
 	virtual shared_ptr<SceneNode> VCreateSceneNode(shared_ptr<Scene> pScene);

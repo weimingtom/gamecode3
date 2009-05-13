@@ -107,7 +107,7 @@ typedef HashedString EventType;
 class ILuaable
 {
 public:
-	virtual LuaObject VGetLuaEventData(void) const = 0;
+	virtual LuaPlus::LuaObject VGetLuaEventData(void) const = 0;
 
 	//Serializes the event data into the LuaObject.
 	virtual void VBuildLuaEventData(void) = 0;
@@ -146,7 +146,7 @@ public:
 	virtual ~BaseEventData()	{ }
 
 	//Called when sending the event data over to the script-side listener.
-	virtual LuaObject VGetLuaEventData(void) const = 0;
+	virtual LuaPlus::LuaObject VGetLuaEventData(void) const = 0;
 
 	//Serializes the event data into the LuaObject.
 	virtual void VBuildLuaEventData(void) = 0;
@@ -188,7 +188,7 @@ public:
 	virtual ~EmptyEventData()	{ }
 
 	//Called when sending the event data over to the script-side listener.
-	virtual LuaObject VGetLuaEventData(void) const
+	virtual LuaPlus::LuaObject VGetLuaEventData(void) const
 	{
 		assert( ( true == m_bHasLuaEventData ) && "Can't get lua event data because it hasn't been built yet!  Call BulidLuaEventData() first!" );
 		return m_LuaEventData;
@@ -198,7 +198,7 @@ public:
 	virtual void VBuildLuaEventData(void);
 
 private:
-	LuaObject m_LuaEventData;
+	LuaPlus::LuaObject m_LuaEventData;
 };
 
 //Note:  This event type will not serialize for Lua listeners.
@@ -211,7 +211,7 @@ private:
 	EvtData(const EvtData &);	// disable copy construction
 	T m_Value;
 
-	LuaObject	m_LuaEventData;
+	LuaPlus::LuaObject	m_LuaEventData;
 public:
 	explicit EvtData<T>( T n )
 	{
@@ -220,7 +220,7 @@ public:
 
 	const T GetValue() { return m_Value; }
 
-	virtual LuaObject VGetLuaEventData(void) const
+	virtual LuaPlus::LuaObject VGetLuaEventData(void) const
 	{
 		assert( ( true == m_bHasLuaEventData ) && "Can't get lua event data because it hasn't been built yet!  Call BulidLuaEventData() first!" );
 		return m_LuaEventData;
@@ -231,7 +231,7 @@ public:
 		assert( ( false == m_bHasLuaEventData ) && "Already built lua event data!" );
 
 		//Get the global state.
-		LuaState * pState = g_pApp->m_pLuaStateManager->GetGlobalState().Get();
+		LuaPlus::LuaState * pState = g_pApp->m_pLuaStateManager->GetGlobalState().Get();
 		//m_LuaEventData.AssignNewTable( pState );
 
 		m_bHasLuaEventData = true;
@@ -250,7 +250,7 @@ public:
 		return m_EventType;
 	}
 
-	EvtData_ScriptEvtData( const EventType & eventType, const LuaObject & srcData )
+	EvtData_ScriptEvtData( const EventType & eventType, const LuaPlus::LuaObject & srcData )
 		: m_EventType( eventType )
 		, m_LuaEventData( srcData )
 	{
@@ -262,7 +262,7 @@ public:
 		return IEventDataPtr (GCC_NEW EvtData_ScriptEvtData ( m_EventType, m_LuaEventData ) ); 
 	}
 
-	virtual LuaObject VGetLuaEventData(void) const
+	virtual LuaPlus::LuaObject VGetLuaEventData(void) const
 	{
 		assert( ( true == m_bHasLuaEventData ) && "Can't get lua event data because it hasn't been built yet!  Call BulidLuaEventData() first!" );
 		return m_LuaEventData;
@@ -275,7 +275,7 @@ public:
 	}
 private:
 	const EventType	m_EventType;	//Type of this event.
-	LuaObject	m_LuaEventData;
+	LuaPlus::LuaObject	m_LuaEventData;
 };
 
 
