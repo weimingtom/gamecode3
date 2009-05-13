@@ -781,8 +781,6 @@ void TeapotWarsGame::VRegisterHit(const ActorId sphere, const ActorId teapot)
 			++(i->second);
 		}
 	}
-
-	VRemoveActor(sphere);
 }
 
 
