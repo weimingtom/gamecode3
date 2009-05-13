@@ -583,8 +583,19 @@ ID3DXEffect *EffectManager::Get(std::wstring name)
 		// Load the effect file
 		DWORD dwShaderFlags = D3DXFX_NOT_CLONEABLE | D3DXSHADER_DEBUG | D3DXSHADER_NO_PRESHADER;
 		WCHAR effectFile[MAX_PATH];
-		DXUTFindDXSDKMediaFileCch( effectFile, MAX_PATH, name.c_str() );	
-		D3DXCreateEffectFromFile( DXUTGetD3D9Device(), effectFile, NULL, NULL, dwShaderFlags, NULL, &pEffect, NULL );
+		if( FAILED( DXUTFindDXSDKMediaFileCch( effectFile, MAX_PATH, name.c_str() ) ) )
+		{
+			OutputDebugString( L"Could not locate the given effects file. Its name is: " );
+			OutputDebugString( name.c_str() );
+			return NULL;
+		}
+
+		if( FAILED( D3DXCreateEffectFromFile( DXUTGetD3D9Device(), effectFile, NULL, NULL, dwShaderFlags, NULL, &pEffect, NULL ) ) )
+		{
+			OutputDebugString( L"Could not load the given effects file. Its name is: " );
+			OutputDebugString( name.c_str() );
+			return NULL;
+		}
 		m_EffectMap[name] = pEffect;
 	}
 
@@ -966,8 +977,12 @@ ShaderMeshNode::ShaderMeshNode(const optional<ActorId> actorId,
 HRESULT ShaderMeshNode::VOnRestore(Scene *pScene)
 {
 	m_pEffect = pScene->GetEffect(m_fxFileName);
-	m_pEffect->AddRef();
-	return MeshNode::VOnRestore(pScene);
+	if( m_pEffect )
+	{
+		m_pEffect->AddRef();
+		return MeshNode::VOnRestore(pScene);
+	}
+	return E_FAIL;
 }
 
 //
@@ -1069,7 +1084,7 @@ HRESULT TeapotMeshNode::VOnRestore(Scene *pScene)
 	HRESULT hr;
 
 	IDirect3DDevice9 * pDevice = DXUTGetD3D9Device();
-	V( D3DXCreateTeapot( pDevice, &m_pMesh, NULL ) );
+	V_RETURN( D3DXCreateTeapot( pDevice, &m_pMesh, NULL ) );
 
 	//Rotate the teapot 90 degrees from default so that the spout faces forward
 	Mat4x4 rotateY90 = m_Props.ToWorld();
@@ -1094,7 +1109,7 @@ HRESULT TeapotMeshNode::VOnRestore(Scene *pScene)
 	//...end rotation
 
 	// Note - the mesh is needed BEFORE calling the base class VOnRestore.
-	V ( ShaderMeshNode::VOnRestore ( pScene ) );
+	V_RETURN( ShaderMeshNode::VOnRestore ( pScene ) );
 
 	return S_OK;
 }

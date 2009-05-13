@@ -833,7 +833,9 @@ bool TeapotWarsGameViewListener::HandleEvent( IEventData const & event )
 
 		shared_ptr<SceneNode> node = ed.m_pActorParams->VCreateSceneNode(m_pView->m_pScene);
 		m_pView->m_pScene->VAddChild(ed.m_pActorParams->m_Id, node);
-		node->VOnRestore(&(*(m_pView->m_pScene)));
+//TODO: Add real error handling here.		
+		if(FAILED(node->VOnRestore(&(*(m_pView->m_pScene)))))
+			return false;
 
 		if (ed.m_pActorParams->m_Type == AT_Teapot)
 		{
