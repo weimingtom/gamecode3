@@ -55,31 +55,31 @@ public:
 	// Returns the main state used by the entire game.  
 	// Other implementations may use multiple LuaStates, but for our purposes
 	// a single state will do just fine.
-	LuaStateOwner & GetGlobalState(void)  { return m_GlobalState; }
+	LuaPlus::LuaStateOwner & GetGlobalState(void)  { return m_GlobalState; }
 
 	// Executes a Lua script file.
 	bool DoFile(char const * const pFileName);
-	static bool ExecuteFile(LuaStateOwner & luaState, char const * const pFileName);
+	static bool ExecuteFile(LuaPlus::LuaStateOwner & luaState, char const * const pFileName);
 
 	// Executes an arbitrary Lua command.
 	int ExecuteString( char const * const pStringToExecute );
 
 	// Debug function for determining an object's type.
-	static void IdentifyLuaObjectType( LuaObject & objToTest );
+	static void IdentifyLuaObjectType( LuaPlus::LuaObject & objToTest );
 
 	// The table where all actor context and data is stored
 	// for script accessability.
-	LuaObject GetGlobalActorTable( void );
+	LuaPlus::LuaObject GetGlobalActorTable( void );
 
 private:
 	// Debug print string function (callable from script).
-	void PrintDebugMessage( LuaObject debugObject );
+	void PrintDebugMessage( LuaPlus::LuaObject debugObject );
 
 	// Our global LuaState.
-	LuaStateOwner m_GlobalState;
+	LuaPlus::LuaStateOwner m_GlobalState;
 
 	// Our portal to the outside world.
-	LuaObject m_MetaTable;
+	LuaPlus::LuaObject m_MetaTable;
 };
 
 #endif	// __INCLUDED_SOURCE_LUASTATEMANAGER_H

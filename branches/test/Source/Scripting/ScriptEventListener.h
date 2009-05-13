@@ -44,7 +44,7 @@
 class ScriptEventListener : public IEventListener
 {
 public:
-	ScriptEventListener( LuaObject explicitHandlerFunction );
+	ScriptEventListener( LuaPlus::LuaObject explicitHandlerFunction );
 
 	virtual ~ScriptEventListener()
 	{
@@ -57,7 +57,7 @@ public:
 
 	virtual bool HandleEvent( IEventData const & event );
 
-	const LuaObject & GetHandlerFunction( void ) const
+	const LuaPlus::LuaObject & GetHandlerFunction( void ) const
 	{
 		return m_HandlerFunction;
 	}
@@ -65,9 +65,9 @@ public:
 protected:
 	// This function is virtual as sub-classes may pass additional
 	// parameters.
-	virtual bool VCallLuaFunction( LuaObject & eventData );
+	virtual bool VCallLuaFunction( LuaPlus::LuaObject & eventData );
 
-	LuaObject m_HandlerFunction;
+	LuaPlus::LuaObject m_HandlerFunction;
 };
 
 //--
@@ -79,7 +79,7 @@ protected:
 class ScriptActorEventListener : public ScriptEventListener
 {
 public:
-	ScriptActorEventListener( LuaObject explicitHandlerFunction, const ActorId actorID );
+	ScriptActorEventListener( LuaPlus::LuaObject explicitHandlerFunction, const ActorId actorID );
 
 	virtual ~ScriptActorEventListener()
 	{
@@ -99,7 +99,7 @@ private:
 
 	// This will pass the event data object as well as
 	// look up our actor's specific script data to pass.
-	virtual bool VCallLuaFunction( LuaObject & eventData );
+	virtual bool VCallLuaFunction( LuaPlus::LuaObject & eventData );
 
 	// Our source actor.
 	const ActorId m_SrcActorID;

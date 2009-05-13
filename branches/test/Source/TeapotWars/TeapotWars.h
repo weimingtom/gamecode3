@@ -157,10 +157,10 @@ private:
 
 private:
 	//Allows access for script calls.
-	LuaObject m_MetaTable;
+	LuaPlus::LuaObject m_MetaTable;
 
 	//Script accessible functions.
-	void SetCameraOffset( LuaObject gameViewIndex, LuaObject offsetTable );
+	void SetCameraOffset( LuaPlus::LuaObject gameViewIndex, LuaPlus::LuaObject offsetTable );
 };
 
 inline TeapotWarsBaseGame const * const  TeapotWarsGameApp::GetGame() const

@@ -45,7 +45,7 @@
 struct EvtData_AiSteer : public BaseEventData
 {
 private:
-	LuaObject m_LuaEventData;
+	LuaPlus::LuaObject m_LuaEventData;
 
 public:
 	static const EventType sk_EventType;
@@ -73,7 +73,7 @@ public:
 
 	virtual const EventType& VGetEventType(void) const { return sk_EventType; }
 
-	virtual LuaObject VGetLuaEventData(void) const
+	virtual LuaPlus::LuaObject VGetLuaEventData(void) const
 	{
 		assert( ( true == m_bHasLuaEventData ) && "Can't get lua event data because it hasn't been built yet!  Call BulidLuaEventData() first!" );
 		return m_LuaEventData;
@@ -84,7 +84,7 @@ public:
 		assert( ( false == m_bHasLuaEventData ) && "Already built lua event data!" );
 
 		//Get the global state.
-		LuaState * pState = g_pApp->m_pLuaStateManager->GetGlobalState().Get();
+		LuaPlus::LuaState * pState = g_pApp->m_pLuaStateManager->GetGlobalState().Get();
 		m_LuaEventData.AssignNewTable( pState );
 
 		//Set appropriate data.

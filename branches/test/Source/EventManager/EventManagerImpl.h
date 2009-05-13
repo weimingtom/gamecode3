@@ -204,8 +204,8 @@ private:
 		{
 		}
 
-		virtual bool VTriggerEventFromScript( LuaObject & srcData ) const = 0;
-		virtual bool VQueueEventFromScript( LuaObject & srcData ) const = 0;
+		virtual bool VTriggerEventFromScript( LuaPlus::LuaObject & srcData ) const = 0;
+		virtual bool VQueueEventFromScript( LuaPlus::LuaObject & srcData ) const = 0;
 		eRegisteredEventMetaData GetEventMetaData( void ) const
 		{
 			return m_MetaData;
@@ -225,8 +225,8 @@ private:
 		{
 		}
 
-		virtual bool VTriggerEventFromScript( LuaObject & srcData ) const;
-		virtual bool VQueueEventFromScript( LuaObject & srcData ) const;
+		virtual bool VTriggerEventFromScript( LuaPlus::LuaObject & srcData ) const;
+		virtual bool VQueueEventFromScript( LuaPlus::LuaObject & srcData ) const;
 
 	private:
 		//We need to hold onto the event type for when it gets triggered.
@@ -243,13 +243,13 @@ private:
 		{
 		}
 
-		virtual bool VTriggerEventFromScript( LuaObject & srcData ) const
+		virtual bool VTriggerEventFromScript( LuaPlus::LuaObject & srcData ) const
 		{
 			assert( 0 && "Attempted to trigger a code-ONLY triggerable event!" );
 			return false;
 		}
 
-		virtual bool VQueueEventFromScript( LuaObject & srcData ) const
+		virtual bool VQueueEventFromScript( LuaPlus::LuaObject & srcData ) const
 		{
 			assert( 0 && "Attempted to queue a code-ONLY queueable event!" );
 			return false;
@@ -267,13 +267,13 @@ private:
 		{
 		}
 
-		virtual bool VTriggerEventFromScript( LuaObject & srcData ) const
+		virtual bool VTriggerEventFromScript( LuaPlus::LuaObject & srcData ) const
 		{
 			const T eventData( srcData );	//Construct directly.
 			return safeTriggerEvent( eventData );
 		}
 
-		virtual bool VQueueEventFromScript( LuaObject & srcData ) const
+		virtual bool VQueueEventFromScript( LuaPlus::LuaObject & srcData ) const
 		{
 			IEventDataPtr eventPtr( GCC_NEW T( srcData ) );
 			return safeQueEvent( eventPtr );
@@ -337,20 +337,20 @@ private:
 	// Add/remove a script listener.  Note that we pass a Lua *function* as the
 	// second parameter of each of these, and tie that function to a specific
 	// event name.  We'll call the Lua function when the event type comes in.
-	bool AddScriptListener( char const * const pEventName, LuaObject callbackFunction );
-	bool RemoveScriptListener( char const * const pEventName, LuaObject callbackFunction );
+	bool AddScriptListener( char const * const pEventName, LuaPlus::LuaObject callbackFunction );
+	bool RemoveScriptListener( char const * const pEventName, LuaPlus::LuaObject callbackFunction );
 
 	// Triggers an event from script.  The event data will be serialized for any
 	// code listeners.  Script listeners will receive the data table passed in.
-	bool TriggerEventFromScript( char const * const pEventName, LuaObject luaEventData );
+	bool TriggerEventFromScript( char const * const pEventName, LuaPlus::LuaObject luaEventData );
 
 	// Actor-specific event listener controls.  These will pass in the actor context
 	// upon calling.
-	bool AddScriptActorListener( char const * const pEventName, LuaObject callbackFunction, const int actorID );
-	bool RemoveScriptActorListener( char const * const pEventName, LuaObject callbackFunction, const int actorID );
+	bool AddScriptActorListener( char const * const pEventName, LuaPlus::LuaObject callbackFunction, const int actorID );
+	bool RemoveScriptActorListener( char const * const pEventName, LuaPlus::LuaObject callbackFunction, const int actorID );
 
 	// Allows access for script calls.
-	LuaObject m_MetaTable;
+	LuaPlus::LuaObject m_MetaTable;
 
 	// Holds all allocated script listeners.
 	// It maps an event ID to a set of listeners.

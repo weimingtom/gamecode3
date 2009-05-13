@@ -334,7 +334,7 @@ bool TeapotWarsEventListener::HandleEvent( IEventData const & event )
 		else
 		{
 			//Create actor params from the Lua object.
-			LuaObject actorDef = castEvent.VGetLuaEventData();
+			LuaPlus::LuaObject actorDef = castEvent.VGetLuaEventData();
 
 			pActorParams = ActorParams::CreateFromLuaObj( actorDef );
 		}
@@ -433,16 +433,16 @@ void TeapotWarsBaseGame::VRemoveActor(ActorId aid)
 	}
 
 	//Call any script-related destructor.
-	LuaState * pState = g_pApp->m_pLuaStateManager->GetGlobalState().Get();
-	LuaObject globalActorTable = g_pApp->m_pLuaStateManager->GetGlobalActorTable();
+	LuaPlus::LuaState * pState = g_pApp->m_pLuaStateManager->GetGlobalState().Get();
+	LuaPlus::LuaObject globalActorTable = g_pApp->m_pLuaStateManager->GetGlobalActorTable();
 	assert( globalActorTable.IsTable() && "Global actor table is NOT a table!" );
-	LuaObject actorData = globalActorTable[ aid ];
+	LuaPlus::LuaObject actorData = globalActorTable[ aid ];
 
 	shared_ptr<ActorParams> actorParams = actor->VGetParams();
 	if ( 0 != strlen( actorParams->m_OnDestroyLuaFunctionName ) )
 	{
 		//First attempt to FIND the function specified.
-		LuaObject foundObj = g_pApp->m_pLuaStateManager->GetGlobalState()->GetGlobal( actorParams->m_OnDestroyLuaFunctionName );
+		LuaPlus::LuaObject foundObj = g_pApp->m_pLuaStateManager->GetGlobalState()->GetGlobal( actorParams->m_OnDestroyLuaFunctionName );
 		if ( foundObj.IsNil() )
 		{
 			assert( 0 && "Unable to find specified OnDestroyFunc function!" );
@@ -457,7 +457,7 @@ void TeapotWarsBaseGame::VRemoveActor(ActorId aid)
 			else
 			{
 				//Attempt to call the function.
-				LuaFunction< void > onDestroyFunc( foundObj );
+				LuaPlus::LuaFunction< void > onDestroyFunc( foundObj );
 				onDestroyFunc( aid, actorData );	//Pass in the actor ID and this actor's user-owned data table.
 			}
 		}
@@ -485,10 +485,10 @@ void TeapotWarsBaseGame::VAddActor(shared_ptr<IActor> actor, ActorParams *p)
 	}
 
 	//Ensure script knows about this actor, too.
-	LuaState * pState = g_pApp->m_pLuaStateManager->GetGlobalState().Get();
-	LuaObject globalActorTable = g_pApp->m_pLuaStateManager->GetGlobalActorTable();
+	LuaPlus::LuaState * pState = g_pApp->m_pLuaStateManager->GetGlobalState().Get();
+	LuaPlus::LuaObject globalActorTable = g_pApp->m_pLuaStateManager->GetGlobalActorTable();
 	assert( globalActorTable.IsTable() && "Global actor table is NOT a table!" );
-	LuaObject addedActorData = globalActorTable.CreateTable( *p->m_Id );	//The actor ID is the key.
+	LuaPlus::LuaObject addedActorData = globalActorTable.CreateTable( *p->m_Id );	//The actor ID is the key.
 	addedActorData.SetInteger( "ActorID", *p->m_Id );
 
 	if ( 0 != p->m_OnCreateLuaFunctionName[0] ) 
@@ -505,7 +505,7 @@ void TeapotWarsBaseGame::VAddActor(shared_ptr<IActor> actor, ActorParams *p)
 	if ( 0 != strlen( p->m_OnCreateLuaFunctionName ) )
 	{
 		//First attempt to FIND the function specified.
-		LuaObject foundObj = g_pApp->m_pLuaStateManager->GetGlobalState()->GetGlobal( p->m_OnCreateLuaFunctionName );
+		LuaPlus::LuaObject foundObj = g_pApp->m_pLuaStateManager->GetGlobalState()->GetGlobal( p->m_OnCreateLuaFunctionName );
 		if ( foundObj.IsNil() )
 		{
 			assert( 0 && "Unable to find specified OnCreateFunc function!" );
@@ -520,7 +520,7 @@ void TeapotWarsBaseGame::VAddActor(shared_ptr<IActor> actor, ActorParams *p)
 			else
 			{
 				//Attempt to call the function.
-				LuaFunction< void > onCreateFunc( foundObj );
+				LuaPlus::LuaFunction< void > onCreateFunc( foundObj );
 				onCreateFunc( *p->m_Id, addedActorData );	//Pass in the actor ID and this actor's user-owned data table.
 			}
 		}
@@ -572,9 +572,9 @@ TeapotWarsGame::TeapotWarsGame(GameOptions const &options)
 //		m_MetaTable.RegisterObjectDirect( "SetCameraOffset", (TeapotWarsGame *)0, &TeapotWarsGame::SetCameraOffset);
 		m_MetaTable.RegisterObjectDirect< TeapotWarsGame > ( "SetCameraOffset", NULL, &TeapotWarsGame::SetCameraOffset); 
 
-		LuaObject luaStateManObj = g_pApp->m_pLuaStateManager->GetGlobalState()->BoxPointer(this);
+		LuaPlus::LuaObject luaStateManObj = g_pApp->m_pLuaStateManager->GetGlobalState()->BoxPointer(this);
 		luaStateManObj.SetMetaTable(m_MetaTable);
-		g_pApp->m_pLuaStateManager->GetGlobalState()->GetGlobals().SetObject("TeapotWarsGame", luaStateManObj);
+		g_pApp->m_pLuaStateManager->GetGlobalState()->GetGlobals().SetObject("TeapotWarsGame",luaStateManObj);
 	}
 }
 
@@ -845,7 +845,7 @@ void TeapotWarsGame::VBuildInitialScene()
 
 
 // Script functions.
-void TeapotWarsGame::SetCameraOffset( LuaObject gameViewIndex, LuaObject offsetTable )
+void TeapotWarsGame::SetCameraOffset( LuaPlus::LuaObject gameViewIndex, LuaPlus::LuaObject offsetTable )
 {
 	//Ensure we have some non-garbage data.
 	if ( false == gameViewIndex.IsNumber() )

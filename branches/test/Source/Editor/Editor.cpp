@@ -163,7 +163,7 @@ bool EditorEventListener::HandleEvent( IEventData const & event )
 		else
 		{
 			//Create actor params from the Lua object.
-			LuaObject actorDef = castEvent.VGetLuaEventData();
+			LuaPlus::LuaObject actorDef = castEvent.VGetLuaEventData();
 
 			pActorParams = ActorParams::CreateFromLuaObj( actorDef );
 		}

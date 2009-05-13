@@ -50,7 +50,7 @@ LuaStateManager::LuaStateManager( void )
 	m_MetaTable.RegisterObjectDirect( "DoFile", (LuaStateManager *)0, &LuaStateManager::DoFile );
 	m_MetaTable.RegisterObjectDirect( "PrintDebugMessage", (LuaStateManager *)0, &LuaStateManager::PrintDebugMessage );
 	
-	LuaObject luaStateManObj = m_GlobalState->BoxPointer( this );
+	LuaPlus::LuaObject luaStateManObj = m_GlobalState->BoxPointer( this );
 	luaStateManObj.SetMetaTable( m_MetaTable );
 
 	// And here we expose the metatable as a named entity.
@@ -68,8 +68,8 @@ bool LuaStateManager::Init( char const * const pInitFileName )
 {
 	// Create our global actor table.
 	// This table will hold context for all actors created in the game world.
-	LuaObject globals = m_GlobalState->GetGlobals();
-	LuaObject actorTable = globals.CreateTable( "ActorList" );
+	LuaPlus::LuaObject globals = m_GlobalState->GetGlobals();
+	LuaPlus::LuaObject actorTable = globals.CreateTable( "ActorList" );
 
 	return DoFile( pInitFileName );
 }
@@ -79,7 +79,7 @@ bool LuaStateManager::DoFile(char const * const pFileName)
 	return ExecuteFile(m_GlobalState, pFileName);
 }
 
-bool LuaStateManager::ExecuteFile(LuaStateOwner & luaState, char const * const pFileName)
+bool LuaStateManager::ExecuteFile(LuaPlus::LuaStateOwner & luaState, char const * const pFileName)
 {
 	const int retVal = luaState->DoFile(pFileName);
 	const bool bSucceeded = ( 0 == retVal );
@@ -94,12 +94,12 @@ int LuaStateManager::ExecuteString( char const * const pStringToExecute )
 	return retVal;
 }
 
-LuaObject LuaStateManager::GetGlobalActorTable( void )
+LuaPlus::LuaObject LuaStateManager::GetGlobalActorTable( void )
 {
 	return m_GlobalState->GetGlobal( "ActorList" );
 }
 
-void LuaStateManager::IdentifyLuaObjectType( LuaObject & objToTest )
+void LuaStateManager::IdentifyLuaObjectType( LuaPlus::LuaObject & objToTest )
 {
 	assert( !objToTest.IsNil() && "Nil!" );
 	assert( !objToTest.IsBoolean() && "Boolean!" );
@@ -116,9 +116,9 @@ void LuaStateManager::IdentifyLuaObjectType( LuaObject & objToTest )
 	assert( 0 && "UNKNOWN!" );
 }
 
-void LuaStateManager::PrintDebugMessage( LuaObject debugObject )
+void LuaStateManager::PrintDebugMessage( LuaPlus::LuaObject debugObject )
 {
-	LuaObject stringObj;
+	LuaPlus::LuaObject stringObj;
 	const char * pFinalStr = debugObject.ToString();
 
 	//Generate an event.

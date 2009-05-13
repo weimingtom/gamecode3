@@ -71,7 +71,7 @@ EventManager::EventManager(
 		m_MetaTable.RegisterObjectDirect( "AddScriptActorListener", (EventManager *)0, &EventManager::AddScriptActorListener );
 		m_MetaTable.RegisterObjectDirect( "RemoveScriptActorListener", (EventManager *)0, &EventManager::RemoveScriptActorListener );
 		
-		LuaObject luaStateManObj = g_pApp->m_pLuaStateManager->GetGlobalState()->BoxPointer(this);
+		LuaPlus::LuaObject luaStateManObj = g_pApp->m_pLuaStateManager->GetGlobalState()->BoxPointer(this);
 		luaStateManObj.SetMetaTable(m_MetaTable);
 		g_pApp->m_pLuaStateManager->GetGlobalState()->GetGlobals().SetObject("EventManager", luaStateManObj);
 	}
@@ -608,7 +608,7 @@ EventTypeList EventManager::GetTypeList ( void ) const
 // EventManager::AddScriptListener						- Chapter 11, page 336
 //
 // Creates a script-side event listener, given an appropriate Lua function.
-bool EventManager::AddScriptListener( char const * const pEventName, LuaObject callbackFunction )
+bool EventManager::AddScriptListener( char const * const pEventName, LuaPlus::LuaObject callbackFunction )
 {
 	//Ensure this event type exists.
 	const EventType testEventType( pEventName );
@@ -627,7 +627,7 @@ bool EventManager::AddScriptListener( char const * const pEventName, LuaObject c
 	{
 		//Iterate through and ensure no duplicates.
 		const ScriptEventListenerPtr evtListener = mapIter->second;
-		const LuaObject & evtObj = evtListener->GetHandlerFunction();
+		const LuaPlus::LuaObject & evtObj = evtListener->GetHandlerFunction();
 		if ( evtObj == callbackFunction )
 		{
 			assert( 0 && "Attempted to listen to the same event handler twice!" );
@@ -648,7 +648,7 @@ bool EventManager::AddScriptListener( char const * const pEventName, LuaObject c
 //--
 // EventManager::RemoveScriptListener
 // Removes a script-side listener.
-bool EventManager::RemoveScriptListener( const char *const pEventName, LuaObject callbackFunction )
+bool EventManager::RemoveScriptListener( const char *const pEventName, LuaPlus::LuaObject callbackFunction )
 {
 	//Ensure this event type exists.
 	const EventType testEventType( pEventName );
@@ -667,7 +667,7 @@ bool EventManager::RemoveScriptListener( const char *const pEventName, LuaObject
 	while ( m_ScriptEventListenerMap.end() != mapIter )
 	{
 		const ScriptEventListenerPtr evtListener = mapIter->second;
-		const LuaObject & evtObj = evtListener->GetHandlerFunction();
+		const LuaPlus::LuaObject & evtObj = evtListener->GetHandlerFunction();
 		if ( evtObj == callbackFunction )
 		{
 			bFound = true;
@@ -694,7 +694,7 @@ bool EventManager::RemoveScriptListener( const char *const pEventName, LuaObject
 //--
 // EventManager::AddScriptActorListener					- Chapter 11, page 341
 // Creates a script-side *ACTOR* event listener, given an appropriate Lua function.
-bool EventManager::AddScriptActorListener( char const * const pEventName, LuaObject callbackFunction, const int actorID )
+bool EventManager::AddScriptActorListener( char const * const pEventName, LuaPlus::LuaObject callbackFunction, const int actorID )
 {
 	//Ensure this event type exists.
 	const EventType testEventType( pEventName );
@@ -713,7 +713,7 @@ bool EventManager::AddScriptActorListener( char const * const pEventName, LuaObj
 	{
 		//Iterate through and ensure no duplicates.
 		const ScriptActorEventListenerPtr evtListener = mapIter->second;
-		const LuaObject & evtObj = evtListener->GetHandlerFunction();
+		const LuaPlus::LuaObject & evtObj = evtListener->GetHandlerFunction();
 		if ( ( evtObj == callbackFunction ) && ( actorID == evtListener->GetActorID() ) )
 		{
 			assert( 0 && "Attempted to listen to the same event handler twice for a specific actor!" );
@@ -734,7 +734,7 @@ bool EventManager::AddScriptActorListener( char const * const pEventName, LuaObj
 //--
 // EventManager::RemoveScriptActorListener
 // Removes a script-side listener for a given actor.
-bool EventManager::RemoveScriptActorListener( const char *const pEventName, LuaObject callbackFunction, const int actorID )
+bool EventManager::RemoveScriptActorListener( const char *const pEventName, LuaPlus::LuaObject callbackFunction, const int actorID )
 {
 	//Ensure this event type exists.
 	const EventType testEventType( pEventName );
@@ -753,7 +753,7 @@ bool EventManager::RemoveScriptActorListener( const char *const pEventName, LuaO
 	while ( m_ScriptActorEventListenerMap.end() != mapIter )
 	{
 		const ScriptActorEventListenerPtr evtListener = mapIter->second;
-		const LuaObject & evtObj = evtListener->GetHandlerFunction();
+		const LuaPlus::LuaObject & evtObj = evtListener->GetHandlerFunction();
 		if ( ( evtObj == callbackFunction ) && ( actorID == evtListener->GetActorID() ) )
 		{
 			bFound = true;
@@ -780,7 +780,7 @@ bool EventManager::RemoveScriptActorListener( const char *const pEventName, LuaO
 //--
 // EventManager::TriggerEventFromScript					- Chapter 11, page 3338
 
-bool EventManager::TriggerEventFromScript( char const * const pEventName, LuaObject luaEventData )
+bool EventManager::TriggerEventFromScript( char const * const pEventName, LuaPlus::LuaObject luaEventData )
 {
 	const EventType eventType( pEventName );
 
@@ -933,13 +933,13 @@ void EventManager::RegisterCodeOnlyEvent( const EventType & eventType )
 
 
 // EventManager::ScriptDefinedEvent::VTriggerEventFromScript		- Chapter 11, page 329
-bool EventManager::ScriptDefinedEvent::VTriggerEventFromScript( LuaObject & srcData ) const
+bool EventManager::ScriptDefinedEvent::VTriggerEventFromScript( LuaPlus::LuaObject & srcData ) const
 {
 	const EvtData_ScriptEvtData scriptEvent( m_EventType, srcData );
 	return safeTriggerEvent( scriptEvent );
 }
 
-bool EventManager::ScriptDefinedEvent::VQueueEventFromScript( LuaObject & srcData ) const
+bool EventManager::ScriptDefinedEvent::VQueueEventFromScript( LuaPlus::LuaObject & srcData ) const
 {
 	//TODO JWC
 	return true;
