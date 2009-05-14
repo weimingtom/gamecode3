@@ -132,6 +132,11 @@ struct ActorParams
 
 	virtual shared_ptr<IActor> VCreate(BaseGameLogic *logic) { shared_ptr<IActor> p; return p; }
 	virtual shared_ptr<SceneNode> VCreateSceneNode(shared_ptr<Scene> pScene) { shared_ptr<SceneNode> p; return p; }
+
+protected:
+	bool ReadVector( LuaPlus::LuaObject& table, Vec3& vec );
+	bool ReadMatrix( LuaPlus::LuaObject& table, Mat4x4& mat );
+	void ReadColor( LuaPlus::LuaObject & table, Color& color );
 };
 
 
