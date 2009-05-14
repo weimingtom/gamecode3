@@ -67,6 +67,79 @@ Could be a function call - or it could be the internet.
 #include "SceneGraph/SceneNodes.h"
 
 
+bool ActorParams::ReadVector( LuaPlus::LuaObject& table, Vec3& vec )
+{
+	assert( table.IsTable() && "Check that table is really a lua table before calling ReadVector!" );
+	
+	const int tableCount = table.GetTableCount();
+	if ( 3 != tableCount )
+	{
+		return false;
+	}
+	//Get the three values.
+	vec.x = table[ 1 ].GetFloat();
+	vec.y = table[ 2 ].GetFloat();
+	vec.z = table[ 3 ].GetFloat();
+	
+	return true;
+}
+
+bool ActorParams::ReadMatrix( LuaPlus::LuaObject& table, Mat4x4& mat )
+{
+	assert( table.IsTable() && "Check that table is really a lua table before calling ReadMatrix!" );
+	
+	const int tableCount = table.GetTableCount();
+	if ( 16 != tableCount )
+	{
+		return false;
+	}
+
+	char name[4] = "_00";
+
+	for( int i = 1; i <= 4; ++i ) 
+	{
+		name[1] = '0' + i;
+		for( int j = 1; j <= 4; ++j ) 
+		{
+			name[2] = '0' + j;
+			LuaPlus::LuaObject entry = table[ name ];
+			if( entry.IsNumber() ) 
+			{
+				mat.m[i - 1][j - 1] = entry.GetFloat();
+			}
+		}
+	}
+	return true;
+}
+
+void ActorParams::ReadColor( LuaPlus::LuaObject& table, Color& color )
+{
+	if ( table.IsTable() )
+	{
+		//Get the RGBA off of it.
+		LuaPlus::LuaObject r = table[ "R" ];
+		if ( r.IsNumber() )
+		{
+			color.r = r.GetFloat();
+		}
+		LuaPlus::LuaObject g = table[ "G" ];
+		if ( g.IsNumber() )
+		{
+			color.g = g.GetFloat();
+		}
+		LuaPlus::LuaObject b = table[ "B" ];
+		if ( b.IsNumber() )
+		{
+			color.b = b.GetFloat();
+		}
+		LuaPlus::LuaObject a = table[ "A" ];
+		if ( a.IsNumber() )
+		{
+			color.a = a.GetFloat();
+		}
+	}
+}
+
 ActorParams::ActorParams() 
 {
 	m_Pos=Vec3(0,0,0); 
@@ -110,52 +183,16 @@ bool ActorParams::VInit( LuaPlus::LuaObject srcData, TErrorMessageList & errorMe
 		m_Id = actorIDObj.GetInteger();
 	}
 
-
-	LuaPlus::LuaObject posObj = srcData[ "Pos" ];
-	if ( posObj.IsTable() )
+	LuaPlus::LuaObject posTable = srcData[ "Pos" ];
+	if( posTable.IsTable() && !ReadVector( posTable, m_Pos ) )
 	{
-		const int tableCount = posObj.GetTableCount();
-		if ( 3 != tableCount )
-		{
-			const std::string err( "Incorrect number of parameters in the 'Pos' member." );
-			errorMessages.push_back( err );
-			return false;
-		}
-		else
-		{
-			//Get the three values.
-			m_Pos.x = posObj[ 1 ].GetFloat();
-			m_Pos.y = posObj[ 2 ].GetFloat();
-			m_Pos.z = posObj[ 3 ].GetFloat();
-		}
+		const std::string err( "Incorrect number of parameters in the 'Pos' member." );
+		errorMessages.push_back( err );
+		return false;
 	}
-
-	LuaPlus::LuaObject colorObj = srcData[ "Color" ];
-	if ( colorObj.IsTable() )
-	{
-		//Get the RGBA off of it.
-		LuaPlus::LuaObject r = colorObj[ "R" ];
-		if ( r.IsNumber() )
-		{
-			m_Color.r = r.GetFloat();
-		}
-		LuaPlus::LuaObject g = colorObj[ "G" ];
-		if ( g.IsNumber() )
-		{
-			m_Color.g = g.GetFloat();
-		}
-		LuaPlus::LuaObject b = colorObj[ "B" ];
-		if ( b.IsNumber() )
-		{
-			m_Color.b = b.GetFloat();
-		}
-		LuaPlus::LuaObject a = colorObj[ "A" ];
-		if ( a.IsNumber() )
-		{
-			m_Color.a = a.GetFloat();
-		}
-	}
-
+	
+	ReadColor( srcData[ "Color" ], m_Color );
+	
 	//See if we have any on create/destroy handlers.
 	LuaPlus::LuaObject onCreateObj = srcData[ "OnCreateFunc" ];
 	if ( onCreateObj.IsString() )
@@ -239,24 +276,15 @@ bool SphereParams::VInit( LuaPlus::LuaObject srcData, TErrorMessageList & errorM
 	{
 		m_Segments = segmentObj.GetInteger();
 	}
-	LuaPlus::LuaObject normalObj = srcData[ "NormalDir" ];
-	if ( normalObj.IsTable() )
+
+	LuaPlus::LuaObject normalTable = srcData[ "NormalDir" ];
+	if( normalTable.IsTable() && !ReadVector( normalTable, m_NormalDir ) )
 	{
-		const int tableCount = normalObj.GetTableCount();
-		if ( 3 != tableCount )
-		{
-			const std::string err( "Incorrect number of parameters in the 'NormalDir' member." );
-			errorMessages.push_back( err );
-			return false;
-		}
-		else
-		{
-			//Get the three values.
-			m_NormalDir.x = normalObj[ 1 ].GetFloat();
-			m_NormalDir.y = normalObj[ 2 ].GetFloat();
-			m_NormalDir.z = normalObj[ 3 ].GetFloat();
-		}
+		const std::string err( "Incorrect number of parameters in the 'NormalDir' member." );
+		errorMessages.push_back( err );
+		return false;
 	}
+
 	LuaPlus::LuaObject forceObj = srcData[ "Force" ];
 	if ( forceObj.IsNumber() )
 	{
@@ -336,102 +364,14 @@ bool TeapotParams::VInit( LuaPlus::LuaObject srcData, TErrorMessageList & errorM
 
 	m_Mat = Mat4x4::g_Identity;
 
-	LuaPlus::LuaObject matObj = srcData[ "Mat" ];
-	if ( matObj.IsTable() )
+	LuaPlus::LuaObject matTable = srcData[ "Mat" ];
+	if( matTable.IsTable() && !ReadMatrix( matTable, m_Mat ) )
 	{
-		const int tableCount = matObj.GetTableCount();
-		if ( 16 != tableCount )
-		{
-			const std::string err( "Incorrect number of parameters in the 'Mat' member." );
-			errorMessages.push_back( err );
-			return false;
-		}
-		else
-		{
-			LuaPlus::LuaObject m11 = matObj[ "_11" ];
-			if ( m11.IsNumber() )
-			{
-				m_Mat._11 = m11.GetFloat();
-			}
-			LuaPlus::LuaObject m12 = matObj[ "_12" ];
-			if ( m12.IsNumber() )
-			{
-				m_Mat._12 = m12.GetFloat();
-			}
-			LuaPlus::LuaObject m13 = matObj[ "_13" ];
-			if ( m13.IsNumber() )
-			{
-				m_Mat._13 = m13.GetFloat();
-			}
-			LuaPlus::LuaObject m14 = matObj[ "_14" ];
-			if ( m14.IsNumber() )
-			{
-				m_Mat._14 = m14.GetFloat();
-			}
-			LuaPlus::LuaObject m21 = matObj[ "_21" ];
-			if ( m21.IsNumber() )
-			{
-				m_Mat._21 = m21.GetFloat();
-			}
-			LuaPlus::LuaObject m22 = matObj[ "_22" ];
-			if ( m22.IsNumber() )
-			{
-				m_Mat._22 = m22.GetFloat();
-			}
-			LuaPlus::LuaObject m23 = matObj[ "_23" ];
-			if ( m23.IsNumber() )
-			{
-				m_Mat._23 = m23.GetFloat();
-			}
-			LuaPlus::LuaObject m24 = matObj[ "_24" ];
-			if ( m24.IsNumber() )
-			{
-				m_Mat._24 = m24.GetFloat();
-			}
-			LuaPlus::LuaObject m31 = matObj[ "_31" ];
-			if ( m31.IsNumber() )
-			{
-				m_Mat._31 = m31.GetFloat();
-			}
-			LuaPlus::LuaObject m32 = matObj[ "_32" ];
-			if ( m32.IsNumber() )
-			{
-				m_Mat._32 = m32.GetFloat();
-			}
-			LuaPlus::LuaObject m33 = matObj[ "_33" ];
-			if ( m33.IsNumber() )
-			{
-				m_Mat._33 = m33.GetFloat();
-			}
-			LuaPlus::LuaObject m34 = matObj[ "_34" ];
-			if ( m34.IsNumber() )
-			{
-				m_Mat._34 = m34.GetFloat();
-			}
-			LuaPlus::LuaObject m41 = matObj[ "_41" ];
-			if ( m41.IsNumber() )
-			{
-				m_Mat._41 = m41.GetFloat();
-			}
-			LuaPlus::LuaObject m42 = matObj[ "_42" ];
-			if ( m42.IsNumber() )
-			{
-				m_Mat._42 = m42.GetFloat();
-			}
-			LuaPlus::LuaObject m43 = matObj[ "_43" ];
-			if ( m43.IsNumber() )
-			{
-				m_Mat._43 = m43.GetFloat();
-			}
-			LuaPlus::LuaObject m44 = matObj[ "_44" ];
-			if ( m44.IsNumber() )
-			{
-				m_Mat._44 = m44.GetFloat();
-			}
-		}
+		const std::string err( "Incorrect number of parameters in the 'Mat' member." );
+		errorMessages.push_back( err );
+		return false;
 	}
-
-
+	
 	LuaPlus::LuaObject viewIDObj = srcData[ "GameViewID" ];
 	if ( viewIDObj.IsInteger() )
 	{
@@ -502,101 +442,13 @@ bool TestObjectParams::VInit( LuaPlus::LuaObject srcData, TErrorMessageList & er
 
 	m_Mat = Mat4x4::g_Identity;
 
-	LuaPlus::LuaObject matObj = srcData[ "Mat" ];
-	if ( matObj.IsTable() )
+	LuaPlus::LuaObject matTable = srcData[ "Mat" ];
+	if( matTable.IsTable() && !ReadMatrix( matTable, m_Mat ) )
 	{
-		const int tableCount = matObj.GetTableCount();
-		if ( 16 != tableCount )
-		{
-			const std::string err( "Incorrect number of parameters in the 'Mat' member." );
-			errorMessages.push_back( err );
-			return false;
-		}
-		else
-		{
-			LuaPlus::LuaObject m11 = matObj[ "_11" ];
-			if ( m11.IsNumber() )
-			{
-				m_Mat._11 = m11.GetFloat();
-			}
-			LuaPlus::LuaObject m12 = matObj[ "_12" ];
-			if ( m12.IsNumber() )
-			{
-				m_Mat._12 = m12.GetFloat();
-			}
-			LuaPlus::LuaObject m13 = matObj[ "_13" ];
-			if ( m13.IsNumber() )
-			{
-				m_Mat._13 = m13.GetFloat();
-			}
-			LuaPlus::LuaObject m14 = matObj[ "_14" ];
-			if ( m14.IsNumber() )
-			{
-				m_Mat._14 = m14.GetFloat();
-			}
-			LuaPlus::LuaObject m21 = matObj[ "_21" ];
-			if ( m21.IsNumber() )
-			{
-				m_Mat._21 = m21.GetFloat();
-			}
-			LuaPlus::LuaObject m22 = matObj[ "_22" ];
-			if ( m22.IsNumber() )
-			{
-				m_Mat._22 = m22.GetFloat();
-			}
-			LuaPlus::LuaObject m23 = matObj[ "_23" ];
-			if ( m23.IsNumber() )
-			{
-				m_Mat._23 = m23.GetFloat();
-			}
-			LuaPlus::LuaObject m24 = matObj[ "_24" ];
-			if ( m24.IsNumber() )
-			{
-				m_Mat._24 = m24.GetFloat();
-			}
-			LuaPlus::LuaObject m31 = matObj[ "_31" ];
-			if ( m31.IsNumber() )
-			{
-				m_Mat._31 = m31.GetFloat();
-			}
-			LuaPlus::LuaObject m32 = matObj[ "_32" ];
-			if ( m32.IsNumber() )
-			{
-				m_Mat._32 = m32.GetFloat();
-			}
-			LuaPlus::LuaObject m33 = matObj[ "_33" ];
-			if ( m33.IsNumber() )
-			{
-				m_Mat._33 = m33.GetFloat();
-			}
-			LuaPlus::LuaObject m34 = matObj[ "_34" ];
-			if ( m34.IsNumber() )
-			{
-				m_Mat._34 = m34.GetFloat();
-			}
-			LuaPlus::LuaObject m41 = matObj[ "_41" ];
-			if ( m41.IsNumber() )
-			{
-				m_Mat._41 = m41.GetFloat();
-			}
-			LuaPlus::LuaObject m42 = matObj[ "_42" ];
-			if ( m42.IsNumber() )
-			{
-				m_Mat._42 = m42.GetFloat();
-			}
-			LuaPlus::LuaObject m43 = matObj[ "_43" ];
-			if ( m43.IsNumber() )
-			{
-				m_Mat._43 = m43.GetFloat();
-			}
-			LuaPlus::LuaObject m44 = matObj[ "_44" ];
-			if ( m44.IsNumber() )
-			{
-				m_Mat._44 = m44.GetFloat();
-			}
-		}
+		const std::string err( "Incorrect number of parameters in the 'Mat' member." );
+		errorMessages.push_back( err );
+		return false;
 	}
-
 	return true;
 }
 
@@ -658,101 +510,14 @@ bool GridParams::VInit( LuaPlus::LuaObject srcData, TErrorMessageList & errorMes
 
 	m_Mat = Mat4x4::g_Identity;
 
-	LuaPlus::LuaObject matObj = srcData[ "Mat" ];
-	if ( matObj.IsTable() )
+	LuaPlus::LuaObject matTable = srcData[ "Mat" ];
+	if( matTable.IsTable() && !ReadMatrix( matTable, m_Mat ) )
 	{
-		const int tableCount = matObj.GetTableCount();
-		if ( 16 != tableCount )
-		{
-			const std::string err( "Incorrect number of parameters in the 'Mat' member." );
-			errorMessages.push_back( err );
-			return false;
-		}
-		else
-		{
-			LuaPlus::LuaObject m11 = matObj[ "_11" ];
-			if ( m11.IsNumber() )
-			{
-				m_Mat._11 = m11.GetFloat();
-			}
-			LuaPlus::LuaObject m12 = matObj[ "_12" ];
-			if ( m12.IsNumber() )
-			{
-				m_Mat._12 = m12.GetFloat();
-			}
-			LuaPlus::LuaObject m13 = matObj[ "_13" ];
-			if ( m13.IsNumber() )
-			{
-				m_Mat._13 = m13.GetFloat();
-			}
-			LuaPlus::LuaObject m14 = matObj[ "_14" ];
-			if ( m14.IsNumber() )
-			{
-				m_Mat._14 = m14.GetFloat();
-			}
-			LuaPlus::LuaObject m21 = matObj[ "_21" ];
-			if ( m21.IsNumber() )
-			{
-				m_Mat._21 = m21.GetFloat();
-			}
-			LuaPlus::LuaObject m22 = matObj[ "_22" ];
-			if ( m22.IsNumber() )
-			{
-				m_Mat._22 = m22.GetFloat();
-			}
-			LuaPlus::LuaObject m23 = matObj[ "_23" ];
-			if ( m23.IsNumber() )
-			{
-				m_Mat._23 = m23.GetFloat();
-			}
-			LuaPlus::LuaObject m24 = matObj[ "_24" ];
-			if ( m24.IsNumber() )
-			{
-				m_Mat._24 = m24.GetFloat();
-			}
-			LuaPlus::LuaObject m31 = matObj[ "_31" ];
-			if ( m31.IsNumber() )
-			{
-				m_Mat._31 = m31.GetFloat();
-			}
-			LuaPlus::LuaObject m32 = matObj[ "_32" ];
-			if ( m32.IsNumber() )
-			{
-				m_Mat._32 = m32.GetFloat();
-			}
-			LuaPlus::LuaObject m33 = matObj[ "_33" ];
-			if ( m33.IsNumber() )
-			{
-				m_Mat._33 = m33.GetFloat();
-			}
-			LuaPlus::LuaObject m34 = matObj[ "_34" ];
-			if ( m34.IsNumber() )
-			{
-				m_Mat._34 = m34.GetFloat();
-			}
-			LuaPlus::LuaObject m41 = matObj[ "_41" ];
-			if ( m41.IsNumber() )
-			{
-				m_Mat._41 = m41.GetFloat();
-			}
-			LuaPlus::LuaObject m42 = matObj[ "_42" ];
-			if ( m42.IsNumber() )
-			{
-				m_Mat._42 = m42.GetFloat();
-			}
-			LuaPlus::LuaObject m43 = matObj[ "_43" ];
-			if ( m43.IsNumber() )
-			{
-				m_Mat._43 = m43.GetFloat();
-			}
-			LuaPlus::LuaObject m44 = matObj[ "_44" ];
-			if ( m44.IsNumber() )
-			{
-				m_Mat._44 = m44.GetFloat();
-			}
-		}
+		const std::string err( "Incorrect number of parameters in the 'Mat' member." );
+		errorMessages.push_back( err );
+		return false;
 	}
-
+	
 	LuaPlus::LuaObject textureObj = srcData[ "Texture" ];
 	if ( textureObj.IsString() )
 	{
@@ -832,36 +597,12 @@ bool GenericMeshObjectParams::VInit( LuaPlus::LuaObject srcData, TErrorMessageLi
 
 	m_Mat = Mat4x4::g_Identity;
 
-	LuaPlus::LuaObject matObj = srcData[ "Mat" ];
-	if ( matObj.IsTable() )
+	LuaPlus::LuaObject matTable = srcData[ "Mat" ];
+	if( matTable.IsTable() && !ReadMatrix( matTable, m_Mat ) )
 	{
-		const int tableCount = matObj.GetTableCount();
-		if ( 16 != tableCount )
-		{
-			const std::string err( "Incorrect number of parameters in the 'Mat' member." );
-			errorMessages.push_back( err );
-			return false;
-		}
-		else
-		{
-			char name[4] = "_00";
-
-			for( int i = 1; i <= 4; ++i ) 
-			{
-				name[1] = '0' + i;
-
-				for( int j = 1; j <= 4; ++j ) 
-				{
-					name[2] = '0' + j;
-
-					LuaPlus::LuaObject entry = matObj[ name ];
-					if( entry.IsNumber() ) 
-					{
-						m_Mat.m[i - 1][j - 1] = entry.GetFloat();
-					}
-				}
-			}
-		}
+		const std::string err( "Incorrect number of parameters in the 'Mat' member." );
+		errorMessages.push_back( err );
+		return false;
 	}
 
 	LuaPlus::LuaObject XFileObj = srcData[ "XFile" ];
