@@ -8,3 +8,13 @@ C:\Users\Mr.Mike\Desktop\GameCode3\Source\EditorApp\obj\Debug\EditorApp.Properti
 C:\Users\Mr.Mike\Desktop\GameCode3\Source\EditorApp\obj\Debug\EditorApp.csproj.GenerateResource.Cache
 C:\Users\Mr.Mike\Desktop\GameCode3\Source\EditorApp\obj\Debug\EditorApp.exe
 C:\Users\Mr.Mike\Desktop\GameCode3\Source\EditorApp\obj\Debug\EditorApp.pdb
+C:\Users\Mr.Mike\Projects_Google_Branches\test\EditorApp.exe
+C:\Users\Mr.Mike\Projects_Google_Branches\test\EditorApp.pdb
+C:\Users\Mr.Mike\Projects_Google_Branches\Source\EditorApp\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Mr.Mike\Projects_Google_Branches\Source\EditorApp\obj\Debug\EditorApp.ActorCreationForm.resources
+C:\Users\Mr.Mike\Projects_Google_Branches\Source\EditorApp\obj\Debug\EditorApp.ActorPropertiesForm.resources
+C:\Users\Mr.Mike\Projects_Google_Branches\Source\EditorApp\obj\Debug\EditorApp.EngineDisplayForm.resources
+C:\Users\Mr.Mike\Projects_Google_Branches\Source\EditorApp\obj\Debug\EditorApp.Properties.Resources.resources
+C:\Users\Mr.Mike\Projects_Google_Branches\Source\EditorApp\obj\Debug\EditorApp.csproj.GenerateResource.Cache
+C:\Users\Mr.Mike\Projects_Google_Branches\Source\EditorApp\obj\Debug\EditorApp.exe
+C:\Users\Mr.Mike\Projects_Google_Branches\Source\EditorApp\obj\Debug\EditorApp.pdb
