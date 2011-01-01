@@ -124,9 +124,12 @@ unsigned int CRandom::Random( unsigned int n )
 
 float CRandom::Random( )
 {
-	int r = (float)Random(0xffffffff);
+	// Jan-2010 - A good fix posted by soufi of Seattle - the previous signed integer based code wasn't
+	//            returning anything between 0.0-0.5.
+	//
+	unsigned int r = (float)Random(0xffffffff);
 	float divisor = (float)0xffffffff;
-	return (r / divisor) + 0.5f;
+	return (r / divisor);
 }
 
 
