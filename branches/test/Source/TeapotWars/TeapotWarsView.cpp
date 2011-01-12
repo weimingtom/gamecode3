@@ -751,7 +751,9 @@ void TeapotWarsGameView::BuildInitialScene()
 
 	m_pFreeCameraController.reset(GCC_NEW MovementController(m_pCamera, 0, 0, false));
 
-	VOnRestore();
+	// Jan 2011 - mlm - Fix the D3D device has a non-zero reference count bug! 
+	//                  Solution posted by shallway
+	//VOnRestore();
 
 }
 
