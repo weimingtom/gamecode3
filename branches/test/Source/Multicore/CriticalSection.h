@@ -130,12 +130,15 @@ private:
        CriticalSection & m_csResource;
 };
  
+
+
 // concurrent_queue was grabbed from 
 // http://www.justsoftwaresolutions.co.uk/threading/implementing-a-thread-safe-queue-using-condition-variables.html
 // and was written by Anthony Williams
 //
 // class concurrent_queue					- Chapter 18, page 669
 //
+
 template<typename Data>
 class concurrent_queue
 {
@@ -185,5 +188,5 @@ public:
 
 };
 
- 
+
 

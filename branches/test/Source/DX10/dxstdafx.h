@@ -40,6 +40,7 @@
 
 #pragma warning( disable : 4100 ) // disable unreference formal parameter warnings for /W4 builds
 
+
 #include <windows.h>
 #include <assert.h>
 #include <wchar.h>
@@ -56,6 +57,8 @@
 #include <crtdbg.h>
 #endif
 
+
+
 // Enable extra D3D debugging in debug builds if using the debug DirectX runtime.  
 // This makes D3D objects work well in the debugger watch window, but slows down 
 // performance slightly.
@@ -69,7 +72,12 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 #include <d3dx9effect.h>
-#include <dxerr9.h>
+
+
+
+
+// If you have a version of DirectX prior to August 2009 you should use <dxerr9.h>
+#include <dxerr.h>
 
 // DirectSound includes
 #include <mmsystem.h>
@@ -88,6 +96,8 @@
 #pragma deprecated("strncat")
 #pragma deprecated("_tcsncat")
 #endif
+
+
 
 #pragma warning( disable : 4996 ) // disable deprecated warning 
 #include <strsafe.h>
@@ -110,19 +120,21 @@
 
 #if defined(DEBUG) | defined(_DEBUG)
 #ifndef V
-#define V(x)           { hr = x; if( FAILED(hr) ) { DXUTTrace( __FILE__, (DWORD)__LINE__, hr, L#x, true ); } }
+//#define V(x)           { hr = x; if( FAILED(hr) ) { DXUTTrace( __FILE__, (DWORD)__LINE__, hr, L#x, true ); } }
 #endif
 #ifndef V_RETURN
 #define V_RETURN(x)    { hr = x; if( FAILED(hr) ) { return DXUTTrace( __FILE__, (DWORD)__LINE__, hr, L#x, true ); } }
 #endif
 #else
 #ifndef V
-#define V(x)           { hr = x; }
+//#define V(x)           { hr = x; }
 #endif
 #ifndef V_RETURN
 #define V_RETURN(x)    { hr = x; if( FAILED(hr) ) { return hr; } }
 #endif
 #endif
+
+
 
 #ifndef SAFE_DELETE
 #define SAFE_DELETE(p)       { if(p) { delete (p);     (p)=NULL; } }
@@ -133,5 +145,9 @@
 #ifndef SAFE_RELEASE
 #define SAFE_RELEASE(p)      { if(p) { (p)->Release(); (p)=NULL; } }
 #endif
+
+
+
+
 
 #endif // !defined(DXSDK_STDAFX_H)

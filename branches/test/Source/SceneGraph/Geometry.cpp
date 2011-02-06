@@ -139,7 +139,10 @@ void Frustum::Init(const float fov, const float aspect, const float nearClip, co
 	Vec3 nearUp = (m_Near * tanFovOver2 ) * g_Up;
 	Vec3 farUp = (m_Far * tanFovOver2)  * g_Up;
 
-	// points start in the upper right and go around clockwise
+	// Oct 2010 - Armadillo pointed out a problem with the below comment, which originally stated
+	//            that the points start in the upper right and go around clockwise.
+
+	// points start in the upper ;eft and go around clockwise
 	m_NearClip[0] = (m_Near * g_Forward) - nearRight + nearUp;
 	m_NearClip[1] = (m_Near * g_Forward) + nearRight + nearUp;
 	m_NearClip[2] = (m_Near * g_Forward) + nearRight - nearUp;

@@ -3906,7 +3906,7 @@ HRESULT DXUTReset3DEnvironment10()
         // Set the fullscreen state
         if( pDeviceSettings->d3d10.sd.Windowed )
         {
-            V_RETURN( pSwapChain->SetFullscreenState( FALSE, NULL ) );
+            VVV_RETURN( pSwapChain->SetFullscreenState( FALSE, NULL ) );
             bDeferredDXGIAction = true;
         }
         else
@@ -3920,10 +3920,10 @@ HRESULT DXUTReset3DEnvironment10()
             // not to store the height and width so that we have the correct values when calling ResizeTarget.
 
             GetDXUTState().SetDoNotStoreBufferSize(true);
-            V_RETURN( pSwapChain->SetFullscreenState( TRUE, NULL ) );
+            VVV_RETURN( pSwapChain->SetFullscreenState( TRUE, NULL ) );
             GetDXUTState().SetDoNotStoreBufferSize(false);
 
-            V_RETURN( pSwapChain->ResizeTarget( &pDeviceSettings->d3d10.sd.BufferDesc ) );
+            VVV_RETURN( pSwapChain->ResizeTarget( &pDeviceSettings->d3d10.sd.BufferDesc ) );
             bDeferredDXGIAction = true;
         }
     }
@@ -3939,7 +3939,7 @@ HRESULT DXUTReset3DEnvironment10()
         else if( pDeviceSettings->d3d10.sd.BufferDesc.Width != SCDesc.BufferDesc.Width ||
                  pDeviceSettings->d3d10.sd.BufferDesc.Height != SCDesc.BufferDesc.Height )
         {
-            V_RETURN( pSwapChain->ResizeTarget( &pDeviceSettings->d3d10.sd.BufferDesc ) );
+            VVV_RETURN( pSwapChain->ResizeTarget( &pDeviceSettings->d3d10.sd.BufferDesc ) );
             bDeferredDXGIAction = true;
         }
     }
@@ -5265,7 +5265,7 @@ void DXUTResizeDXGIBuffers( UINT Width, UINT Height, BOOL bFullScreen )
         Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 
     // ResizeBuffers
-    V( pSwapChain->ResizeBuffers( pDevSettings->d3d10.sd.BufferCount,
+    VVV( pSwapChain->ResizeBuffers( pDevSettings->d3d10.sd.BufferCount,
                                   Width,
                                   Height,
                                   pDevSettings->d3d10.sd.BufferDesc.Format,

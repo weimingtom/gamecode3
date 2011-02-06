@@ -223,7 +223,7 @@ HRESULT MainMenuUI::VOnRender(double fTime, float fElapsedTime)
 {
 	HRESULT hr;
 	DXUT_BeginPerfEvent( DXUT_PERFEVENTCOLOR, L"TeapotWarsHUD" ); // These events are to help PIX identify what the code is doing
-	V( m_SampleUI.OnRender( fElapsedTime ) );
+	VVV( m_SampleUI.OnRender( fElapsedTime ) );
 	DXUT_EndPerfEvent();
 	return S_OK;
 };
@@ -385,7 +385,7 @@ HRESULT StandardHUD::VOnRender(double fTime, float fElapsedTime)
 {
 	HRESULT hr;
 	DXUT_BeginPerfEvent( DXUT_PERFEVENTCOLOR, L"StandardUI" ); // These events are to help PIX identify what the code is doing
-	V( m_HUD.OnRender( fElapsedTime ) );
+	VVV( m_HUD.OnRender( fElapsedTime ) );
 	DXUT_EndPerfEvent();
 	return S_OK;
 };
@@ -538,7 +538,7 @@ LRESULT CALLBACK TeapotWarsGameView::VOnMsgProc( AppMsg msg )
 			SetCapture(g_pApp->GetHwnd());
 			return 1;
 		}
-		else if (msg.m_wParam=='Q')
+		else if (msg.m_wParam=='Q' || msg.m_wParam==VK_ESCAPE)				// Jan 2010 - mlm - added VK_ESCAPE since it is on the onscreen help!
 		{
 			if (GameCodeApp::Ask(QUESTION_QUIT_GAME)==IDYES)
 			{
@@ -751,9 +751,9 @@ void TeapotWarsGameView::BuildInitialScene()
 
 	m_pFreeCameraController.reset(GCC_NEW MovementController(m_pCamera, 0, 0, false));
 
-	// Jan 2011 - mlm - Fix the D3D device has a non-zero reference count bug! 
-	//                  Solution posted by shallway
-	//VOnRestore();
+	// Jan 2010 - mlm - A fix to the D3D Device has a non-zero reference count bug posted by shallway
+	//                  Commenting this out fixes this problem.
+	// VOnRestore();
 
 }
 

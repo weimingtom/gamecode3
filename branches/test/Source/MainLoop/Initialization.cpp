@@ -74,7 +74,8 @@ void CheckHardDisk(const DWORDLONG diskSpaceNeeded)
 void CheckMemory(const DWORDLONG physicalRAMNeeded, const DWORDLONG virtualRAMNeeded)
 {
 	MEMORYSTATUSEX status;
-	GlobalMemoryStatusEx(&status);
+	status.dwLength = sizeof(MEMORYSTATUSEX);			// Dec 2008 - line correctly added by KeithH
+	GlobalMemoryStatusEx(&status);						
 	if (status.ullTotalPhys < (physicalRAMNeeded))
 	{
 		// you don’t have enough physical memory. Tell the player to go get a real 

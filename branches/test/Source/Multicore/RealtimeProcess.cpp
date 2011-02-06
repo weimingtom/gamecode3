@@ -45,6 +45,12 @@
 
 
 #include "GameCodeStd.h"
+
+#define BOOST_THREAD_USE_LIB
+#include <boost/thread/mutex.hpp>
+#include <boost/thread/condition_variable.hpp>
+
+
 #include "RealtimeProcess.h"
 #include "..\Multicore\SafeStream.h"
 
@@ -423,7 +429,5 @@ void testRealtimeDecompression(CProcessManager *procMgr)
 
 	safeQueEvent(IEventDataPtr ( GCC_NEW  EvtData_Decompress_Request(L"big.zip", "big.dat")));
 }
-
-
 
 

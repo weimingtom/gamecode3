@@ -102,12 +102,15 @@ class PrimeSearch
 	int maxElements;
 	int *currentPrime;
 	int searches;
+	bool startAtZero;
 	
 public:
-	PrimeSearch(int elements);
+	PrimeSearch(int elements, bool _startAtZero=true);
 	int GetNext(bool restart=false);
 	bool Done() { return (searches==*currentPrime); }
-	void Restart() { currentPosition=0; searches=0; }
+
+	// Sep 2010 (MrMike) - Restart method moved to the cpp file.
+	void PrimeSearch::Restart();
 };
 
 

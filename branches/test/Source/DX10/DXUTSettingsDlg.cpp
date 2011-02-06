@@ -506,7 +506,7 @@ HRESULT CD3DSettingsDlg::OnD3D10CreateDevice( ID3D10Device* pd3dDevice )
     D3D10_STATE_BLOCK_MASK SBM;
     DXUT_Dynamic_D3D10StateBlockMaskDisableAll( &SBM );
     DXUT_Dynamic_D3D10StateBlockMaskEnableCapture( &SBM, D3D10_DST_RS_RASTERIZER_STATE, 0, 1 );
-    V_RETURN(DXUT_Dynamic_D3D10CreateStateBlock( pd3dDevice, &SBM, &m_pStateBlock10 ));
+    VVV_RETURN(DXUT_Dynamic_D3D10CreateStateBlock( pd3dDevice, &SBM, &m_pStateBlock10 ));
 
     return S_OK;
 }

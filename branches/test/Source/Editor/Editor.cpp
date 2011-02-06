@@ -266,7 +266,7 @@ EditorGame::~EditorGame()
 //
 // EditorGame::EditorGame					- Chapter 20, page 747
 //
-bool EditorGame::VLoadGame(string gameName)
+bool EditorGame::VLoadGame(std::string gameName)
 {
 	if (gameName=="NewGame")
 	{

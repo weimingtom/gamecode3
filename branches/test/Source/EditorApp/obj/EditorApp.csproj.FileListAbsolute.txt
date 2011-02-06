@@ -18,3 +18,13 @@ C:\Users\Mr.Mike\Projects_Google_Branches\Source\EditorApp\obj\Debug\EditorApp.P
 C:\Users\Mr.Mike\Projects_Google_Branches\Source\EditorApp\obj\Debug\EditorApp.csproj.GenerateResource.Cache
 C:\Users\Mr.Mike\Projects_Google_Branches\Source\EditorApp\obj\Debug\EditorApp.exe
 C:\Users\Mr.Mike\Projects_Google_Branches\Source\EditorApp\obj\Debug\EditorApp.pdb
+C:\Users\Mr.Mike\Projects_Google_Branches\bin\EditorApp.exe
+C:\Users\Mr.Mike\Projects_Google_Branches\bin\EditorApp.pdb
+C:\Users\Mr.Mike\Projects_Google_Branches\Source\EditorApp\obj\Release\ResolveAssemblyReference.cache
+C:\Users\Mr.Mike\Projects_Google_Branches\Source\EditorApp\obj\Release\EditorApp.ActorCreationForm.resources
+C:\Users\Mr.Mike\Projects_Google_Branches\Source\EditorApp\obj\Release\EditorApp.ActorPropertiesForm.resources
+C:\Users\Mr.Mike\Projects_Google_Branches\Source\EditorApp\obj\Release\EditorApp.EngineDisplayForm.resources
+C:\Users\Mr.Mike\Projects_Google_Branches\Source\EditorApp\obj\Release\EditorApp.Properties.Resources.resources
+C:\Users\Mr.Mike\Projects_Google_Branches\Source\EditorApp\obj\Release\EditorApp.csproj.GenerateResource.Cache
+C:\Users\Mr.Mike\Projects_Google_Branches\Source\EditorApp\obj\Release\EditorApp.exe
+C:\Users\Mr.Mike\Projects_Google_Branches\Source\EditorApp\obj\Release\EditorApp.pdb

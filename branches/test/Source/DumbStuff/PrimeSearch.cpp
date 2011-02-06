@@ -124,11 +124,12 @@ int PrimeSearch::prime_array[] =
 };
 
 
-PrimeSearch::PrimeSearch(int elements)
+PrimeSearch::PrimeSearch(int elements, bool _startAtZero)
 {
 	assert(elements>0 && "Can't do a PrimeSearch if you have 0 elements to search through, buddy-boy");
 
 	maxElements = elements;
+	startAtZero = _startAtZero;
 
 	int a = (rand()%13)+1;
 	int b = (rand()%7)+1;
@@ -155,6 +156,18 @@ PrimeSearch::PrimeSearch(int elements)
 	if (!test)
 		skip++;
 }
+
+void PrimeSearch::Restart() 
+{ 
+	// Sep 2010 (MrMike) - A good suggestion by mdunsford - at the request of the programmer, 
+	//                     start at a random position instead of zero.
+
+	currentPosition = startAtZero ? 0 : rand()%(maxElements-1); 
+	searches=0; 
+}
+
+
+
 
 int PrimeSearch::GetNext(bool restart)
 {

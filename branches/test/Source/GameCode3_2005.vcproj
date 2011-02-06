@@ -140,7 +140,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalLibraryDirectories="3rdParty\NovodeX2.2\SDKs\Physics\lib\win32\Release"
+				AdditionalLibraryDirectories=""
 				IgnoreAllDefaultLibraries="true"
 			/>
 			<Tool
