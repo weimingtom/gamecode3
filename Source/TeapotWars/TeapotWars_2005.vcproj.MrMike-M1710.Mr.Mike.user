@@ -11,7 +11,7 @@
 			<DebugSettings
 				Command="$(TargetPath)"
 				WorkingDirectory="..\..\Bin"
-				CommandArguments=""
+				CommandArguments="-players 2 -gamehost -numai 2"
 				Attach="false"
 				DebuggerType="3"
 				Remote="1"

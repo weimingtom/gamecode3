@@ -54,7 +54,7 @@ void RemoveFirstLine(std::wstring &src, std::wstring &result)
 {
 	int breakPosition = (int)src.find('\n');
 	result = _T("");
-	if(breakPosition != std::string.npos)	//if found...
+	if(breakPosition != std::string::npos)	//if found...
 	{
 		int len = (int)src.length();
 		result = src.substr(0, breakPosition);
@@ -102,7 +102,7 @@ int CountLines(const std::wstring &s)
 	{
 		++lines;
 		breakPos = (int)s.find('\n', breakPos+1);
-	} while (breakPos != std::string.npos);
+	} while (breakPos != std::string::npos);
 
 	return lines;
 }	

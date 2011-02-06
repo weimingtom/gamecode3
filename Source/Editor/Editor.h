@@ -58,8 +58,8 @@
 #include "EditorGameView.h"
 #pragma warning( disable : 4996 ) // 'function' declared deprecated - gets rid of all those 2005 warnings....
 
-
-using namespace std;
+// Jan 2010 - commented this out and replaced string with std::string to avoid a name collision problem with Boost library.
+//using namespace std;
 
 class EditorGame;
 
@@ -93,7 +93,7 @@ public:
 	EditorGame(GameOptions const &options);
 	~EditorGame();
 	
-	bool VLoadGame(string gameName);
+	bool VLoadGame(std::string gameName);
 	virtual void VOnUpdate(float time, float elapsedTime);
 
 	// We need to expose this information so that the C# app can

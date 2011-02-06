@@ -840,10 +840,10 @@ float MeshNode::CalcBoundingSphere()
     D3DXVECTOR3 vCenter;
     FLOAT fObjectRadius;
 	HRESULT hr;
-	V( m_pMesh->LockVertexBuffer( 0, ( LPVOID* )&pData ) );
-    V( D3DXComputeBoundingSphere( pData, m_pMesh->GetNumVertices(),
+	VVV( m_pMesh->LockVertexBuffer( 0, ( LPVOID* )&pData ) );
+    VVV( D3DXComputeBoundingSphere( pData, m_pMesh->GetNumVertices(),
                                   D3DXGetFVFVertexSize( m_pMesh->GetFVF() ), &vCenter, &fObjectRadius ) );
-    V( m_pMesh->UnlockVertexBuffer() );
+    VVV( m_pMesh->UnlockVertexBuffer() );
 
 	return fObjectRadius;
 }
@@ -887,9 +887,9 @@ HRESULT MeshNode::VOnRestore(Scene *pScene)
     // sample we'll ignore the X file's embedded materials since we know 
     // exactly the model we're loading.  See the mesh samples such as
     // "OptimizedMesh" for a more generic mesh loading example.
-	V_RETURN( DXUTFindDXSDKMediaFileCch( str, MAX_PATH, m_XFileName.c_str() ) );
+	VVV_RETURN( DXUTFindDXSDKMediaFileCch( str, MAX_PATH, m_XFileName.c_str() ) );
 
-    V_RETURN( D3DXLoadMeshFromX(str, D3DXMESH_MANAGED, DXUTGetD3D9Device(), NULL, NULL, NULL, NULL, &m_pMesh) );
+    VVV_RETURN( D3DXLoadMeshFromX(str, D3DXMESH_MANAGED, DXUTGetD3D9Device(), NULL, NULL, NULL, NULL, &m_pMesh) );
 
     DWORD *rgdwAdjacency = NULL;
 
@@ -897,10 +897,10 @@ HRESULT MeshNode::VOnRestore(Scene *pScene)
     if( !(m_pMesh->GetFVF() & D3DFVF_NORMAL) )
     {
         ID3DXMesh* pTempMesh;
-        V( m_pMesh->CloneMeshFVF( m_pMesh->GetOptions(), 
+        VVV( m_pMesh->CloneMeshFVF( m_pMesh->GetOptions(), 
                                   m_pMesh->GetFVF() | D3DFVF_NORMAL, 
                                   DXUTGetD3D9Device(), &pTempMesh ) );
-        V( D3DXComputeNormals( pTempMesh, NULL ) );
+        VVV( D3DXComputeNormals( pTempMesh, NULL ) );
 
         SAFE_RELEASE( m_pMesh );
         m_pMesh = pTempMesh;
@@ -914,8 +914,8 @@ HRESULT MeshNode::VOnRestore(Scene *pScene)
     rgdwAdjacency = GCC_NEW DWORD[m_pMesh->GetNumFaces() * 3];
     if( rgdwAdjacency == NULL )
         return E_OUTOFMEMORY;
-    V( m_pMesh->ConvertPointRepsToAdjacency(NULL, rgdwAdjacency) );
-    V( m_pMesh->OptimizeInplace(D3DXMESHOPT_VERTEXCACHE, rgdwAdjacency, NULL, NULL, NULL) );
+    VVV( m_pMesh->ConvertPointRepsToAdjacency(NULL, rgdwAdjacency) );
+    VVV( m_pMesh->OptimizeInplace(D3DXMESHOPT_VERTEXCACHE, rgdwAdjacency, NULL, NULL, NULL) );
     
 	SAFE_DELETE_ARRAY(rgdwAdjacency);
 
@@ -1002,14 +1002,14 @@ HRESULT ShaderMeshNode::VRender(Scene *pScene)
 	Mat4x4 worldViewProj = pScene->GetCamera()->GetWorldViewProjection(pScene);
 
 	D3DXCOLOR ambient =  m_Props.GetMaterial().GetAmbient();
-    V_RETURN( m_pEffect->SetValue( "g_MaterialAmbientColor", &ambient, sizeof( D3DXCOLOR ) ) );
+    VVV_RETURN( m_pEffect->SetValue( "g_MaterialAmbientColor", &ambient, sizeof( D3DXCOLOR ) ) );
 	D3DXCOLOR diffuse =  m_Props.GetMaterial().GetDiffuse();
-    V_RETURN( m_pEffect->SetValue( "g_MaterialDiffuseColor", &diffuse, sizeof( D3DXCOLOR ) ) );
+    VVV_RETURN( m_pEffect->SetValue( "g_MaterialDiffuseColor", &diffuse, sizeof( D3DXCOLOR ) ) );
 
 
-	V( m_pEffect->SetMatrix( "g_mWorldViewProjection", &worldViewProj ) );
-    V( m_pEffect->SetMatrix( "g_mWorld", pScene->GetTopMatrix() ) );
-    V( m_pEffect->SetFloat( "g_fTime", ( float )1.0f ) );
+	VVV( m_pEffect->SetMatrix( "g_mWorldViewProjection", &worldViewProj ) );
+    VVV( m_pEffect->SetMatrix( "g_mWorld", pScene->GetTopMatrix() ) );
+    VVV( m_pEffect->SetFloat( "g_fTime", ( float )1.0f ) );
 
 	D3DXVECTOR3 vLightDir[3];
     D3DXCOLOR vLightDiffuse[3];
@@ -1027,41 +1027,41 @@ HRESULT ShaderMeshNode::VRender(Scene *pScene)
         vLightDiffuse[i] = D3DXCOLOR( 1, 1, 1, 1 );
     }
 
-    V( m_pEffect->SetValue( "g_LightDir", vLightDir, sizeof( D3DXVECTOR3 ) * 3 ) );
-    V( m_pEffect->SetValue( "g_LightDiffuse", vLightDiffuse, sizeof( D3DXVECTOR4 ) * 3 ) );
-	V( m_pEffect->SetInt( "g_nNumLights", 1 ) );
-    V( m_pEffect->SetValue( "g_LightAmbient", &vLightAmbient, sizeof( D3DXVECTOR4 ) * 1 ) );
-	V( m_pEffect->SetFloat( "g_fAlpha",  m_Props.GetMaterial().GetAlpha() ) );
+    VVV( m_pEffect->SetValue( "g_LightDir", vLightDir, sizeof( D3DXVECTOR3 ) * 3 ) );
+    VVV( m_pEffect->SetValue( "g_LightDiffuse", vLightDiffuse, sizeof( D3DXVECTOR4 ) * 3 ) );
+	VVV( m_pEffect->SetInt( "g_nNumLights", 1 ) );
+    VVV( m_pEffect->SetValue( "g_LightAmbient", &vLightAmbient, sizeof( D3DXVECTOR4 ) * 1 ) );
+	VVV( m_pEffect->SetFloat( "g_fAlpha",  m_Props.GetMaterial().GetAlpha() ) );
 
 	if (m_Props.GetMaterial().GetAlpha()!=1.0f)
 	{
-		V( m_pEffect->SetTechnique( "RenderSceneWith1Light" ) );
+		VVV( m_pEffect->SetTechnique( "RenderSceneWith1Light" ) );
 	}
 	else
 	{
-		V( m_pEffect->SetTechnique( "RenderSceneWith1Light" ) );
+		VVV( m_pEffect->SetTechnique( "RenderSceneWith1Light" ) );
 	}
 
     // Apply the technique contained in the effect 
 	UINT iPass, cPasses;
 
-    V( m_pEffect->Begin( &cPasses, 0 ) );
+    VVV( m_pEffect->Begin( &cPasses, 0 ) );
 
     for( iPass = 0; iPass < cPasses; iPass++ )
     {
-        V( m_pEffect->BeginPass( iPass ) );
+        VVV( m_pEffect->BeginPass( iPass ) );
 
         // The effect interface queues up the changes and performs them 
         // with the CommitChanges call. You do not need to call CommitChanges if 
         // you are not setting any parameters between the BeginPass and EndPass.
-        // V( g_pEffect->CommitChanges() );
+        // VVV( g_pEffect->CommitChanges() );
 
         // Render the mesh with the applied technique
-        V( m_pMesh->DrawSubset( 0 ) );
+        VVV( m_pMesh->DrawSubset( 0 ) );
 
-        V( m_pEffect->EndPass() );
+        VVV( m_pEffect->EndPass() );
     }
-    V( m_pEffect->End() );
+    VVV( m_pEffect->End() );
 
 	return S_OK;
 } 
@@ -1084,7 +1084,7 @@ HRESULT TeapotMeshNode::VOnRestore(Scene *pScene)
 	HRESULT hr;
 
 	IDirect3DDevice9 * pDevice = DXUTGetD3D9Device();
-	V_RETURN( D3DXCreateTeapot( pDevice, &m_pMesh, NULL ) );
+	VVV_RETURN( D3DXCreateTeapot( pDevice, &m_pMesh, NULL ) );
 
 	//Rotate the teapot 90 degrees from default so that the spout faces forward
 	Mat4x4 rotateY90 = m_Props.ToWorld();
@@ -1109,7 +1109,7 @@ HRESULT TeapotMeshNode::VOnRestore(Scene *pScene)
 	//...end rotation
 
 	// Note - the mesh is needed BEFORE calling the base class VOnRestore.
-	V_RETURN( ShaderMeshNode::VOnRestore ( pScene ) );
+	VVV_RETURN( ShaderMeshNode::VOnRestore ( pScene ) );
 
 	return S_OK;
 }
@@ -2073,7 +2073,7 @@ HRESULT RayCast::Pick(Scene *pScene, optional<ActorId> actorId, ID3DXMesh *pMesh
     m_vPickRayOrig.z = m._43;
 
 	ID3DXMesh* pTempMesh;
-    V( pMesh->CloneMeshFVF( pMesh->GetOptions(), TEXTURED_VERTEX::FVF,
+    VVV( pMesh->CloneMeshFVF( pMesh->GetOptions(), TEXTURED_VERTEX::FVF,
                                   DXUTGetD3D9Device(), &pTempMesh ) );
 
     LPDIRECT3DVERTEXBUFFER9 pVB;

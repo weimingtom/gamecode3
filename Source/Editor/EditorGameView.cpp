@@ -255,7 +255,8 @@ void EditorGameView::BuildInitialScene()
 	m_MouseHandler = m_pFreeCameraController;
 	m_pCamera->ClearTarget();
 
-	VOnRestore();
+	// Jan 2010 - mlm see if this gets rid of the D3D device has non-zero reference count problem
+	//VOnRestore();
 }
 
 //========================================================================

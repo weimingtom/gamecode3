@@ -649,7 +649,10 @@ void OpenLevel( char* fileName )
 void ReplaceAllCharacters( std::string& origString, std::string subString, std::string newSubString )
 {
 	size_t subStringPos = origString.find(subString, 0);
-	while (subStringPos != std::string.npos)
+	
+	// Jan 2010 - replaced std::string.npos with std::string::npos to remove a compiler problem in VS 2010
+	
+	while (subStringPos != std::string::npos)
 	{
 		origString.replace( subStringPos, subString.length(), newSubString );
 		subStringPos += newSubString.length();

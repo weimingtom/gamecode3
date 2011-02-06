@@ -53,7 +53,7 @@
 
 
 #include "GameCodeStd.h"
-#include <atlconv.h>
+//#include <atlconv.h>
 
 #include "Dbt.h"						// required for DBT_DEVICEREMOVECOMPLETE
 
@@ -1100,14 +1100,14 @@ int	GameCodeApp::EatSpecificMessages( UINT msgType, optional<LPARAM> lParam, opt
 HRESULT CALLBACK GameCodeApp::OnResetDevice(IDirect3DDevice9* pd3dDevice, const D3DSURFACE_DESC*, void* pUserContext  )
 {
 	HRESULT hr;
-	V_RETURN( g_pApp->g_DialogResourceManager.OnD3D9ResetDevice( ) );
+	VVV_RETURN( g_pApp->g_DialogResourceManager.OnD3D9ResetDevice( ) );
 
 	if (g_pApp->m_pGame)
 	{
 		BaseGameLogic *pGame = g_pApp->m_pGame;
 		for(GameViewList::iterator i=pGame->m_gameViews.begin(); i!=pGame->m_gameViews.end(); ++i)
 		{
-			V_RETURN ( (*i)->VOnRestore() );
+			VVV_RETURN ( (*i)->VOnRestore() );
 		}
 	}
 
@@ -1200,7 +1200,7 @@ void CALLBACK GameCodeApp::OnRender( IDirect3DDevice9* pd3dDevice, double fTime,
 HRESULT CALLBACK GameCodeApp::OnCreateDevice( IDirect3DDevice9* pd3dDevice, const D3DSURFACE_DESC* pBackBufferSurfaceDesc, void* pUserContext )
 {
 	HRESULT hr;
-    V_RETURN( g_pApp->g_DialogResourceManager.OnD3D9CreateDevice( pd3dDevice ) );
+    VVV_RETURN( g_pApp->g_DialogResourceManager.OnD3D9CreateDevice( pd3dDevice ) );
 	return S_OK;
 }
 
@@ -1710,7 +1710,7 @@ HRESULT CMessageBox::VOnRestore()
 HRESULT CMessageBox::VOnRender(double fTime, float fElapsedTime)
 {
 	HRESULT hr;
-	V( m_UI.OnRender( fElapsedTime ) );
+	VVV( m_UI.OnRender( fElapsedTime ) );
 	return S_OK;
 };
 
@@ -1776,7 +1776,7 @@ void HumanView::VOnRender(double fTime, float fElapsedTime )
 	if( m_runFullSpeed || ( (m_currTick - m_lastDraw) > SCREEN_REFRESH_RATE) )
 	{
 	    // Clear the render target and the zbuffer 
-		V( DXUTGetD3D9Device()->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_ARGB(0, 45, 50, 170), 1.0f, 0) );
+		VVV( DXUTGetD3D9Device()->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_ARGB(0, 45, 50, 170), 1.0f, 0) );
 
 
 	    // Render the scene
@@ -1807,7 +1807,7 @@ void HumanView::VOnRender(double fTime, float fElapsedTime )
 			m_lastDraw = m_currTick;
 		}
 
-        V( DXUTGetD3D9Device()->EndScene() );
+        VVV( DXUTGetD3D9Device()->EndScene() );
     }
 }
 
@@ -1827,22 +1827,22 @@ HRESULT HumanView::VOnRestore()
 	}
 	else
 	{
-        V_RETURN( m_pFont->OnResetDevice() );
+        VVV_RETURN( m_pFont->OnResetDevice() );
 	}
 
 	if (!m_pTextSprite)
 	{
 		// Create a sprite to help batch calls when drawing many lines of text
-		V_RETURN( D3DXCreateSprite( DXUTGetD3D9Device(), &m_pTextSprite ) );
+		VVV_RETURN( D3DXCreateSprite( DXUTGetD3D9Device(), &m_pTextSprite ) );
 	}
 	else
 	{
-        V_RETURN( m_pTextSprite->OnResetDevice() );		
+        VVV_RETURN( m_pTextSprite->OnResetDevice() );		
 	}
 	
 	for(ScreenElementList::iterator i=m_ScreenElements.begin(); i!=m_ScreenElements.end(); ++i)
 	{
-		V_RETURN ( (*i)->VOnRestore() );
+		VVV_RETURN ( (*i)->VOnRestore() );
 	}
 
 	return hr;

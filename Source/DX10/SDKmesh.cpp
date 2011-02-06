@@ -221,7 +221,7 @@ HRESULT CDXUTSDKMesh::CreateVertexBuffer( IDirect3DDevice9* pd3dDevice, SDKMESH_
         if( SUCCEEDED(hr) )
         {
             void* pLockedVerts = NULL;
-            V_RETURN( pHeader->pVB9->Lock( 0, 0, &pLockedVerts, 0 ) );
+            VVV_RETURN( pHeader->pVB9->Lock( 0, 0, &pLockedVerts, 0 ) );
             CopyMemory( pLockedVerts, pVertices, (size_t)pHeader->SizeBytes );
             pHeader->pVB9->Unlock();
         }
@@ -264,7 +264,7 @@ HRESULT CDXUTSDKMesh::CreateIndexBuffer( IDirect3DDevice9* pd3dDevice, SDKMESH_I
         if( SUCCEEDED(hr) )
         {
             void* pLockedIndices = NULL;
-            V_RETURN( pHeader->pIB9->Lock( 0, 0, &pLockedIndices, 0 ) );
+            VVV_RETURN( pHeader->pIB9->Lock( 0, 0, &pLockedIndices, 0 ) );
             CopyMemory( pLockedIndices, pIndices, (size_t)(pHeader->SizeBytes) );
             pHeader->pIB9->Unlock();
         }
@@ -282,7 +282,7 @@ HRESULT CDXUTSDKMesh::CreateFromFile( ID3D10Device *pDev10, IDirect3DDevice9* pD
     HRESULT hr = S_OK;
 
     // Find the path for the file
-    V_RETURN( DXUTFindDXSDKMediaFileCch( m_strPathW, sizeof(m_strPathW) / sizeof(WCHAR), szFileName ) );
+    VVV_RETURN( DXUTFindDXSDKMediaFileCch( m_strPathW, sizeof(m_strPathW) / sizeof(WCHAR), szFileName ) );
 
     // Open the file
     m_hFile = CreateFile( m_strPathW, FILE_READ_DATA, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_FLAG_SEQUENTIAL_SCAN, NULL );
@@ -904,7 +904,7 @@ HRESULT CDXUTSDKMesh::LoadAnimation( WCHAR* szFileName )
     WCHAR strPath[MAX_PATH];
 
     // Find the path for the file
-    V_RETURN( DXUTFindDXSDKMediaFileCch( strPath, MAX_PATH, szFileName ) );
+    VVV_RETURN( DXUTFindDXSDKMediaFileCch( strPath, MAX_PATH, szFileName ) );
 
     // Open the file
     HANDLE hFile = CreateFile( strPath, FILE_READ_DATA, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_FLAG_SEQUENTIAL_SCAN, NULL );
@@ -1126,7 +1126,7 @@ HRESULT CDXUTSDKMesh::CreateAdjacencyIndices( ID3D10Device *pd3dDevice, float fE
 
         if( DXGI_FORMAT_R32_UINT == GetIBFormat10(i) )
             Options |= D3DX10_MESH_32_BIT;
-        V_RETURN( D3DX10CreateMesh( pd3dDevice,
+        VVV_RETURN( D3DX10CreateMesh( pd3dDevice,
                                     layout, 
                                     2,
                                     layout[0].SemanticName,
@@ -1151,8 +1151,8 @@ HRESULT CDXUTSDKMesh::CreateAdjacencyIndices( ID3D10Device *pd3dDevice, float fE
         ID3DX10MeshBuffer* pIndexBuffer = NULL;
         BYTE* pAdjIndices = NULL;
         SIZE_T Size = 0;
-        V_RETURN( pMesh->GetIndexBuffer( &pIndexBuffer ) );
-        V_RETURN( pIndexBuffer->Map( (void**)&pAdjIndices, &Size ) );
+        VVV_RETURN( pMesh->GetIndexBuffer( &pIndexBuffer ) );
+        VVV_RETURN( pIndexBuffer->Map( (void**)&pAdjIndices, &Size ) );
         
         //Copy info about the original IB with a few modifications
         m_pAdjacencyIndexBufferArray[IBIndex] = m_pIndexBufferArray[IBIndex];
@@ -1168,7 +1168,7 @@ HRESULT CDXUTSDKMesh::CreateAdjacencyIndices( ID3D10Device *pd3dDevice, float fE
 
         D3D10_SUBRESOURCE_DATA InitData;
         InitData.pSysMem = pAdjIndices;
-        V_RETURN( pd3dDevice->CreateBuffer( &bufferDesc, &InitData, &m_pAdjacencyIndexBufferArray[IBIndex].pIB10 ) );
+        VVV_RETURN( pd3dDevice->CreateBuffer( &bufferDesc, &InitData, &m_pAdjacencyIndexBufferArray[IBIndex].pIB10 ) );
 
         //cleanup
         pIndexBuffer->Unmap();
@@ -2049,7 +2049,7 @@ HRESULT CDXUTXFileMesh::SetVertexDecl( LPDIRECT3DDEVICE9 pd3dDevice, const D3DVE
             rgdwAdjacency = new DWORD[m_pMesh->GetNumFaces() * 3];
             if( rgdwAdjacency == NULL )
                 return E_OUTOFMEMORY;
-            V( m_pMesh->GenerateAdjacency(1e-6f,rgdwAdjacency) );
+            VVV( m_pMesh->GenerateAdjacency(1e-6f,rgdwAdjacency) );
 
             float fPartialEdgeThreshold;
             float fSingularPointThreshold;

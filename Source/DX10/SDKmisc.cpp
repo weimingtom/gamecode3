@@ -1561,7 +1561,7 @@ HRESULT DXUTSnapD3D9Screenshot( LPCTSTR szFileName )
         return E_FAIL;
 
     IDirect3DSurface9* pBackBuffer = NULL;
-    V_RETURN( pDev->GetBackBuffer( 0, 0, D3DBACKBUFFER_TYPE_MONO, &pBackBuffer ) );
+    VVV_RETURN( pDev->GetBackBuffer( 0, 0, D3DBACKBUFFER_TYPE_MONO, &pBackBuffer ) );
 
     return D3DXSaveSurfaceToFile( szFileName, D3DXIFF_BMP, pBackBuffer, NULL, NULL );
 }

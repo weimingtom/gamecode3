@@ -70,8 +70,9 @@ extern "C" DllExport void RotateActorYAxis( ActorId actorId, float radians );
 extern "C" DllExport void RemoveActor( ActorId actorId );
 extern "C" DllExport void CreateActor( ActorType actorType, DWORD color, float length, float radius, LPCTSTR lEffectFileName, LPCTSTR lMeshFileName );
 
-extern "C" DllExport void SaveLevel( LPCTSTR lFileName );
-extern "C" DllExport void OpenLevel( LPCTSTR lFileName );
+// Dec 2008 (MrMike) - these two declarations were corrected as a result of KeithH's post.
+extern "C" DllExport void SaveLevel( char * lFileName );
+extern "C" DllExport void OpenLevel( char * lFileName );
 
 
 void WriteBeginningParamsBlock(FILE* pFile, std::string paramType, ActorId actorId);

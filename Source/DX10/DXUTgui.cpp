@@ -457,7 +457,7 @@ HRESULT CDXUTDialogResourceManager::OnD3D9ResetDevice()
     if( m_pSprite )
         m_pSprite->OnResetDevice();
 
-    V_RETURN( m_pd3d9Device->CreateStateBlock( D3DSBT_ALL, &m_pStateBlock ) );
+    VVV_RETURN( m_pd3d9Device->CreateStateBlock( D3DSBT_ALL, &m_pStateBlock ) );
 
     return S_OK;
 }
@@ -520,7 +520,7 @@ HRESULT CDXUTDialogResourceManager::OnD3D10CreateDevice( ID3D10Device *pd3dDevic
     HRESULT hr = S_OK;
 
     // Create the UI effect object
-    V_RETURN( D3DX10CreateEffectFromMemory( g_strUIEffectFile, g_uUIEffectFileSize, NULL, NULL,
+    VVV_RETURN( D3DX10CreateEffectFromMemory( g_strUIEffectFile, g_uUIEffectFileSize, NULL, NULL,
                                             NULL, "fx_4_0", D3D10_SHADER_ENABLE_STRICTNESS, 0, 
                                             pd3dDevice, NULL, NULL, &m_pEffect10, NULL, NULL ) );
 
@@ -553,8 +553,8 @@ HRESULT CDXUTDialogResourceManager::OnD3D10CreateDevice( ID3D10Device *pd3dDevic
     };
 
     D3D10_PASS_DESC PassDesc;
-    V_RETURN( m_pTechRenderUI10->GetPassByIndex( 0 )->GetDesc( &PassDesc ) );
-    V_RETURN( pd3dDevice->CreateInputLayout( layout, 3, PassDesc.pIAInputSignature, PassDesc.IAInputSignatureSize, &m_pInputLayout10 ) );
+    VVV_RETURN( m_pTechRenderUI10->GetPassByIndex( 0 )->GetDesc( &PassDesc ) );
+    VVV_RETURN( pd3dDevice->CreateInputLayout( layout, 3, PassDesc.pIAInputSignature, PassDesc.IAInputSignatureSize, &m_pInputLayout10 ) );
 
     // Create a vertex buffer quad for rendering later
     D3D10_BUFFER_DESC BufDesc;
@@ -563,7 +563,7 @@ HRESULT CDXUTDialogResourceManager::OnD3D10CreateDevice( ID3D10Device *pd3dDevic
     BufDesc.BindFlags = D3D10_BIND_VERTEX_BUFFER;
     BufDesc.CPUAccessFlags = D3D10_CPU_ACCESS_WRITE;
     BufDesc.MiscFlags = 0;
-    V_RETURN( pd3dDevice->CreateBuffer( &BufDesc, NULL, &m_pVBScreenQuad10 ) );
+    VVV_RETURN( pd3dDevice->CreateBuffer( &BufDesc, NULL, &m_pVBScreenQuad10 ) );
 
     return S_OK;
 }
@@ -584,7 +584,7 @@ HRESULT CDXUTDialogResourceManager::OnD3D10ResizedSwapChain( ID3D10Device *pd3dD
     D3D10_STATE_BLOCK_MASK StateBlockMask;
     DXUT_Dynamic_D3D10StateBlockMaskEnableAll( &StateBlockMask );
     DXUT_Dynamic_D3D10StateBlockMaskDisableCapture( &StateBlockMask, D3D10_DST_OM_RENDER_TARGETS, 0, 1 );
-    V_RETURN( DXUT_Dynamic_D3D10CreateStateBlock( pd3dDevice, &StateBlockMask, &m_pStateBlock10 ) );
+    VVV_RETURN( DXUT_Dynamic_D3D10CreateStateBlock( pd3dDevice, &StateBlockMask, &m_pStateBlock10 ) );
 
     return hr;
 }
@@ -1835,7 +1835,7 @@ HRESULT CDXUTDialog::InitControl( CDXUTControl* pControl )
             pControl->SetElement( pElementHolder->iElement, &pElementHolder->Element );
     }
 
-    V_RETURN( pControl->OnInit() );
+    VVV_RETURN( pControl->OnInit() );
 
     return S_OK;
 }
@@ -2554,7 +2554,7 @@ HRESULT CDXUTDialogResourceManager::CreateFont9( UINT iFont )
 
     SAFE_RELEASE( pFontNode->pFont9 );
 
-    V_RETURN( D3DXCreateFont( m_pd3d9Device, pFontNode->nHeight, 0, pFontNode->nWeight, 1, FALSE, DEFAULT_CHARSET, 
+    VVV_RETURN( D3DXCreateFont( m_pd3d9Device, pFontNode->nHeight, 0, pFontNode->nWeight, 1, FALSE, DEFAULT_CHARSET, 
                               OUT_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, 
                               pFontNode->strFace, &pFontNode->pFont9 ) );
 
@@ -2571,7 +2571,7 @@ HRESULT CDXUTDialogResourceManager::CreateFont10( UINT iFont )
 
     SAFE_RELEASE( pFontNode->pFont10 );
 
-    V_RETURN( D3DX10CreateFont( m_pd3d10Device, pFontNode->nHeight, 0, pFontNode->nWeight, 1, FALSE, DEFAULT_CHARSET, 
+    VVV_RETURN( D3DX10CreateFont( m_pd3d10Device, pFontNode->nHeight, 0, pFontNode->nWeight, 1, FALSE, DEFAULT_CHARSET, 
                                 OUT_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, 
                                 pFontNode->strFace, &pFontNode->pFont10 ) );
 

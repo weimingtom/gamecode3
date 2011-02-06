@@ -50,7 +50,7 @@
 
 #include <crtdbg.h>
 
-
+/****
 #if defined (_MSC_VER) && (_MSC_VER < 1300)
 	#include "types.h"
 #else
@@ -62,14 +62,16 @@
 		#include <atltypes.h>
 	#endif
 #endif
+****/
 
+#undef ATLTYPES_INLINE
 
+#include "gcctypes.h"
 
 #define _VS2005_
 #if _MSC_VER < 1400
 	#undef _VS2005_
 #endif
-
 
 
 
@@ -92,6 +94,17 @@
 #include <map>
 
 
+// Boost Includes - VERY important to include these BEFORE DirectX includes - since DirectX #defines the VVV(x) macro, and there are templates
+// in Boost's thread library that uses U and V as template variables.
+
+#include <boost\config.hpp>
+#include <boost\shared_ptr.hpp>
+#include <boost\utility.hpp>
+
+using boost::shared_ptr;
+
+
+
 // Game Code Complete - Chapter 12, page 446-447
 #if defined(_DEBUG)
 #	define GCC_NEW new(_NORMAL_BLOCK,__FILE__, __LINE__)
@@ -106,6 +119,7 @@
 #include <dxut.h>
 #include <SDKmisc.h>
 
+
 #pragma warning( disable : 4201 ) // nonstandard extension used - nameless struct/union - triggered in code inside MMSystem.h
 #pragma warning( disable : 4244 ) // conversion from 'int' to 'short', possible loss of data - small number of places
 #pragma warning( disable : 4100 ) // unreferenced formal parameter - small number of places
@@ -117,12 +131,6 @@
 
 // GameCode #includes
 #include "DumbStuff\templates.h"
-
-#include <boost\config.hpp>
-#include <boost\shared_ptr.hpp>
-#include <boost\utility.hpp>
-
-using boost::shared_ptr;
 
 #include "SceneGraph\geometry.h"
 
@@ -201,4 +209,5 @@ extern INT WINAPI GameCode3(HINSTANCE hInstance,
                      HINSTANCE hPrevInstance,
                      LPWSTR    lpCmdLine,
                      int       nCmdShow);
+
 
