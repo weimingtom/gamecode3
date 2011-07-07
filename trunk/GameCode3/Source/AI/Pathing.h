@@ -90,7 +90,7 @@ class PathingArc
 	PathingNode* m_pNodes[2];  // an arc always connects two nodes
 
 public:
-	explicit PathingArc(float weight = PATHING_DEFAULT_ARC_WEIGHT;) { m_weight = weight; }
+	explicit PathingArc(float weight = PATHING_DEFAULT_ARC_WEIGHT) { m_weight = weight; }
 	float GetWeight(void) const { return m_weight; }
 	void LinkNodes(PathingNode* pNodeA, PathingNode* pNodeB);
 	PathingNode* GetNeighbor(PathingNode* pMe);
