@@ -118,13 +118,6 @@ INT WINAPI GameCode3(HINSTANCE hInstance,
 
 //This is code that tests shared pointers.
 
-
-#include <boost\config.hpp>
-#include <boost\shared_ptr.hpp>
-
-using boost::shared_ptr;
-
-
 class IPrintable
 {
 public:

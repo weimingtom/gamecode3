@@ -46,7 +46,7 @@
 
 
 
-#include <boost/shared_ptr.hpp>
+//#include <boost/shared_ptr.hpp>
 #include <strstream>
 //#include "..\GameCode.h"
 #include "..\Scripting\LuaStateManager.h"
@@ -118,7 +118,7 @@ public:
 };
 
 class IEventData;
-typedef boost::shared_ptr<IEventData> IEventDataPtr;
+typedef shared_ptr<IEventData> IEventDataPtr;
 
 class IEventData : public ILuaable
 {
@@ -350,7 +350,7 @@ public:
 // automatically clean up all pointed-to objects ( so long as
 // there are no other oustanding references, of course ).
 
-typedef boost::shared_ptr<IEventListener>   EventListenerPtr;
+typedef shared_ptr<IEventListener>   EventListenerPtr;
 typedef concurrent_queue<IEventDataPtr> ThreadSafeEventQueue;
 
 class IEventManager

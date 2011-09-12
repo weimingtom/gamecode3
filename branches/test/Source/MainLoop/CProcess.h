@@ -95,7 +95,7 @@ static const int PROCESS_FLAG_ATTACHED		= 0x00000001;
 //
 //////////////////////////////////////////////////////////////////////
 
-class CProcess : public boost::noncopyable
+class CProcess : public GCC_noncopyable
 {
 	friend class CProcessManager;
 

@@ -332,7 +332,7 @@ struct BulletActor
 //       - Chapter 15, page 544
 /////////////////////////////////////////////////////////////////////////////
 
-class BulletPhysics : public IGamePhysics, boost::noncopyable
+class BulletPhysics : public IGamePhysics, GCC_noncopyable
 {
 	// use auto pointers to automatically call delete on these objects
 	//   during ~BulletPhysics

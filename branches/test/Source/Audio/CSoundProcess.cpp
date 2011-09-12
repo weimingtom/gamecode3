@@ -248,7 +248,7 @@ void ExplosionProcess::VOnInitialize()
 {
 	CProcess::VOnInitialize();
 	SoundResource resource("explosion.wav");
-	shared_ptr<SoundResHandle> srh = boost::static_pointer_cast<SoundResHandle>(g_pApp->m_ResCache->GetHandle(&resource));
+	shared_ptr<SoundResHandle> srh = std::tr1::static_pointer_cast<SoundResHandle>(g_pApp->m_ResCache->GetHandle(&resource));
 	m_Sound.reset(GCC_NEW SoundProcess(srh));
 
 	// Imagine cool explosion graphics setup code here!!!!

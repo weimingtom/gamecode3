@@ -37,10 +37,10 @@
 //========================================================================
  
 #include <windows.h>
-#include <boost/thread/mutex.hpp>
-#include <boost/thread/condition_variable.hpp>
+//#include <boost/thread/mutex.hpp>
+//#include <boost/thread/condition_variable.hpp>
  
-class CriticalSection : public boost::noncopyable
+class CriticalSection : public GCC_noncopyable
 {
 public:
 	CriticalSection()
@@ -111,7 +111,7 @@ protected:
  
  
 */
-class ScopedCriticalSection : public boost::noncopyable
+class ScopedCriticalSection : public GCC_noncopyable
 {
 public:
 	ScopedCriticalSection( CriticalSection & csResource)
@@ -144,26 +144,38 @@ class concurrent_queue
 {
 private:
     std::queue<Data> the_queue;
-    mutable boost::mutex the_mutex;
-    boost::condition_variable the_condition_variable;
+	CriticalSection m_cs;
+    //std::condition_variable the_condition_variable;
+	HANDLE m_dataPushed;
 public:
+	concurrent_queue()
+	{
+		m_dataPushed = CreateEvent(NULL, TRUE, FALSE, NULL);
+	}
+
     void push(Data const& data)
     {
-        boost::mutex::scoped_lock lock(the_mutex);
-        the_queue.push(data);
-        lock.unlock();
-        the_condition_variable.notify_one();
+        //boost::mutex::scoped_lock lock(the_mutex);
+		{
+			ScopedCriticalSection locker(m_cs);
+			the_queue.push(data);
+		}
+        //lock.unlock();
+        //the_condition_variable.notify_one();
+		PulseEvent(m_dataPushed);
     }
 
     bool empty() const
     {
-        boost::mutex::scoped_lock lock(the_mutex);
+        //boost::mutex::scoped_lock lock(the_mutex);
+		ScopedCriticalSection locker(m_cs);
         return the_queue.empty();
     }
 
     bool try_pop(Data& popped_value)
     {
-        boost::mutex::scoped_lock lock(the_mutex);
+        //boost::mutex::scoped_lock lock(the_mutex);
+		ScopedCriticalSection locker(m_cs);
         if(the_queue.empty())
         {
             return false;
@@ -176,10 +188,12 @@ public:
 
     void wait_and_pop(Data& popped_value)
     {
-        boost::mutex::scoped_lock lock(the_mutex);
+        //boost::mutex::scoped_lock lock(the_mutex);
+		ScopedCriticalSection locker(m_cs);
         while(the_queue.empty())
         {
-            the_condition_variable.wait(lock);
+            //the_condition_variable.wait(lock);
+			WaitForSingleObject(m_dataPushed);
         }
         
         popped_value=the_queue.front();

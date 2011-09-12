@@ -55,8 +55,13 @@ namespace EditorApp
     // We also need to import some functions that will allow us to load
     // the dll, and free it when we're done.
     static class NativeMethods
-    {     
-        const string editorDllName = "Editor.dll";      // Jan 2010 - mlm - DLL should have the same name in debug and release.
+    {
+
+#if DEBUG
+        const string editorDllName = "Editord.dll";
+#else
+        const string editorDllName = "Editor.dll"; 
+#endif
 
         [DllImport(editorDllName)]
         public unsafe static extern int EditorMain(IntPtr instancePtrAddress, IntPtr hPrevInstancePtrAddress, IntPtr hWndPtrAddress, int nCmdShow, int screenWidth, int screenHeight);
