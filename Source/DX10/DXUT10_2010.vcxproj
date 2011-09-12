@@ -42,6 +42,12 @@
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\..\Obj\$(Configuration)\$(ProjectName)\</IntDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\..\Libs\$(Configuration)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\..\Obj\$(Configuration)\$(ProjectName)\</IntDir>
+    <ExecutablePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(DXSDK_DIR)Utilities\Bin\x86";$(VCInstallDir)Tools\Bin;$(VCInstallDir)PlatformSDK\bin;$(VSInstallDir)\SDK\v2.0\bin;$(ExecutablePath)</ExecutablePath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(DXSDK_DIR)Include";C:\Program Files\Debugging Tools for Windows\sdk\inc;$(VCInstallDir)PlatformSDK\include;$(IncludePath)</IncludePath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(DXSDK_DIR)Lib\x86";$(VCInstallDir)PlatformSDK\lib;$(LibraryPath)</LibraryPath>
+    <ExecutablePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(DXSDK_DIR)Utilities\Bin\x86";$(VCInstallDir)Tools\Bin;$(VCInstallDir)PlatformSDK\bin;$(VSInstallDir)\SDK\v2.0\bin;$(ExecutablePath)</ExecutablePath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(DXSDK_DIR)Include";C:\Program Files\Debugging Tools for Windows\sdk\inc;$(VCInstallDir)PlatformSDK\include;$(IncludePath)</IncludePath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(DXSDK_DIR)Lib\x86";$(VCInstallDir)PlatformSDK\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

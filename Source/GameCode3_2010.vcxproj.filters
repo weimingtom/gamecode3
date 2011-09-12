@@ -141,13 +141,13 @@
     <ClCompile Include="AI\StateMachine.cpp">
       <Filter>AI</Filter>
     </ClCompile>
-    <ClCompile Include="Multicore\RealtimeProcess.cpp">
-      <Filter>Multicore</Filter>
-    </ClCompile>
     <ClCompile Include="Actors.cpp" />
     <ClCompile Include="GameCode.cpp" />
     <ClCompile Include="GameCode3.cpp" />
     <ClCompile Include="GameCodeStd.cpp" />
+    <ClCompile Include="Multicore\RealtimeProcess.cpp">
+      <Filter>Multicore</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainLoop\CProcess.h">

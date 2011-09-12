@@ -280,7 +280,7 @@ private:
 		}
 	};		
 
-	typedef boost::shared_ptr< IRegisteredEvent > IRegisteredEventPtr;
+	typedef shared_ptr< IRegisteredEvent > IRegisteredEventPtr;
 
 	//Verifies that such an event does not already exist, then registers it.
 	void AddRegisteredEventType( const EventType & eventType, IRegisteredEventPtr metaData );
@@ -354,12 +354,12 @@ private:
 
 	// Holds all allocated script listeners.
 	// It maps an event ID to a set of listeners.
-	typedef boost::shared_ptr< ScriptEventListener > ScriptEventListenerPtr;
+	typedef shared_ptr< ScriptEventListener > ScriptEventListenerPtr;
 	typedef std::multimap< unsigned int, ScriptEventListenerPtr > ScriptEventListenerMap;
 	ScriptEventListenerMap m_ScriptEventListenerMap;
 
 	// Holds all allocated script actor listeners.
-	typedef boost::shared_ptr< ScriptActorEventListener > ScriptActorEventListenerPtr;
+	typedef shared_ptr< ScriptActorEventListener > ScriptActorEventListenerPtr;
 	typedef std::multimap< unsigned int, ScriptActorEventListenerPtr > ScriptActorEventListenerMap;
 	ScriptActorEventListenerMap m_ScriptActorEventListenerMap;
 

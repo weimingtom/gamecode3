@@ -131,7 +131,7 @@ HWND GameCodeApp::GetHwnd()
 //
 //===================================================================
 
-#ifdef DEBUG
+#ifdef _DEBUG
 	char const * const kpLangDllName = "Langd.dll";
 #else
 	char const * const kpLangDllName = "Lang.dll";
@@ -310,6 +310,11 @@ bool GameCodeApp::InitInstance(HINSTANCE hInstance, LPWSTR lpCmdLine, HWND hWnd,
 
 void GameCodeApp::ParseCommandLine(LPWSTR lpCmdLine)
 {
+	// Feb 2011 - Mr.Mike - This was extremely fragile, and easy to screw up the game initialization sequence if the command line
+	//                      options weren't set up exactly right. This has been replaced with the MainMenuUI anyway, so it was
+	//                      a good idea to just remove this entirely.
+	//
+	/****
 	WCHAR *playersCmd = _T("-players");
 	WCHAR *gameHostCmd = _T("-gamehost");
 	WCHAR *listenCmd = _T("-listen");
@@ -383,6 +388,9 @@ void GameCodeApp::ParseCommandLine(LPWSTR lpCmdLine)
 			m_pOptions->m_numAIs = numAIs;
 		}
 	}
+	*****************/
+
+
 
 }
 

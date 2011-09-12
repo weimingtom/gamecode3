@@ -310,7 +310,6 @@ bool EventManager::VQueueEvent ( IEventDataPtr const & inEvent )
 bool EventManager::VThreadSafeQueueEvent ( IEventDataPtr const & inEvent )
 {
 	m_RealtimeEventQueue.push(inEvent);
-	//assert(0 && "Not implemented - the editor won't link with boost::thread");
 	return true;
 }
 
@@ -410,6 +409,7 @@ bool EventManager::VTick ( unsigned long maxMillis )
 			}
 		}
 	}
+
 	// --------------------------------------------------------
 
 	// swap active queues, make sure new queue is empty after the

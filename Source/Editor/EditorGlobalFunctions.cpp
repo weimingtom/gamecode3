@@ -288,7 +288,7 @@ int PickActor(int *hWndPtrAddress)
 		return INVALID_ID;
 	}
 
-	shared_ptr<EditorGameView> gameView = boost::static_pointer_cast<EditorGameView>( pView );
+	shared_ptr<EditorGameView> gameView = std::tr1::static_pointer_cast<EditorGameView>( pView );
 
 	// Cast a ray through the scene. The RayCast object contains an array of Intersection
 	// objects.
@@ -510,7 +510,7 @@ void SaveLevel( char* fileName )
 				// position.
 				WriteBeginningParamsBlock(pFile, "sphere", actorId);
 				WritePosParams(pFile, pActor->VGetMat().GetPosition());
-				shared_ptr<SphereParams> sphereParams = boost::static_pointer_cast<SphereParams>( pActorParams );
+				shared_ptr<SphereParams> sphereParams = std::tr1::static_pointer_cast<SphereParams>( pActorParams );
 				fprintf(pFile, "   Radius = %f,\n", sphereParams->m_Radius);
 				fprintf(pFile, "   Segments = %i,\n", sphereParams->m_Segments);
 				WriteColorParams(pFile, sphereParams->m_Color);
@@ -522,7 +522,7 @@ void SaveLevel( char* fileName )
 				// We want to write out the matrix params for the teapot, since we're
 				// interested in saving its position and rotation.
 				WriteBeginningParamsBlock(pFile, "teapot", actorId);
-				shared_ptr<TeapotParams> teapotParams = boost::static_pointer_cast<TeapotParams>( pActorParams );
+				shared_ptr<TeapotParams> teapotParams = std::tr1::static_pointer_cast<TeapotParams>( pActorParams );
 				WriteColorParams(pFile, teapotParams->m_Color);
 				WriteMatrixParams(pFile, pActor->VGetMat());
 				WriteEndParamsBlock(pFile, "teapot", actorId);
@@ -534,7 +534,7 @@ void SaveLevel( char* fileName )
 				// We want to write out the matrix params for the Test Object, since we're
 				// interested in saving its position and rotation.
 				WriteBeginningParamsBlock(pFile, "testObject", actorId);
-				shared_ptr<TestObjectParams> testObjectParams = boost::static_pointer_cast<TestObjectParams>( pActorParams );
+				shared_ptr<TestObjectParams> testObjectParams = std::tr1::static_pointer_cast<TestObjectParams>( pActorParams );
 				WriteColorParams(pFile, testObjectParams->m_Color);
 				WriteMatrixParams(pFile, pActor->VGetMat());
 				WriteEndParamsBlock(pFile, "testObject", actorId);
@@ -545,7 +545,7 @@ void SaveLevel( char* fileName )
 				// The grid contains some extra information, like its texture and
 				// number of squares.
 				WriteBeginningParamsBlock(pFile, "grid", actorId);
-				shared_ptr<GridParams> gridParams = boost::static_pointer_cast<GridParams>( pActorParams );
+				shared_ptr<GridParams> gridParams = std::tr1::static_pointer_cast<GridParams>( pActorParams );
 				WriteColorParams(pFile, gridParams->m_Color);
 				WriteMatrixParams(pFile, pActor->VGetMat());
 				fprintf(pFile, "   Texture = \"%s\",\n", gridParams->m_Texture);
@@ -556,7 +556,7 @@ void SaveLevel( char* fileName )
 		case AT_GenericMeshObject:
 			{
 				WriteBeginningParamsBlock(pFile, "genericMeshObject", actorId);
-				shared_ptr<GenericMeshObjectParams> genericMeshObjectParams = boost::static_pointer_cast<GenericMeshObjectParams>( pActorParams );
+				shared_ptr<GenericMeshObjectParams> genericMeshObjectParams = std::tr1::static_pointer_cast<GenericMeshObjectParams>( pActorParams );
 				WriteColorParams(pFile, genericMeshObjectParams->m_Color);
 				WriteMatrixParams(pFile, pActor->VGetMat());
 				std::string meshFileName(genericMeshObjectParams->m_XFileName);

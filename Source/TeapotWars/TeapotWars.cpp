@@ -199,7 +199,7 @@ bool TeapotWarsEventListener::HandleEvent( IEventData const & event )
 			if (actor->VGetType() == AT_Teapot)
 			{
 				shared_ptr<ActorParams> params = actor->VGetParams();
-				shared_ptr<TeapotParams> teapotParams = boost::static_pointer_cast<TeapotParams>(params);
+				shared_ptr<TeapotParams> teapotParams = std::tr1::static_pointer_cast<TeapotParams>(params);
 				if (teapotParams->m_ViewId == VIEWID_NO_VIEW_ATTACHED)
 				{
 					break;
@@ -737,15 +737,15 @@ void TeapotWarsGame::VChangeState(BaseGameState newState)
 void TeapotWarsGame::VAddView(shared_ptr<IGameView> pView, optional<ActorId> actor)
 {
 	TeapotWarsBaseGame::VAddView(pView, actor);
-	if (boost::dynamic_pointer_cast<NetworkGameView>(pView))
+	if (std::tr1::dynamic_pointer_cast<NetworkGameView>(pView))
 	{
 		m_HumanPlayersAttached++;
 	}
-	else if (boost::dynamic_pointer_cast<TeapotWarsGameView>(pView))
+	else if (std::tr1::dynamic_pointer_cast<TeapotWarsGameView>(pView))
 	{
 		m_HumanPlayersAttached++;
 	}
-	else if (boost::dynamic_pointer_cast<AITeapotView>(pView))
+	else if (std::tr1::dynamic_pointer_cast<AITeapotView>(pView))
 	{
 		m_AIPlayersAttached++;
 	}

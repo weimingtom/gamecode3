@@ -97,12 +97,22 @@
 // Boost Includes - VERY important to include these BEFORE DirectX includes - since DirectX #defines the VVV(x) macro, and there are templates
 // in Boost's thread library that uses U and V as template variables.
 
-#include <boost\config.hpp>
-#include <boost\shared_ptr.hpp>
-#include <boost\utility.hpp>
+//#include <boost\config.hpp>
+//#include <boost\shared_ptr.hpp>
+//#include <boost\utility.hpp>
 
-using boost::shared_ptr;
+using std::tr1::shared_ptr;
 
+//using boost::shared_ptr;
+
+class GCC_noncopyable 
+{  
+     private:  
+      GCC_noncopyable(const GCC_noncopyable& x);  
+      GCC_noncopyable& operator=(const GCC_noncopyable& x);  
+     public:  
+      GCC_noncopyable() {}; // Default constructor  
+};  
 
 
 // Game Code Complete - Chapter 12, page 446-447

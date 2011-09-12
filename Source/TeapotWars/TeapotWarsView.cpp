@@ -64,7 +64,7 @@
 #include "TeapotController.h"
 #include "TeapotWars.h"
 
-#include <boost\format.hpp>
+//#include <boost\format.hpp>
 
 extern TeapotWarsGameApp g_TeapotWarsApp;
 
@@ -513,7 +513,7 @@ LRESULT CALLBACK TeapotWarsGameView::VOnMsgProc( AppMsg msg )
 			//testRealtimeEvents(m_pProcessManager);
 
 			extern void testRealtimeDecompression(CProcessManager *procMgr);
-			testRealtimeDecompression(m_pProcessManager);
+			//testRealtimeDecompression(m_pProcessManager);
 		}
 		else if (msg.m_wParam==VK_F8)
 		{
@@ -728,7 +728,7 @@ void TeapotWarsGameView::BuildInitialScene()
 {
 	SoundResource resource("SpaceGod7-Level2.ogg");
 	shared_ptr<ResHandle> rh = g_pApp->m_ResCache->GetHandle(&resource);
-	shared_ptr<SoundResHandle> srh = boost::static_pointer_cast<SoundResHandle>(rh);
+	shared_ptr<SoundResHandle> srh = std::tr1::static_pointer_cast<SoundResHandle>(rh);
 	shared_ptr<SoundProcess> music(GCC_NEW SoundProcess(srh, PROC_MUSIC, 0, true));
 	m_pProcessManager->Attach(music);
 
@@ -796,7 +796,7 @@ bool TeapotWarsGameViewListener::HandleEvent( IEventData const & event )
 			// play the sound a bullet makes when it hits a teapot
 
 			SoundResource resource("computerbeep3.wav");
-			shared_ptr<SoundResHandle> srh = boost::static_pointer_cast<SoundResHandle>(g_pApp->m_ResCache->GetHandle(&resource));
+			shared_ptr<SoundResHandle> srh = std::tr1::static_pointer_cast<SoundResHandle>(g_pApp->m_ResCache->GetHandle(&resource));
 			shared_ptr<SoundProcess> sfx(GCC_NEW SoundProcess(srh, PROC_SOUNDFX, 100, false));
 			m_pView->m_pProcessManager->Attach(sfx);
 		}
@@ -812,7 +812,7 @@ bool TeapotWarsGameViewListener::HandleEvent( IEventData const & event )
 	{
 		// play a weapon fire sound
 		SoundResource resource("blip.wav");
-		shared_ptr<SoundResHandle> srh = boost::static_pointer_cast<SoundResHandle>(g_pApp->m_ResCache->GetHandle(&resource));
+		shared_ptr<SoundResHandle> srh = std::tr1::static_pointer_cast<SoundResHandle>(g_pApp->m_ResCache->GetHandle(&resource));
 		shared_ptr<SoundProcess> sfx1(GCC_NEW SoundProcess(srh, PROC_SOUNDFX, 100, false));
 		shared_ptr<SoundProcess> sfx2(GCC_NEW SoundProcess(srh, PROC_SOUNDFX, 60, false));
 		shared_ptr<SoundProcess> sfx3(GCC_NEW SoundProcess(srh, PROC_SOUNDFX, 40, false));

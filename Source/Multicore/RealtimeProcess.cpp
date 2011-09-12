@@ -257,7 +257,6 @@ LONG nRemainingThreads = THREADS_COUNT;
 #include "../EventManager/Events.h"
 
 
-
 ThreadSafeEventQueue g_RealtimeEventQueue;
 
 class EventSenderProcess : public RealtimeProcess
@@ -386,7 +385,7 @@ DWORD WINAPI DecompressionProcess::ThreadProc( LPVOID lpParam )
 			// there's an event! Something to do....
 			if (EvtData_Decompress_Request::sk_EventType == e->VGetEventType())
 			{
-				shared_ptr<EvtData_Decompress_Request> decomp = boost::static_pointer_cast<EvtData_Decompress_Request>(e);
+				shared_ptr<EvtData_Decompress_Request> decomp = std::tr1::static_pointer_cast<EvtData_Decompress_Request>(e);
 
 				ZipFile zipFile;
 
