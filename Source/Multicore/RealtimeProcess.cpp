@@ -46,15 +46,14 @@
 
 #include "GameCodeStd.h"
 
-#define BOOST_THREAD_USE_LIB
-#include <boost/thread/mutex.hpp>
-#include <boost/thread/condition_variable.hpp>
+//#define BOOST_THREAD_USE_LIB
+//#include <boost/thread/mutex.hpp>
+//#include <boost/thread/condition_variable.hpp>
 
 
 #include "RealtimeProcess.h"
-#include "..\Multicore\SafeStream.h"
-
-#include <boost/format.hpp>
+//#include "..\Multicore\SafeStream.h"
+//#include <boost/format.hpp>
 
 
 DWORD g_maxLoops = 100000;
@@ -198,9 +197,8 @@ DWORD WINAPI UnprotectedProcess::ThreadProc( LPVOID lpParam )
 
 int g_ThreadCount = 20;
 DWORD g_ThreadLoops = 100000;
-bool g_Condom = true;
 
-void testThreading(CProcessManager *procMgr)
+void testThreading(CProcessManager *procMgr, bool runProtected)
 {
     int i;
 
@@ -209,7 +207,7 @@ void testThreading(CProcessManager *procMgr)
 
 	for( i=0; i < g_ThreadCount; i++ )
 	{
-		if (g_Condom)
+		if (runProtected)
 		{
 			shared_ptr<CProcess> proc(GCC_NEW ProtectedProcess(g_ThreadLoops));
 			procMgr->Attach(proc);
@@ -219,7 +217,6 @@ void testThreading(CProcessManager *procMgr)
 			shared_ptr<CProcess> proc(GCC_NEW UnprotectedProcess(g_ThreadLoops));
 			procMgr->Attach(proc);
 		}
-
 	}
  }
 
@@ -227,7 +224,7 @@ void testThreading(CProcessManager *procMgr)
 // Solution 1
 // (note: compiles with gcc 3.2, VC6)
 #include "CriticalSection.h"
-#include "SafeStream.h"
+//#include "SafeStream.h"
  
 
  

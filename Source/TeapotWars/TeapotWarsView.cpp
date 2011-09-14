@@ -503,17 +503,17 @@ LRESULT CALLBACK TeapotWarsGameView::VOnMsgProc( AppMsg msg )
 			//extern void CreateThreads();
 			//CreateThreads();
 
-			extern void testThreading(CProcessManager *procMgr);
-			//testThreading(m_pProcessManager);
-
-			extern void testStreaming(CProcessManager *procMgr);
-			//testStreaming(m_pProcessManager);
+			extern void testThreading(CProcessManager *procMgr, bool runProtected);
+			testThreading(m_pProcessManager, true);
+			Sleep(5000);
+			testThreading(m_pProcessManager, false);
+			Sleep(5000);
 
 			extern void testRealtimeEvents(CProcessManager *procMgr);
-			//testRealtimeEvents(m_pProcessManager);
+			testRealtimeEvents(m_pProcessManager);
 
 			extern void testRealtimeDecompression(CProcessManager *procMgr);
-			//testRealtimeDecompression(m_pProcessManager);
+			testRealtimeDecompression(m_pProcessManager);
 		}
 		else if (msg.m_wParam==VK_F8)
 		{
