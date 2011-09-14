@@ -477,7 +477,7 @@ typedef basic_thread_safe_stream< wchar_t> wthread_safe_stream;
  
 //  This cool streaming code was found on....
 //  http://articles.techrepublic.com.com/5100-10878_11-5072104.html
-/**************************************
+
 // Example on using the thread safe stream.
 
 thread_safe_stream get_log()
@@ -546,4 +546,3 @@ void testStreaming(CProcessManager *procMgr)
     }
 }
 
-*******************/

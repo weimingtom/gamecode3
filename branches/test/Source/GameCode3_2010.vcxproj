@@ -53,7 +53,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;PROFILE;APP_SUFX="$(Configuration)";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>GameCodeStd.h</PrecompiledHeaderFile>
@@ -177,7 +177,6 @@
     <ClInclude Include="AI\StateMachine.h" />
     <ClInclude Include="Multicore\CriticalSection.h" />
     <ClInclude Include="Multicore\RealtimeProcess.h" />
-    <ClInclude Include="Multicore\SafeStream.h" />
     <ClInclude Include="actors.h" />
     <ClInclude Include="GameCode.h" />
     <ClInclude Include="GameCodeStd.h" />

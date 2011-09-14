@@ -246,9 +246,6 @@
     <ClInclude Include="Multicore\RealtimeProcess.h">
       <Filter>Multicore</Filter>
     </ClInclude>
-    <ClInclude Include="Multicore\SafeStream.h">
-      <Filter>Multicore</Filter>
-    </ClInclude>
     <ClInclude Include="actors.h" />
     <ClInclude Include="GameCode.h" />
     <ClInclude Include="GameCodeStd.h" />
