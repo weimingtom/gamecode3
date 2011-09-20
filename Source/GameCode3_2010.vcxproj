@@ -53,7 +53,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;PROFILE;APP_SUFX="$(Configuration)";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>GameCodeStd.h</PrecompiledHeaderFile>

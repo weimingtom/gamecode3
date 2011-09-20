@@ -69,10 +69,11 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>/MACHINE:I386 /IGNORE:4089 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>d3dx9.lib;d3d9.lib;d3d10.lib;d3dx10.lib;dxerr.lib;dxguid.lib;winmm.lib;comctl32.lib;vorbisfile_static.lib;vorbis_static.lib;ogg_static.lib;dxut10.lib;gamecode3.lib;LuaPlus_1100.lib;libbulletdynamics.lib;libbulletcollision.lib;libbulletmath.lib;zlib.lib</AdditionalDependencies>
+      <AdditionalDependencies>user32.lib;gdi32.lib;kernel32.lib;shell32.lib;d3dx9.lib;d3d9.lib;d3d10.lib;d3dx10.lib;dxerr.lib;dxguid.lib;winmm.lib;comctl32.lib;vorbisfile_static.lib;vorbis_static.lib;ogg_static.lib;dxut10.lib;gamecode3.lib;LuaPlusD_1100.lib;libbulletdynamics_d.lib;libbulletcollision_d.lib;libbulletmath_d.lib;zlib.lib</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName)d.exe</OutputFile>
       <AdditionalLibraryDirectories>..\..\Libs\$(Configuration);..\3rdParty\boost_1_45_0\stage\lib;..\3rdParty\oggvorbis-win32sdk-1.0\lib;..\3rdParty\LuaPlus\Lib\win32;..\3rdParty\bullet-2.73\out\debug8\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <IgnoreSpecificDefaultLibraries>libcpmtd.lib</IgnoreSpecificDefaultLibraries>
+      <IgnoreSpecificDefaultLibraries>
+      </IgnoreSpecificDefaultLibraries>
       <DelayLoadDLLs>%(DelayLoadDLLs)</DelayLoadDLLs>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(IntDir)$(TargetName).pdb</ProgramDatabaseFile>
@@ -104,7 +105,7 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>/MACHINE:I386 /IGNORE:4089 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>d3dx9.lib;d3d9.lib;d3d10.lib;d3dx10.lib;dxerr.lib;dxguid.lib;winmm.lib;comctl32.lib;vorbisfile_static.lib;vorbis_static.lib;ogg_static.lib;dxut10.lib;gamecode3.lib;LuaPlus_1100.lib;libbulletdynamics.lib;libbulletcollision.lib;libbulletmath.lib;zlib.lib</AdditionalDependencies>
+      <AdditionalDependencies>user32.lib;gdi32.lib;kernel32.lib;shell32.lib;d3dx9.lib;d3d9.lib;d3d10.lib;d3dx10.lib;dxerr.lib;dxguid.lib;winmm.lib;comctl32.lib;vorbisfile_static.lib;vorbis_static.lib;ogg_static.lib;dxut10.lib;gamecode3.lib;LuaPlus_1100.lib;libbulletdynamics.lib;libbulletcollision.lib;libbulletmath.lib;zlib.lib</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
       <AdditionalLibraryDirectories>..\..\Libs\$(Configuration);..\3rdParty\boost_1_45_0\stage\lib;..\3rdParty\oggvorbis-win32sdk-1.0\lib;..\3rdParty\LuaPlus\Lib\win32;..\3rdParty\bullet-2.73\out\release8\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <DelayLoadDLLs>%(DelayLoadDLLs)</DelayLoadDLLs>
@@ -117,7 +118,11 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <EntryPointSymbol>wWinMainCRTStartup</EntryPointSymbol>
       <TargetMachine>MachineX86</TargetMachine>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
     </Link>
+    <ProjectReference>
+      <UseLibraryDependencyInputs>true</UseLibraryDependencyInputs>
+    </ProjectReference>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\actors.h" />

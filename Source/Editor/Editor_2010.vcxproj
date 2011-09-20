@@ -98,7 +98,8 @@
       <AdditionalLibraryDirectories>..\..\Libs\$(Configuration);..\3rdParty\boost_1_45_0\stage\lib;..\3rdParty\oggvorbis-win32sdk-1.0\lib;..\3rdParty\LuaPlus\Lib\win32;..\3rdParty\bullet-2.73\out\release8\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
-      <IgnoreSpecificDefaultLibraries>libcpmtd.lib</IgnoreSpecificDefaultLibraries>
+      <IgnoreSpecificDefaultLibraries>
+      </IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
