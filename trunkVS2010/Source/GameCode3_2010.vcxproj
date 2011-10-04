@@ -1,0 +1,188 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>GameCode3</ProjectName>
+    <ProjectGuid>{CACD6762-8701-49A3-8E03-7CFCDA35BD5B}</ProjectGuid>
+    <RootNamespace>GameCode3</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\Libs\$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\Obj\$(Configuration)\$(ProjectName)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\Libs\$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\Obj\$(Configuration)\$(ProjectName)\</IntDir>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(WindowsSdkDir)include;$(DXSDK_DIR)Include;C:\Program Files\Debugging Tools for Windows\sdk\inc;$(VCInstallDir)PlatformSDK\include;$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(FrameworkSDKDir)\include</IncludePath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(WindowsSdkDir)include;$(DXSDK_DIR)Include;C:\Program Files\Debugging Tools for Windows\sdk\inc;$(VCInstallDir)PlatformSDK\include;$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(FrameworkSDKDir)\include</IncludePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(SolutionDir)\3rdParty\OggVorbis-win32sdk-1.0\include;$(SolutionDir)\3rdParty\boost_1_45_0;DX10;$(SolutionDir)\3rdParty\bullet-2.73\src;$(SolutionDir)\3rdParty\LuaPlus\Src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;PROFILE;APP_SUFX="$(Configuration)";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>GameCodeStd.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)$(ProjectName)d.pch</PrecompiledHeaderOutputFile>
+      <ProgramDataBaseFileName>$(IntDir)$(TargetName).pdb</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Lib>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <OmitFramePointers>true</OmitFramePointers>
+      <AdditionalIncludeDirectories>$(SolutionDir)\3rdParty\OggVorbis-win32sdk-1.0\include;$(SolutionDir)\3rdParty\boost_1_45_0;DX10;$(SolutionDir)\3rdParty\bullet-2.73\src;$(SolutionDir)\3rdParty\LuaPlus\Src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;APP_SUFX=;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>GameCodeStd.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)$(ProjectName).pch</PrecompiledHeaderOutputFile>
+      <ProgramDataBaseFileName>$(IntDir)$(TargetName).pdb</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Lib>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include="DX9Common\directx.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuildStep Include="GameCode3.manifest">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </CustomBuildStep>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="MainLoop\CProcess.cpp" />
+    <ClCompile Include="MainLoop\CPUSpeed.cpp" />
+    <ClCompile Include="MainLoop\Initialization.cpp" />
+    <ClCompile Include="Audio\CAudio.cpp" />
+    <ClCompile Include="Audio\CSoundProcess.cpp" />
+    <ClCompile Include="Audio\CSoundResource.cpp" />
+    <ClCompile Include="Audio\DirectSoundAudio.cpp" />
+    <ClCompile Include="DumbStuff\CMath.cpp" />
+    <ClCompile Include="DumbStuff\CMath_Random.cpp" />
+    <ClCompile Include="DumbStuff\PrimeSearch.cpp" />
+    <ClCompile Include="DumbStuff\String.cpp" />
+    <ClCompile Include="Debugging\Debugging.cpp" />
+    <ClCompile Include="Debugging\MiniDump.cpp" />
+    <ClCompile Include="Multicore\RealtimeProcess.cpp" />
+    <ClCompile Include="ResourceCache\ResCache2.cpp" />
+    <ClCompile Include="ResourceCache\ZipFile.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="SceneGraph\Geometry.cpp" />
+    <ClCompile Include="SceneGraph\SceneNodes.cpp" />
+    <ClCompile Include="Physics\Physics.cpp" />
+    <ClCompile Include="Physics\PhysicsDebugDrawer.cpp" />
+    <ClCompile Include="Physics\PhysicsEventListener.cpp" />
+    <ClCompile Include="EventManager\EventManager.cpp" />
+    <ClCompile Include="EventManager\EventManagerImpl.cpp" />
+    <ClCompile Include="EventManager\Events.cpp" />
+    <ClCompile Include="Graphics2D\Font.cpp" />
+    <ClCompile Include="Network\Network.cpp" />
+    <ClCompile Include="Scripting\LuaStateManager.cpp" />
+    <ClCompile Include="Scripting\ScriptEventListener.cpp" />
+    <ClCompile Include="AI\AiEvents.cpp" />
+    <ClCompile Include="AI\Pathing.cpp" />
+    <ClCompile Include="AI\StateMachine.cpp" />
+    <ClCompile Include="Actors.cpp" />
+    <ClCompile Include="GameCode.cpp" />
+    <ClCompile Include="GameCode3.cpp" />
+    <ClCompile Include="GameCodeStd.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(ProjectName)d.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(ProjectName).pch</PrecompiledHeaderOutputFile>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="MainLoop\CProcess.h" />
+    <ClInclude Include="MainLoop\Initialization.h" />
+    <ClInclude Include="Audio\CAudio.h" />
+    <ClInclude Include="Audio\CSoundProcess.h" />
+    <ClInclude Include="Audio\CSoundResource.h" />
+    <ClInclude Include="Audio\DirectSoundAudio.h" />
+    <ClInclude Include="DumbStuff\CMath.h" />
+    <ClInclude Include="DumbStuff\GameCodeError.h" />
+    <ClInclude Include="DumbStuff\PrimeSearch.h" />
+    <ClInclude Include="DumbStuff\String.h" />
+    <ClInclude Include="DumbStuff\templates.h" />
+    <ClInclude Include="Debugging\MiniDump.h" />
+    <ClInclude Include="ResourceCache\ResCache2.h" />
+    <ClInclude Include="ResourceCache\ZipFile.h" />
+    <ClInclude Include="SceneGraph\Geometry.h" />
+    <ClInclude Include="SceneGraph\SceneNodes.h" />
+    <ClInclude Include="Physics\Physics.h" />
+    <ClInclude Include="Physics\PhysicsDebugDrawer.h" />
+    <ClInclude Include="Physics\PhysicsEventListener.h" />
+    <ClInclude Include="EventManager\EventManager.h" />
+    <ClInclude Include="EventManager\EventManagerImpl.h" />
+    <ClInclude Include="EventManager\Events.h" />
+    <ClInclude Include="Graphics2D\Font.h" />
+    <ClInclude Include="Graphics2D\Sprite.h" />
+    <ClInclude Include="Network\Network.h" />
+    <ClInclude Include="Scripting\LuaStateManager.h" />
+    <ClInclude Include="Scripting\ScriptEventListener.h" />
+    <ClInclude Include="AI\AiEvents.h" />
+    <ClInclude Include="AI\Pathing.h" />
+    <ClInclude Include="AI\StateMachine.h" />
+    <ClInclude Include="Multicore\CriticalSection.h" />
+    <ClInclude Include="Multicore\RealtimeProcess.h" />
+    <ClInclude Include="actors.h" />
+    <ClInclude Include="GameCode.h" />
+    <ClInclude Include="GameCodeStd.h" />
+    <ClInclude Include="interfaces.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
